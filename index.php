@@ -16,7 +16,7 @@
 				<div class="card">
 				   <div class="card-body">
 					<h1>หวย</h1>
-					<p style="font-size:10px">หวย หวย หวยชนิด</p>
+					<p style="font-size:10px">Sangtian lotto</p>
 					<p class="badge badge-pill badge-warning text-light" >กรุณาเข้าสู่ระบบ</p>
 					<form style="width:60%">
 						  <div class="form-group">
