@@ -31,9 +31,6 @@ function login(){
 			}
 }
 
-function testNew(){
-	return true;
-}
 
 
 
