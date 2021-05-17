@@ -1,4 +1,4 @@
-var projectPath = location.origin+"/huay";
+var projectPath = location.origin+"/lotto";
 function login(){
 			const username = $('#username').val();
 			const password = $('#password').val();
@@ -29,6 +29,10 @@ function login(){
 					}
 				});
 			}
+}
+
+function testNew(){
+	return true;
 }
 
 
