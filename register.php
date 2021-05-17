@@ -7,7 +7,7 @@
 </head>
 <body>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<br><br><br>
+	<br>
 	<center>
 	<div class="container">
 		<br><br>
