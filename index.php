@@ -26,6 +26,8 @@
 						    <input type="password" class="form-control" id="password" placeholder="รหัสผ่าน">
 						  </div>
 						  <button type="button" onClick="login()" class="btn btn-outline-primary">เข้าสู่ระบบ</button>
+						  <br><br>
+						  <button type="button" onClick="go_register()" class="btn btn-outline-warning">สมัครสมาชิก</button>
 					</form>
 					</div>
 				<div>
@@ -40,5 +42,10 @@
 				}
 			}
 	</style>
+	<script type="text/javascript">
+		function go_register(){
+			window.location = "register.php";
+		}
+	</script>
 </body>
 </html>

@@ -15,6 +15,7 @@ include(__DIR__.'/../resource/include/menu.php');
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
 				<h2>รายการทั้งหมด</h2>
+				<label>งวดวันที่ 32 มกราคม 2555</label>
 				 <input type="search" class="form-control" placeholder="ค้นหาเลขเด็ด" onKeyup="findDebtor(this.value)">
 			</div>
 		</div>
@@ -46,6 +47,7 @@ include(__DIR__.'/../resource/include/menu.php');
 												</div>
 										  </div>
 						</div>
+
 					<div class="w-100"></div><br>;
 
 			</div>

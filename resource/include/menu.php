@@ -14,7 +14,7 @@
         <a class="nav-link" href="#"><i class="fas fa-user"></i> โปรไฟล์</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pricing</a>
+        <a class="nav-link" href="#"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
       </li>
     </ul>
     <span class="navbar-text">
