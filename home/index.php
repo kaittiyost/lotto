@@ -2,7 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php include(__DIR__.'/../resource/include/menu.php');?>
+<?php 
+include(__DIR__.'/../resource/include/script.html');
+include(__DIR__.'/../resource/include/menu.php');
+?>
 <title>หวย</title>
 </head>
 <body>

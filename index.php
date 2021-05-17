@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>เข้าสู่ระบบ</title>
-    <?php include(__DIR__."/resource/include/menu.php"); ?>
+    <?php include(__DIR__."/resource/include/script.html"); ?>
 </head>
 <body>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -15,7 +15,7 @@
 			<div class="col" >
 				<div class="card">
 				   <div class="card-body">
-					<h1>หวย</h1>
+					<h1>Sangtian lotto</h1>
 					<p style="font-size:10px">Sangtian lotto</p>
 					<p class="badge badge-pill badge-warning text-light" >กรุณาเข้าสู่ระบบ</p>
 					<form style="width:60%">
