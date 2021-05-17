@@ -1,4 +1,4 @@
-var projectPath = location.origin+"/lotto";
+var projectPath = location.origin;
 function login(){
 			const username = $('#username').val();
 			const password = $('#password').val();
@@ -17,14 +17,13 @@ function login(){
 					}
 				).done((rs)=>{
 					console.log(rs)
-					rs = JSON.parse(rs);
-					if(rs.status==0){
+					if(rs==0){
 						Swal.fire({
 							icon: 'error',
 							title: 'เกิดข้อผิดพลาด!',
 							text: 'usernameหรือรหัสผ่านไม่ตรงกัน!'
 						});
-					}else if(rs.status==1){
+					}else if(rs==1){
 						location.href = projectPath+'/home';
 					}
 				});
