@@ -21,19 +21,44 @@
   }
 
   body{
-    background-color:white;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+      background-color:white;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
     }
    #loading_button{
       display:none;
    }
 
   .responsive_img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
   }
+
+  .digit-group .splitter{
+         padding: 0 5px;
+         color: white;
+         font-size: 24px;
+   }
+   
+   .digit-group input {
+         width: 30px;
+         height: 50px;
+         background-color: lighten($BaseBG, 5%);
+         border: none;
+         line-height: 50px;
+         text-align: center;
+         font-size: 24px;
+         font-weight: 200;
+         color: black;
+         margin: 0 2px;
+   }
+
+   .prompt {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: white;
+   }
 </style>

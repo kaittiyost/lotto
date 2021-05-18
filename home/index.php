@@ -1,9 +1,10 @@
+<?php include(__DIR__."/../resource/controller/home_controller.php"); ?>
 <!DOCTYPE html>
 <html>
 <head>
 <?php 
-include(__DIR__.'/../resource/include/script.html');
-include(__DIR__.'/../resource/include/menu.php');
+	include(__DIR__.'/../resource/include/script.html');
+	include(__DIR__.'/../resource/include/menu.php');
 ?>
 <title>หวย</title>
 </head>
@@ -15,7 +16,19 @@ include(__DIR__.'/../resource/include/menu.php');
 			<div class="alert-body">
 				<h2>รายการทั้งหมด</h2>
 				<label>งวดวันที่ 32 มกราคม 2555</label>
-				 <input type="search" class="form-control" placeholder="ค้นหาเลขเด็ด" onKeyup="findDebtor(this.value)">
+
+				<div class="prompt text-secondary">ค้นหลาเลขเด็ด</div>
+				<form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+					<input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+					<input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+					<input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+					<span class="splitter">&ndash;</span>
+					<input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
+					<input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
+					<input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
+				</form>
+				<br>
+				<button class="btn btn-dark" style="padding-left:80px;padding-right:80px;">ค้นหา</button>
 			</div>
 		</div>
 	   	  
@@ -23,36 +36,34 @@ include(__DIR__.'/../resource/include/menu.php');
 		<center>
 		<div id="deb_component">
 			<div class="row" id='all_debtor'>
-					<div class="col col-6">
+					<?php 
+						$lotterySet = GetData::lottery();
+						$i = 0;
+						if(is_null($lotterySet)){ ?>
+							<h1>ยังไม่เปิดขาย</h1>
+					<?php }else{ 
+							while(($row=$lotterySet->fetch_array())!=Null){ ?>
+								<div class="col col-6">
 									       <div class="card border-info" style="text-align:center;">
 									       		<div class="card-header bg-white" style="height:40px;">
-									       		   <p  style="font-size:14px" class="badge badge-light">779 998</p><br>
+									       		   <p  style="font-size:14px" class="badge badge-light"><?php echo $row["number"]; ?></p><br>
 									       		</div>
 												<div class="card-body" style="overflow:auto;">
-													<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg"><br><br>
+													<img  class="responsive_img" src="../images/item/<?php echo $row["img"]; ?>"><br><br>
 													<button type="button" class="btn btn-info" style="width: 100%"><i class="fas fa-search-plus"></i></button>
 												</div>
 										  </div>
-						</div>
-						<div class="col col-6">
-									       <div class="card border-info" style="text-align:center;">
-									       		<div class="card-header bg-white" style="height:40px;">
-									       		   <p  style="font-size:14px" class="badge badge-light">666 099</p><br>
-									       		</div>
-												<div class="card-body" style="overflow:auto;">
-													<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg"><br><br>
-													<button type="button" class="btn btn-info" style="width: 100%"><i class="fas fa-search-plus"></i></button>
-
-												</div>
-										  </div>
-						</div>
-
-					<div class="w-100"></div><br>;
-
+								</div>
+					<?php
+								$i+=1;
+								if($i%2==0){
+									echo "<div class='w-100'></div><br>";
+								}
+							}  
+						} ?>
 			</div>
 	</div>
 	</div>
-
 <script src='../resource/script.js'></script>
 </body>
 </html>
