@@ -63,7 +63,7 @@
              $.ajax({
                   "type":"POST",
                   "contentType":"application/x-www-form-urlencoded;charset=utf-8",
-                  "url":pathController,
+                  "url":projectPath,
                   "data":{"fb_id":data.id,"fb_name":data.name,'inSystem':(i)?1:0,"func":"loginFb"}
              })
              .done((response)=>{
