@@ -19,25 +19,29 @@
 
 				<div class="prompt text-secondary">ค้นหลาเลขเด็ด</div>
 				<form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
-					<input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
-					<input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
-					<input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+					<input type="number" id="digit-1" name="digit-1" data-next="digit-2" />
+					<input type="number" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+					<input type="number" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
 					<span class="splitter">&ndash;</span>
-					<input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
-					<input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
-					<input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
+					<input type="number" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
+					<input type="number" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
+					<input type="number" id="digit-6" name="digit-6" data-previous="digit-5" />
 				</form>
 				<br>
-				<button class="btn btn-dark" style="padding-left:80px;padding-right:80px;">ค้นหา</button>
+				<button id="search_btn" class="btn btn-dark" style="padding-left:80px;padding-right:80px;">ค้นหา</button>
 			</div>
 		</div>
 	   	  
 		<br>
 		<center>
-		<div id="deb_component">
-			<div class="row" id='all_debtor'>
+		<div id="lotery_all">
+			<div class="row" id='lotery_rows'>
 					<?php 
-						$lotterySet = GetData::lottery();
+						$key = Null;
+						if(isset($_GET["s"])){
+							$key = $_GET["s"];
+						}
+						$lotterySet = GetData::lottery($key);
 						$i = 0;
 						if(is_null($lotterySet)){ ?>
 							<h1>ยังไม่เปิดขาย</h1>

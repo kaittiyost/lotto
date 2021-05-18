@@ -52,6 +52,15 @@ $('.digit-group').find('input').each(function(){
 	});
 });
 
+$("#search_btn").click((e)=>{
+	let key = "";
+	for(let i=0;i<6;i++){
+		let thisChar = $("#digit-"+(i+1)).val();
+		key+=(String(thisChar)=="")?"a":thisChar;
+	}
+	$("#lotery_all").load(projectPath+"/home/?s="+key+" #lotery_rows");
+});
+
 
 
 
