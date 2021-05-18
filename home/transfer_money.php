@@ -1,4 +1,3 @@
-<?php include(__DIR__.'/../resource/controller/login.php');?>
 <!DOCTYPE html>
 <html>
 <head>
