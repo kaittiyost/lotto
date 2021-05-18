@@ -44,7 +44,7 @@
 						$lotterySet = GetData::lottery($key);
 						$i = 0;
 						if(is_null($lotterySet)){ ?>
-							<h1>ยังไม่เปิดขาย</h1>
+							<h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1>
 					<?php }else{ 
 							while(($row=$lotterySet->fetch_array())!=Null){ ?>
 								<div class="col col-6">
