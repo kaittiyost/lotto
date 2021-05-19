@@ -11,7 +11,7 @@
         <a class="nav-link" href="/home/"><i class="fas fa-home"></i> หน้าแรก <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-user"></i> โปรไฟล์</a>
+        <a class="nav-link" href="/profile/"><i class="fas fa-user"></i> โปรไฟล์</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
