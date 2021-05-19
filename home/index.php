@@ -54,7 +54,8 @@
 									       		</div>
 												<div class="card-body" style="overflow:auto;">
 													<img  class="responsive_img" src="../images/item/<?php echo $row["img"]; ?>"><br><br>
-													<button type="button" class="btn btn-info" style="width: 100%"><i class="fas fa-search-plus"></i></button>
+													<h5 class="text-secondary"><i class="fas fa-box"></i> คงเหลือ <?php echo $row["stock"]; ?></h5>
+													<buttcon type="button" class="btn btn-info" style="width: 100%"><i class="fas fa-search-plus"></i></button>
 												</div>
 										  </div>
 								</div>
