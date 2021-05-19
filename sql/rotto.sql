@@ -11,7 +11,7 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 18/05/2021 16:57:03
+ Date: 19/05/2021 21:26:20
 */
 
 SET NAMES utf8mb4;
@@ -44,6 +44,21 @@ CREATE TABLE `fb_user`  (
   INDEX `FB_USER_FK`(`USER_ID`) USING BTREE,
   CONSTRAINT `FB_USER_FK` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for img_confirm
+-- ----------------------------
+DROP TABLE IF EXISTS `img_confirm`;
+CREATE TABLE `img_confirm`  (
+  `id` int(9) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NULL DEFAULT NULL,
+  `img` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `status` tinyint(1) NULL DEFAULT 0,
+  `time_reg` date NULL DEFAULT curdate,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `img_con_fk`(`user_id`) USING BTREE,
+  CONSTRAINT `img_con_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`USER_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for lottery
@@ -106,6 +121,10 @@ CREATE TABLE `user`  (
   `USER_USERNAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `USER_PASSWORD` varchar(70) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `USER_UUID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `USER_LASTNAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
+  `USER_NAME` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
+  `USER_EMAIL` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
+  `USER_TEL` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '',
   `REGIS_TIME` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`USER_ID`) USING BTREE,
   UNIQUE INDEX `USER_USERNAME`(`USER_USERNAME`) USING BTREE
@@ -114,6 +133,6 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '2021-05-18 00:06:39');
+INSERT INTO `user` VALUES (113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '', '', '', '', '2021-05-18 00:06:39');
 
 SET FOREIGN_KEY_CHECKS = 1;
