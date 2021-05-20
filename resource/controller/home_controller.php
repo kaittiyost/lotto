@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     include(__DIR__."/../database/db_config.php");
     class GetData{
         public static function lottery($key){
@@ -23,12 +24,14 @@
 
     class ExeData{
         public function toCart($lottoId){
+            $response = ["status"=>""];
             try{
                 if(isset($_SESSION["loginStatus"])){
                     $conn = DB::getConnect();
-                   $lottoId = htmlentities($conn->escape_string($conn));
+                    $lottoId = htmlentities($conn->escape_string($lottoId));
                 }else{
-                    header("location:".$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"]);
+                    $response["status"] = "non_login";
+                    echo json_encode($response);
                 }
             }catch(Exception $e){
                 echo "error -->".$e->getMessage();
@@ -41,7 +44,7 @@
         switch($choice){
             case "toCart":
                 $exeData = new ExeData();
-                $exeData->toCart($l_POST["lotId"]);
+                $exeData->toCart($_POST["lotId"]);
         }
     }
 ?>

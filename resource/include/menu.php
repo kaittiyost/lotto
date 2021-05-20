@@ -1,4 +1,3 @@
-
 <div style="background-color:#E3E3E3;height:50px;position:fixed;width:100%;z-index:1000;font-size:20px;opacity:1;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Sangtian lotto</a>
@@ -20,7 +19,7 @@
         <a class="nav-link" href="/purchase_list/"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
+        <a class="nav-link" href="#" id="logout_btn"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
       </li>
     </ul>
     <span class="navbar-text">
@@ -29,4 +28,25 @@
   </div>
 </nav>
 </div>
-
+<script>
+  $("#logout_btn").click(()=>{
+		$.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/login.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"func":"logout"}
+		}
+		).done((rs)=>{
+			console.log(rs)
+			if(rs==0){
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด!',
+					text: ''
+				});
+			}else if(rs==1){
+				location.href = projectPath;
+			}
+		});
+});
+</script>

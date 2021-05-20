@@ -1,4 +1,5 @@
 <?php include(__DIR__."/../resource/controller/profile_controller.php"); ?>
+<?php $profile = GetData::profile(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,6 @@
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
 				<h2>โปรไฟล์</h2>
-                <?php $profile = GetData::profile(); ?>
 				<br>
                 <table class="table" style="width:50%;margin:auto;">
                     <thead>

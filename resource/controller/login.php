@@ -18,10 +18,23 @@
             echo '0';
         }
     }
+    function logout(){
+        try {
+            session_destroy();
+            echo 1;
+        } catch (Exception $th) {
+            echo "Error -->".$th->getMessage();
+        }
+    }
 
     if(isset($_POST["func"])){
-        if($_POST["func"]=="login"){
-            login();
+        switch($_POST["func"]){
+            case "login" :
+                login();
+                break;
+            case "logout" :
+                logout();
+                break;
         }
     }
 ?>
