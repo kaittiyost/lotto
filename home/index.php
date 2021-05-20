@@ -3,8 +3,8 @@
 <html>
 <head>
 	<?php 
-	include(__DIR__.'/../resource/include/script.html');
-	include(__DIR__.'/../resource/include/menu.php');
+		include(__DIR__.'/../resource/include/script.html');
+		include(__DIR__.'/../resource/include/menu.php');
 	?>
 	<title>หวย</title>
 </head>
@@ -28,7 +28,7 @@
 					<input type="number" id="digit-6" name="digit-6" data-previous="digit-5" />
 				</form>
 				<br>
-				<button id="search_btn" class="btn btn-dark" style="padding-left:80px;padding-right:80px;">ค้นหา</button>
+				<button id="search_btn" class="btn btn-dark btn-md-width">ค้นหา</button>
 			</div>
 		</div>
 
@@ -56,12 +56,15 @@
 										<img  class="responsive_img" src="../images/item/<?php echo $row["img"]; ?>"><br><br>
 										<p class="badge badge-pill badge-danger text-light"> <i class="fas fa-box"></i> คงเหลือ <?php echo $row["stock"]; ?></p>
 										<a data-toggle="modal" 
-										data-quantity="<?php echo $row["stock"]; ?>" 
-										data-number="<?php echo $row["number"]; ?>"  
-										data-img="<?php echo $row["img"]; ?>" 
-										class="open-quan btn btn-primary" 
-										href="#DetailModal"
-										style="width: 100%"><i class="fas fa-search-plus"></i></a>
+											data-id="<?php echo $row["id"]; ?>"
+											data-quantity="<?php echo $row["stock"]; ?>" 
+											data-number="<?php echo $row["number"]; ?>"  
+											data-img="<?php echo $row["img"]; ?>" 
+											class="open-quan btn btn-primary" 
+											href="#DetailModal"
+											style="width: 100%">
+												<i class="fas fa-search-plus"></i>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -88,31 +91,38 @@
 						</button>
 					</div>
 					<div class="modal-body">
+						<input type="hidden" id="lottoly_id" value="">
 						<div id="lottoly_img"></div>
-						<p>ใบละ 80 บาท</p>
-						<div id="lottoly_quantity"></div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-outline-success">หยิบลงตระกร้า</button>
+						<form style="width:50%;margin:auto;text-align:center;">
+							<div class="row">
+								<div class="col">
+									<p>ใบละ 80 บาท</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div id="lottoly_quantity" style="margin-top:10px;"></div>
+								</div>
+							</div>
+							<div class="row">
+								<div  class="col">
+									<select id="quan_select" class="form-control"  style="width:60%;margin:auto;margin-top:10px;">
+										<option selected>เลือกจำนวน</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<button type="button" id="add_to_card_btn" class="btn btn-warning" style="margin-top:20px;">เพิ่มในตระกร้า</button>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script src='../resource/script.js'></script>
-
-		<script type="text/javascript">
-			
-			$(document).on("click", ".open-quan", function () {
-				let lotto_quan = $(this).data('quantity');
-				let lotto_number = $(this).data('number');
-				let lotto_img = $(this).data('img');
-
-				$("#lottoly_number").html('หมายเลข '+lotto_number);
-				$("#lottoly_quantity").html('<i class="fas fa-box"></i> คงเหลือ '+lotto_quan+' ใบ');
-				$("#lottoly_img").html('<img  class="responsive_img" src="../images/item/'+lotto_img+'"><br><br>');
-
-			});
-		</script>
 	</body>
 	</html>

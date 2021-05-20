@@ -20,4 +20,28 @@
             }
         }
     }
+
+    class ExeData{
+        public function toCart($lottoId){
+            try{
+                if(isset($_SESSION["loginStatus"])){
+                    $conn = DB::getConnect();
+                   $lottoId = htmlentities($conn->escape_string($conn));
+                }else{
+                    header("location:".$_SERVER["REQUEST_SCHEME"]."://".$_SERVER["SERVER_NAME"]);
+                }
+            }catch(Exception $e){
+                echo "error -->".$e->getMessage();
+            }
+        }
+    }
+
+    if(isset($_POST["func"])){
+        $choice = $_POST["func"];
+        switch($choice){
+            case "toCart":
+                $exeData = new ExeData();
+                $exeData->toCart($l_POST["lotId"]);
+        }
+    }
 ?>

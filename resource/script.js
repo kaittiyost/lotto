@@ -61,7 +61,38 @@ $("#search_btn").click((e)=>{
 	$("#lotery_all").load(projectPath+"/home/?s="+key+" #lotery_rows");
 });
 
+			
+$(document).on("click", ".open-quan", function () {
+	new Promise((resolve,reject)=>{
+		let lotto_quan = $(this).data('quantity');
+		let lotto_number = $(this).data('number');
+		let lotto_img = $(this).data('img');
 
+		$("#lottoly_id").val($(this).data("id"));
+		$("#lottoly_number").html('หมายเลข '+lotto_number);
+		$("#lottoly_quantity").html('<i class="fas fa-box"></i> คงเหลือ '+lotto_quan+' ใบ');
+		$("#lottoly_img").html('<img  class="responsive_img" src="../images/item/'+lotto_img+'"><br><br>');
+		resolve(parseInt(lotto_quan));
+
+	}).then((lotto_quan)=>{
+		for(let i=0;i<lotto_quan;i++){
+			$("#quan_select").append("<option value='"+(i+1)+"'>"+(i+1)+"</option>");
+		}
+	})
+});
+
+$("#add_to_card_btn").click(()=>{
+		let lot_id = $("#lottoly_id").val();
+		$.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/home_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"lotId":lot_id,"func":"toCart"}
+		})
+		.done((response)=>{
+			console.log(response);
+		});
+});
 
 
 
