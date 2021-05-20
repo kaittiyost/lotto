@@ -15,7 +15,6 @@
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
 				<h2>รายการซื้อของฉัน</h2>
-               
 			</div>
 		</div>	   	  
 		<br>
