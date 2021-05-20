@@ -33,7 +33,6 @@
 				<button id="search_btn" class="btn btn-dark btn-md-width">ค้นหา</button>
 			</div>
 		</div>
-
 		<br>
 		<center>
 			<div id="lotery_all">

@@ -83,15 +83,40 @@ $(document).on("click", ".open-quan", function () {
 
 $("#add_to_card_btn").click(()=>{
 		let lot_id = $("#lottoly_id").val();
-		$.ajax({
-			method:"POST",
-			url:projectPath+"/resource/controller/home_controller.php",
-			contentType:"application/x-www-form-urlencoded; charset=utf-8",
-			data:{"lotId":lot_id,"func":"toCart"}
-		})
-		.done((response)=>{
-			console.log(response);
-		});
+		let lot_quan = $("#quan_select").val();
+		if(String(lot_quan)==="เลือกจำนวน"){
+			Swal.fire({
+				icon: 'warning',
+				title: 'โปรดเลือกจำนวน'
+			  })
+		}else{
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/home_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"lotId":lot_id,"quan":lot_quan,"func":"toCart"}
+			})
+			.done((response)=>{
+				response = JSON.parse(response);
+				switch(String(response.status)){
+					case "1":
+						Swal.fire({
+							icon: 'success',
+							title: 'เพิ่มในตระกร้าแล้ว'
+						  })
+						break;
+					case "0":
+						Swal.fire({
+							icon: 'error',
+							title: 'เกิดข้อผิดพลาด!'
+						  })
+						break;
+					case "non_login":
+						location.href = projectPath;
+						break;
+				}
+			});
+		}
 });
 //----------------------------------HOME(END)----------------------------------
 

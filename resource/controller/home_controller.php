@@ -23,12 +23,21 @@
     }
 
     class ExeData{
-        public function toCart($lottoId){
+        public function toCart($lottoId,$quan){
             $response = ["status"=>""];
             try{
                 if(isset($_SESSION["loginStatus"])){
                     $conn = DB::getConnect();
                     $lottoId = htmlentities($conn->escape_string($lottoId));
+                    $sql = "INSERT INTO bucket SET user_id = ".$_SESSION['userData']['USER_ID']
+                            .",lottery_id = ".$lottoId.",quan = ".$quan;
+                    if($conn->query($sql)){
+                        $response["status"] = 1;
+                        echo json_encode($response);
+                    }else{
+                        $response["status"] = 0;
+                        echo json_encode($response);
+                    }
                 }else{
                     $response["status"] = "non_login";
                     echo json_encode($response);
@@ -44,7 +53,7 @@
         switch($choice){
             case "toCart":
                 $exeData = new ExeData();
-                $exeData->toCart($_POST["lotId"]);
+                $exeData->toCart($_POST["lotId"],$_POST["quan"]);
         }
     }
 ?>
