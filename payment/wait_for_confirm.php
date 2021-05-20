@@ -20,7 +20,7 @@ include(__DIR__.'/../resource/include/menu.php');
 			</div>
 		</div>	   	  
 		<br>
-			 <button class="btn btn-outline-info" style="width: 100%;" onclick="go_home()">กลับหน้าแรก</button><br><br>
+			 <a href="/home/" class="btn btn-outline-info" style="width: 100%;" onclick="go_home()">กลับหน้าแรก</a><br><br>
 	</div>
 	</div>
 

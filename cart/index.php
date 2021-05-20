@@ -31,12 +31,18 @@
 <body>
 	<br><br><br>
 	<div class="container" style="text-align: center">
-		<button class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button>
+		<a href="/home/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
 		<br>
 		<br>
-		<p><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน</p>
+		
+		<div class="alert alert-info text-dark" style="width:100%">
+			<div class="alert-body">
+				<h2><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน</h2>
+				
+			</div>
+		</div>
 		<div style="margin-bottom: 30% ; margin-top: 15px">
-			<div class="alert text-dark" style="width:100% ; background-color: #fcfcfc !important;text-align: left">
+			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ; text-align: left">
 				<div class="alert-body">
 					<div class="row">
 
@@ -55,7 +61,7 @@
 					</div>
 				</div>
 			</div>	   	  
-			<div class="alert text-dark" style="width:100% ; background-color: #fcfcfc!important;text-align: left">
+			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ;text-align: left">
 				<div class="alert-body">
 					<div class="row">
 
@@ -74,7 +80,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="alert text-dark" style="width:100% ; background-color: #fcfcfc!important;text-align: left">
+			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ; text-align: left">
 				<div class="alert-body">
 					<div class="row">
 
@@ -93,7 +99,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="alert text-dark" style="width:100% ; background-color: #fcfcfc!important;text-align: left ;">
+			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ;text-align: left ;">
 				<div class="alert-body">
 					<div class="row">
 
@@ -133,21 +139,21 @@
 	}
 
 	function del(){
-		Swal.fire({
-			title: 'ยืนยันการลบรายการ',
-			text: "ข้อมูลจะถูกลบออกจากตระกร้าสินค้าของคุณ",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'ลบ'
-		}).then((result) => {
-			if (result.isConfirmed) {
+		// Swal.fire({
+		// 	title: 'ยืนยันการลบรายการ',
+		// 	text: "ข้อมูลจะถูกลบออกจากตระกร้าสินค้าของคุณ",
+		// 	icon: 'warning',
+		// 	showCancelButton: true,
+		// 	confirmButtonColor: '#3085d6',
+		// 	cancelButtonColor: '#d33',
+		// 	confirmButtonText: 'ลบ'
+		// }).then((result) => {
+		// 	if (result.isConfirmed) {
 
 
-			}
-		});
+		// 	}
+		// });
 	}
-	</script>
+</script>
 </body>
 </html>

@@ -14,7 +14,13 @@
         <a class="nav-link" href="/profile/"><i class="fas fa-user"></i> โปรไฟล์</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
+        <a class="nav-link" href="/cart/"><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน <span class="badge badge-info">4</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/purchase_list/"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
       </li>
     </ul>
     <span class="navbar-text">
