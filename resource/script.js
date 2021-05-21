@@ -119,7 +119,42 @@ $("#add_to_card_btn").click(()=>{
 		}
 });
 //----------------------------------HOME(END)----------------------------------
-
+//----------------------------------CART---------------------------------------
+function delBucket(lot_id){
+	Swal.fire({
+		title: 'ต้องการลบ?',
+		text: "คุณต้องการลบรายการออกจากตระกร้าหรือไม่!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ใช่'
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/cart_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"lotId":lot_id,"func":"del"}
+			}).done((respones)=>{
+				respones = JSON.parse(respones);
+				if(String(respones.status)==0){
+					Swal.fire({
+						title:"เกิดข้อผิดพลาด!",
+						icon:"error"
+					});
+				}else{
+					Swal.fire({
+						title:"ลบสำเร็จ",
+						icon:"success"
+					});
+					$("#lottery_list").load(location.href+" #lottery_list_in");
+				}
+			})
+	
+		}
+	  })
+}
 
 
 

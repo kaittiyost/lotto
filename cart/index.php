@@ -1,10 +1,13 @@
+<?php 
+	include(__DIR__."/../resource/controller/cart_controller.php");
+	$getDataProfile = new GetData();
+	$cart = $getDataProfile->cart();
+	include(__DIR__.'/../resource/include/script.html');
+	include(__DIR__.'/../resource/include/menu.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<?php 
-	include(__DIR__.'/../resource/include/script.html');
-	include(__DIR__.'/../resource/include/menu.php');
-	?>
 	<style type="text/css">
 		.total {
 			overflow: hidden;
@@ -14,7 +17,6 @@
 			width: 100%;
 
 		}
-
 		.total a {
 			float: left;
 			display: block;
@@ -41,83 +43,35 @@
 				
 			</div>
 		</div>
-		<div style="margin-bottom: 30% ; margin-top: 15px">
-			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ; text-align: left">
-				<div class="alert-body">
-					<div class="row">
+		<div id="lottery_list" style="margin-bottom: 30% ; margin-top: 15px">
+			<div id="lottery_list_in">
+					<?php 
+						if(is_null($cart)){?>
+							<h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1>
+				<?php }else{ 
+							while(($row=$cart->fetch_array())!=Null){
+							?>
+							<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ; text-align: left">
+								<div class="alert-body">
+									<div class="row">
+										<div class="col-8" style="text-align: center">
+											<h5>หมายเลข <?php echo $row["number"]; ?></h5>
+											<img  class="responsive_img" src="../images/item/<?php echo $row["img"]; ?>">
 
-						<div class="col-8" style="text-align: center">
-							<h5>หมายเลข 955 776</h5>
-							<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
+										</div>
+										<div class="col-4">
+											<label> <?php echo $row["price"]; ?> ฿</label>
+											<br>
+											<label>จำนวน  <?php echo $row["quan"]; ?> ใบ</label>
+											<button class="btn btn-outline-danger" style="width: 100%" onclick='delBucket(<?php echo $row["lottery_id"]; ?>)'>ลบ</button>
+										</div>
 
-						</div>
-						<div class="col-4">
-							<label>80 ฿</label>
-							<br>
-							<label>จำนวน 1 ใบ</label>
-							<button class="btn btn-outline-danger" style="width: 100%" onclick="del()">ลบ</button>
-						</div>
-
-					</div>
-				</div>
-			</div>	   	  
-			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ;text-align: left">
-				<div class="alert-body">
-					<div class="row">
-
-						<div class="col-8"  style="text-align: center">
-							<h5>หมายเลข 955 776</h5>
-							<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-
-						</div>
-						<div class="col-4">
-							<label>80 ฿</label>
-							<br>
-							<label>จำนวน 1 ใบ</label>
-							<button class="btn btn-outline-danger" style="width: 100%">ลบ</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ; text-align: left">
-				<div class="alert-body">
-					<div class="row">
-
-						<div class="col-8"  style="text-align: center">
-							<h5>หมายเลข 955 776</h5>
-							<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-
-						</div>
-						<div class="col-4">
-							<label>80 บาท</label>
-							<br>
-							<label>จำนวน 1 ใบ</label>
-							<button class="btn btn-outline-danger" style="width: 100%">ลบ</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="width:100% ;text-align: left ;">
-				<div class="alert-body">
-					<div class="row">
-
-						<div class="col-8"  style="text-align: center">
-							<h5>หมายเลข 955 776</h5>
-							<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-
-						</div>
-						<div class="col-4">
-							<label>80 บาท</label>
-							<br>
-							<label>จำนวน 1 ใบ</label>
-							<button class="btn btn-outline-danger" style="width: 100%">ลบ</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
+									</div>
+								</div>
+							</div>
+					<?php } 
+					}?>	   
+			</div>	  
 		</div>
 	</div>
 </div>
@@ -131,29 +85,6 @@
 		</div>
 	</div>
 </div>
-
 <script src='../resource/script.js'></script>
-<script type="text/javascript">
-	function go_home(){
-		window.location = "index.php";
-	}
-
-	function del(){
-		// Swal.fire({
-		// 	title: 'ยืนยันการลบรายการ',
-		// 	text: "ข้อมูลจะถูกลบออกจากตระกร้าสินค้าของคุณ",
-		// 	icon: 'warning',
-		// 	showCancelButton: true,
-		// 	confirmButtonColor: '#3085d6',
-		// 	cancelButtonColor: '#d33',
-		// 	confirmButtonText: 'ลบ'
-		// }).then((result) => {
-		// 	if (result.isConfirmed) {
-
-
-		// 	}
-		// });
-	}
-</script>
 </body>
 </html>
