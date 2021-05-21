@@ -78,7 +78,7 @@
 <div class="total">
 	<div class="row" style="padding: 10px">
 		<div class="col-8">
-			<p class="text text-dark" style="margin-left: 10px;margin-top: 15px; font-size: 20px;">ทั้งหมด <b>฿99</b> </p>
+			<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b>฿99</b> </p>
 		</div>
 		<div class="col-4" style="">
 			<a class="btn btn-info text-light" href="transfer_money.php">ชำระเงิน</a>
