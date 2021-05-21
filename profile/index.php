@@ -1,5 +1,8 @@
-<?php include(__DIR__."/../resource/controller/profile_controller.php"); ?>
-<?php $profile = GetData::profile(); ?>
+<?php 
+	include(__DIR__."/../resource/controller/profile_controller.php");
+	$profileGetData = new GetData();
+	$profile = $profileGetData->profile(); 
+?>
 <!DOCTYPE html>
 <html>
 <head>
