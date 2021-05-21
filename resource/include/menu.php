@@ -13,7 +13,7 @@
         <a class="nav-link" href="/profile/"><i class="fas fa-user"></i> โปรไฟล์</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/cart/"><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน <span class="badge badge-info">4</span></a>
+        <a class="nav-link" href="/cart/"><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน <span class="badge badge-info" id="cart_count">4</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/purchase_list/"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
@@ -29,6 +29,21 @@
 </nav>
 </div>
 <script>
+  window.onload = ()=>{
+    $.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/cart_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"func":"cart_count"}
+		})
+    .done((response)=>{
+      response = JSON.parse(response);
+      if(parseInt(response.status)==1){
+          $("#cart_count").html(response.result.quan);
+      }
+    });
+  }
+
   $("#logout_btn").click(()=>{
 		$.ajax({
 			method:"POST",
@@ -48,5 +63,5 @@
 				location.href = projectPath;
 			}
 		});
-});
+  });
 </script>
