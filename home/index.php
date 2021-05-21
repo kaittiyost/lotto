@@ -19,7 +19,7 @@
 				<h2>รายการทั้งหมด</h2>
 				<label>งวดวันที่ 32 มกราคม 2555</label>
 
-				<div class="prompt text-secondary">ค้นหลาเลขเด็ด</div>
+				<div class="prompt text-secondary">ค้นหาเลขเด็ด</div>
 				<form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
 					<input type="number" id="digit-1" name="digit-1" data-next="digit-2" />
 					<input type="number" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />

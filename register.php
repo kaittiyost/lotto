@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>เข้าสู่ระบบ</title>
+	<title>สมัครสมาชิกใหม่</title>
 	<?php include(__DIR__."/resource/include/script.html"); ?>
 </head>
 <body>

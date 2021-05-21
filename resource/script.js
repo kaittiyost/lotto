@@ -104,6 +104,7 @@ $("#add_to_card_btn").click(()=>{
 							icon: 'success',
 							title: 'เพิ่มในตระกร้าแล้ว'
 						  })
+						
 						break;
 					case "0":
 						Swal.fire({
