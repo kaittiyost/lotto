@@ -72,9 +72,10 @@ $(document).on("click", ".open-quan", function () {
 		$("#lottoly_number").html('หมายเลข '+lotto_number);
 		$("#lottoly_quantity").html('<i class="fas fa-box"></i> คงเหลือ '+lotto_quan+' ใบ');
 		$("#lottoly_img").html('<img  class="responsive_img" src="../images/item/'+lotto_img+'"><br><br>');
+		$("#quan_select").empty();
 		resolve(parseInt(lotto_quan));
-
 	}).then((lotto_quan)=>{
+		$("#quan_select").append("<option selected>เลือกจำนวน</option>");
 		for(let i=0;i<lotto_quan;i++){
 			$("#quan_select").append("<option value='"+(i+1)+"'>"+(i+1)+"</option>");
 		}

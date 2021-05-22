@@ -39,6 +39,33 @@
                  echo "error".$e->getMessage();
             }
         }
+        function totalOncart(){
+            try {
+                $conn = DB::getConnect();
+                $sql = "SELECT bucket.user_id\n".
+                        "		,SUM(lottery.price*bucket.quan) as total\n".
+                        "FROM \n".
+                        "(\n".
+                        "	SELECT * FROM bucket \n".
+                        ")as bucket\n".
+                        "INNER JOIN \n".
+                        "(\n".
+                        "	SELECT * FROM lottery\n".
+                        ") as lottery\n".
+                        "ON bucket.lottery_id = lottery.id\n".
+                        "INNER JOIN \n".
+                        "(\n".
+                        "	SELECT * FROM user \n".
+                        ") as user\n".
+                        "ON user.USER_ID = bucket.user_id\n".
+                        "WHERE bucket.user_id =".$_SESSION['userData']['USER_ID']."\n".
+                        "GROUP BY bucket.user_id";
+                $result = $conn->query($sql)->fetch_array();
+                return (($conn->affected_rows)<=0)?Null:$result;
+            } catch (Exception $e) {
+                 echo "error".$e->getMessage();
+            }
+        }
     }
     class ExeData{
         public function del($lotId){
