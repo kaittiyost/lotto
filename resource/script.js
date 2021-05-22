@@ -157,7 +157,56 @@ function delBucket(lot_id){
 		}
 	  })
 }
+$("#pay_order").click(()=>{
+	Swal.fire({
+		title: 'ยืนยันการซื้อสินค้า?',
+		text: "คุณต้องการยืนยันการหรือไม่!",
+		icon: 'info',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ใช่'
+	  }).then((result)=>{
+		if(result.isConfirmed){
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/cart_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"func":"confirm_cart"}
+			}).done((response)=>{
+				console.log(response);
+				response = JSON.parse(response);
+				if(parseInt(response.status)==1){
+					Swal.fire({
+						icon:"success",
+						title:"ยืนยันการซื้อแล้ว",
+						text:"โปรดส่งหลักฐานการโอนเงินภายในเวลา30นาที"
+					});
+					setTimeout(()=>{
+						location.reload();
+					},1000);
+				}else if(String(response.status)=="out_stock"){
+					Swal.fire({
+						icon:"warning",
+						title:"ยืนยันการซื้อแล้ว",
+						text:"สินค้าบางรายหมดโปรดส่งหลักฐานการโอนเงินภายในเวลา30นาที"
+					});
+					setTimeout(()=>{
+						location.reload();
+					},1000);
+				}else{
+					Swal.fire({
+						icon:"error",
+						title:"เกิดข้อผิดพลาด!",
+						text:"เกิดข้อผิดพลาดไม่สราบสาเหตุโปรดลองอีกครั้งในภายหลัง"
+					});
+				}
+			})
 
+		}
+	  })
+});
+//----------------------------------CART(END)---------------------------------------
 
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2021 at 07:25 AM
+-- Generation Time: May 22, 2021 at 07:48 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -34,17 +34,6 @@ CREATE TABLE `bucket` (
   `quan` int(6) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `bucket`
---
-
-INSERT INTO `bucket` (`id`, `user_id`, `lottery_id`, `quan`, `reg_date`) VALUES
-(1, 113, 0, 2, '2021-05-20 09:02:48'),
-(2, 113, 0, 2, '2021-05-20 09:03:03'),
-(3, 113, 2, 12, '2021-05-20 09:03:57'),
-(4, 113, 0, 1, '2021-05-20 09:13:46'),
-(5, 113, 1, 13, '2021-05-20 14:10:02');
 
 -- --------------------------------------------------------
 
@@ -80,10 +69,11 @@ CREATE TABLE `img_confirm` (
 
 CREATE TABLE `lottery` (
   `id` int(20) NOT NULL,
-  `number` int(6) DEFAULT NULL,
+  `number` varchar(6) NOT NULL,
   `date` date DEFAULT NULL,
   `img` varchar(255) DEFAULT NULL,
   `stock` int(6) DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT 80,
   `status` tinyint(1) DEFAULT 1,
   `reg_date` date DEFAULT curdate()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -92,10 +82,11 @@ CREATE TABLE `lottery` (
 -- Dumping data for table `lottery`
 --
 
-INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `status`, `reg_date`) VALUES
-(0, 999555, '2021-06-01', 'lotto_excemple.jpeg', 2, 1, '2021-05-18'),
-(1, 123456, '2021-06-01', 'lotto_excemple.jpeg', 20, 1, '2021-05-18'),
-(2, 654321, '2021-06-01', 'lotto_excemple.jpeg', 100, 1, '2021-05-18');
+INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `price`, `status`, `reg_date`) VALUES
+(0, '999555', '2021-06-01', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-18'),
+(1, '123456', '2021-06-01', 'lotto_excemple.jpeg', 1, '80', 1, '2021-05-18'),
+(2, '654321', '2021-06-01', 'lotto_excemple.jpeg', 65, '80', 1, '2021-05-18'),
+(4, '000333', '2021-05-22', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-22');
 
 -- --------------------------------------------------------
 
@@ -106,8 +97,40 @@ INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `status`, `reg_da
 CREATE TABLE `sales` (
   `id` int(10) NOT NULL,
   `user_id` int(10) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 0,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Triggers `sales`
+--
+DELIMITER $$
+CREATE TRIGGER `bf_del_sales` BEFORE DELETE ON `sales` FOR EACH ROW BEGIN
+		DECLARE xlot_id int(10);
+		DECLARE xquan int(10);
+		DECLARE finished TINYINT(1) DEFAULT 0;
+		
+		DECLARE salse_det_set CURSOR FOR 
+		SELECT lottery_id,quan FROM sales_det 
+		WHERE sale_id = OLD.id;
+		
+		DECLARE CONTINUE HANDLER 
+			FOR NOT FOUND SET finished = 1;
+		
+		OPEN salse_det_set;
+		
+		sale_det_loop : LOOP 
+			FETCH salse_det_set INTO xlot_id,xquan;
+			IF finished = 1 THEN 
+				LEAVE sale_det_loop;
+			END IF;
+			UPDATE lottery SET stock = stock + xquan WHERE id = xlot_id;
+		END LOOP sale_det_loop;
+		
+		CLOSE salse_det_set;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -123,6 +146,18 @@ CREATE TABLE `sales_det` (
   `price` decimal(10,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Triggers `sales_det`
+--
+DELIMITER $$
+CREATE TRIGGER `af_add_sales_det` AFTER INSERT ON `sales_det` FOR EACH ROW BEGIN
+		UPDATE lottery 
+		SET stock = stock - new.quan 
+		WHERE id = new.lottery_id;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -134,8 +169,8 @@ CREATE TABLE `user` (
   `USER_USERNAME` varchar(50) NOT NULL,
   `USER_PASSWORD` varchar(70) NOT NULL,
   `USER_UUID` varchar(255) DEFAULT NULL,
-  `USER_LASTNAME` varchar(255) DEFAULT '',
-  `USER_NAME` varchar(225) DEFAULT '',
+  `USER_LASTNAME` varchar(255) NOT NULL DEFAULT '',
+  `USER_NAME` varchar(225) NOT NULL DEFAULT '',
   `USER_EMAIL` varchar(225) DEFAULT '',
   `USER_TEL` varchar(20) DEFAULT '',
   `REGIS_TIME` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
@@ -210,7 +245,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bucket`
 --
 ALTER TABLE `bucket`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `fb_user`
@@ -228,19 +263,19 @@ ALTER TABLE `img_confirm`
 -- AUTO_INCREMENT for table `lottery`
 --
 ALTER TABLE `lottery`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -281,8 +316,8 @@ ALTER TABLE `sales`
 -- Constraints for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  ADD CONSTRAINT `sales_det_fk` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`),
-  ADD CONSTRAINT `sales_det_fk2` FOREIGN KEY (`lottery_id`) REFERENCES `lottery` (`id`);
+  ADD CONSTRAINT `sales_det_fk` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `sales_det_fk2` FOREIGN KEY (`lottery_id`) REFERENCES `lottery` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

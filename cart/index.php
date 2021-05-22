@@ -75,16 +75,20 @@
 		</div>
 	</div>
 </div>
-<div class="total">
-	<div class="row" style="padding: 10px">
-		<div class="col-8">
-			<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getDataProfile->totalOncart()["total"]; ?>฿</b> </p>
-		</div>
-		<div class="col-4" style="">
-			<a class="btn btn-info text-light" href="transfer_money.php">ชำระเงิน</a>
+<?php 
+if(!is_null($cart)){
+?>
+	<div class="total">
+		<div class="row" style="padding: 10px">
+			<div class="col-8">
+				<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getDataProfile->totalOncart()["total"]; ?>฿</b> </p>
+			</div>
+			<div class="col-4" style="">
+				<a class="btn btn-info text-light" id="pay_order">ชำระเงิน</a>
+			</div>
 		</div>
 	</div>
-</div>
+<?php } ?>
 <script src='../resource/script.js'></script>
 </body>
 </html>
