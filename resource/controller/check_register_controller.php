@@ -59,6 +59,23 @@ function check_tel(){
 
 }
 
+function check_email(){
+	
+	$conn = DB::getConnect();
+	$email =$conn->escape_string( $_POST['email']);
+
+	$sql = 'SELECT COUNT(*) as c FROM user WHERE USER_EMAIL = "'.$email.'";';
+	$result = $conn->query($sql);
+	$count = $result->fetch_array();
+
+	if($count['c'] == '1'){
+		echo 0;
+	}else{
+		echo 1;
+	}
+
+}
+
 if(isset($_POST["func"])){
 	if($_POST["func"]== "check_username"){
 		check_username();
@@ -66,6 +83,8 @@ if(isset($_POST["func"])){
 		check_tel();
 	}else if($_POST["func"]== "register"){
 		register();
+	}else if($_POST["func"]== "check_email"){
+		check_mail();
 	}
 }
 ?>

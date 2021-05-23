@@ -33,7 +33,6 @@ function check_tel(tel){
 		return '0';
 	}else{
 
-		if(username != ""){
 			$.ajax({
 				method:"POST",
 				url:projectPath+"/resource/controller/check_register_controller.php",
@@ -50,9 +49,7 @@ function check_tel(tel){
 					return '1';
 				}
 			});
-		}else{
 
-		}
 	}
 }
 
@@ -127,4 +124,25 @@ function register(){
 		});
 
 	}
+}
+
+function check_email(email){
+
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/check_register_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"email":email,"func":"check_email"}
+			}
+			).done((rs)=>{
+				//console.log(rs)
+				if(rs==0){
+					$('#alert_tel').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> Emailนี้ถูกใช้งานแล้ว</p>');
+					return '0';
+				}else if(rs==1){
+					$('#alert_tel').html('<p style="color:green"><i class="fas fa-check-circle"></i> Email นี้ใช้งานได้</p>');
+					return '1';
+				}
+			});
+
 }
