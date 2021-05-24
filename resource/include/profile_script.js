@@ -35,7 +35,7 @@ function check_tel(tel){
 					if (result.isConfirmed) {
 						$.ajax({
 							method:"POST",
-							url:projectPath+"/resource/controller/update_profile_controller.php",
+							url:projectPath+"/resource/controller/profile_controller.php",
 							contentType:"application/x-www-form-urlencoded; charset=utf-8",
 							data:{"tel":tel,"func":"add_tel"}
 						}
@@ -72,9 +72,7 @@ function check_tel(tel){
 
 
 $("#btn_add_tel").click((e)=>{
-	// check & add
 	let tel = $('#tel').val();
 	check_tel(tel);
-
 });
 

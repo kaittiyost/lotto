@@ -207,6 +207,35 @@ $("#pay_order").click(()=>{
 	  })
 });
 //----------------------------------CART(END)---------------------------------------
-
+//---------------------------------- ADMIN ---------------------------------------
+function login_admin(){
+	const username = $('#username').val();
+	const password = $('#password').val();
+	if(username==''||password==''){
+				Swal.fire({
+					icon: 'error',
+					title: 'ข้อมูลว่าง',
+					text: 'โปรดกรอกข้อมูลให้ครบ!'
+				});
+	}else{
+		$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/admin_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"username":username,"password":password,"func":"login_admin"}
+			}
+		).done((rs)=>{
+			if(rs==0){
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด!',
+					text: 'usernameหรือรหัสผ่านไม่ตรงกัน!'
+				});
+			}else if(rs==1){
+				location.href = projectPath+'/admin/';
+			}
+		});
+	}
+}
 
 
