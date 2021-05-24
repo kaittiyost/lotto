@@ -80,7 +80,7 @@ $profile = $profileGetData->profile();
 					<input type="email" name="email" class="form-control" placeholder="กรอก Email ของคุณ">
 				</div>
 				<div class="modal-footer">
-					<a href="#" class="btn btn-outline-success" id="btn_add_email">บันทึก</a>
+					<a  class="btn btn-outline-success" id="btn_add_email">บันทึก</a>
 				</div>
 			</div>
 		</div>
@@ -101,7 +101,7 @@ $profile = $profileGetData->profile();
 					<input type="number" id="tel" class="form-control" placeholder="กรอกหมายเลขโทรศัพท์ของคุณ">
 				</div>
 				<div class="modal-footer">
-					<a type="button" href="#" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
+					<a type="button" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
 				</div>
 			</div>
 		</div>
@@ -124,7 +124,7 @@ $profile = $profileGetData->profile();
 					<input type="text" id="confirm_new_password" class="form-control" placeholder="ยืนยันรหัสผ่านใหม่">
 				</div>
 				<div class="modal-footer">
-					<a type="button" href="#" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
+					<a type="button" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
 				</div>
 			</div>
 		</div>

@@ -27,32 +27,6 @@ function check_username(username){
 		}
 	}
 }
-function check_tel(tel){
-	if(tel.length < 10 || tel.length > 10){
-		$('#alert_tel').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> หมายเลขไม่ถูกต้อง</p>');
-		return '0';
-	}else{
-
-			$.ajax({
-				method:"POST",
-				url:projectPath+"/resource/controller/check_register_controller.php",
-				contentType:"application/x-www-form-urlencoded; charset=utf-8",
-				data:{"tel":tel,"func":"check_tel"}
-			}
-			).done((rs)=>{
-				//console.log(rs)
-				if(rs==0){
-					$('#alert_tel').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> หมายเลขนี้ถูกใช้งานแล้ว</p>');
-					return '0';
-				}else if(rs==1){
-					$('#alert_tel').html('<p style="color:green"><i class="fas fa-check-circle"></i> หมายเลขนี้ใช้งานได้</p>');
-					return '1';
-				}
-			});
-
-	}
-}
-
 
 function check_confirm_password(password,confirm_password){
 	if(password.length < 8 || confirm_password.length < 8){
@@ -128,13 +102,13 @@ function register(){
 
 function check_email(email){
 
-			$.ajax({
-				method:"POST",
-				url:projectPath+"/resource/controller/check_register_controller.php",
-				contentType:"application/x-www-form-urlencoded; charset=utf-8",
-				data:{"email":email,"func":"check_email"}
-			}
-			).done((rs)=>{
+	$.ajax({
+		method:"POST",
+		url:projectPath+"/resource/controller/check_register_controller.php",
+		contentType:"application/x-www-form-urlencoded; charset=utf-8",
+		data:{"email":email,"func":"check_email"}
+	}
+	).done((rs)=>{
 				//console.log(rs)
 				if(rs==0){
 					$('#alert_tel').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> Emailนี้ถูกใช้งานแล้ว</p>');
