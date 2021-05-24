@@ -34,7 +34,7 @@ $profile = $profileGetData->profile();
 				</div>
 				<hr>
 			<?php }else{ ?>
-				<p style="text-align:left"><i class="fas fa-phone-alt">  <?php echo $profile["user_tel"]; ?></i></p><hr>
+				<p style="text-align:left"><i class="fas fa-phone-alt"></i>  <?php echo $profile["user_tel"]; ?></p><hr>
 			<?php } ?>
 			<?php if($profile["user_email"] == ""){?>
 				<div class="row">
