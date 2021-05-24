@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2021 at 07:48 PM
+-- Generation Time: May 24, 2021 at 05:36 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `rotto`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(10) NOT NULL,
+  `name` varchar(225) DEFAULT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(70) DEFAULT NULL,
+  `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `name`, `username`, `password`, `reg_date`) VALUES
+(0, 'unknow', 'uncheck', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', '2021-05-24 15:33:28'),
+(2, 'เทวินทร์', 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', '2021-05-24 09:15:40');
 
 -- --------------------------------------------------------
 
@@ -55,11 +77,18 @@ CREATE TABLE `fb_user` (
 
 CREATE TABLE `img_confirm` (
   `id` int(9) NOT NULL,
-  `user_id` int(10) DEFAULT NULL,
+  `sale_id` int(10) DEFAULT NULL,
   `img` varchar(225) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
-  `time_reg` date DEFAULT curdate()
+  `time_reg` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `img_confirm`
+--
+
+INSERT INTO `img_confirm` (`id`, `sale_id`, `img`, `status`, `time_reg`) VALUES
+(1, 21, NULL, 0, '2021-05-24 15:35:11');
 
 -- --------------------------------------------------------
 
@@ -84,8 +113,8 @@ CREATE TABLE `lottery` (
 
 INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `price`, `status`, `reg_date`) VALUES
 (0, '999555', '2021-06-01', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-18'),
-(1, '123456', '2021-06-01', 'lotto_excemple.jpeg', 1, '80', 1, '2021-05-18'),
-(2, '654321', '2021-06-01', 'lotto_excemple.jpeg', 65, '80', 1, '2021-05-18'),
+(1, '123456', '2021-06-01', 'lotto_excemple.jpeg', 0, '80', 1, '2021-05-18'),
+(2, '654321', '2021-06-01', 'lotto_excemple.jpeg', 60, '80', 1, '2021-05-18'),
 (4, '000333', '2021-05-22', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-22');
 
 -- --------------------------------------------------------
@@ -98,12 +127,27 @@ CREATE TABLE `sales` (
   `id` int(10) NOT NULL,
   `user_id` int(10) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
+  `confirm_by_admin` int(10) DEFAULT 0,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `user_id`, `status`, `confirm_by_admin`, `reg_date`) VALUES
+(21, 113, 0, 0, '2021-05-24 15:35:11');
+
+--
 -- Triggers `sales`
 --
+DELIMITER $$
+CREATE TRIGGER `TG_INSERT_IMG_CONFIRM` AFTER INSERT ON `sales` FOR EACH ROW BEGIN
+	INSERT INTO img_confirm (sale_id, img) 
+								VALUES (new.id,NULL);
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `bf_del_sales` BEFORE DELETE ON `sales` FOR EACH ROW BEGIN
 		DECLARE xlot_id int(10);
@@ -147,6 +191,14 @@ CREATE TABLE `sales_det` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `sales_det`
+--
+
+INSERT INTO `sales_det` (`id`, `sale_id`, `lottery_id`, `quan`, `price`) VALUES
+(18, 21, 1, 1, '80'),
+(19, 21, 2, 5, '400');
+
+--
 -- Triggers `sales_det`
 --
 DELIMITER $$
@@ -181,11 +233,18 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`USER_ID`, `USER_USERNAME`, `USER_PASSWORD`, `USER_UUID`, `USER_LASTNAME`, `USER_NAME`, `USER_EMAIL`, `USER_TEL`, `REGIS_TIME`) VALUES
-(113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '', '', '', '', '2021-05-17 17:06:39');
+(113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '', '', '', '0970655563', '2021-05-24 09:25:38');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `bucket`
@@ -207,7 +266,7 @@ ALTER TABLE `fb_user`
 --
 ALTER TABLE `img_confirm`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `img_con_fk` (`user_id`);
+  ADD KEY `imgcon_fk_sales` (`sale_id`);
 
 --
 -- Indexes for table `lottery`
@@ -220,7 +279,8 @@ ALTER TABLE `lottery`
 --
 ALTER TABLE `sales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sale_fk` (`user_id`);
+  ADD KEY `sale_fk` (`user_id`),
+  ADD KEY `sales_fk_admin` (`confirm_by_admin`);
 
 --
 -- Indexes for table `sales_det`
@@ -242,10 +302,16 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `bucket`
 --
 ALTER TABLE `bucket`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `fb_user`
@@ -257,7 +323,7 @@ ALTER TABLE `fb_user`
 -- AUTO_INCREMENT for table `img_confirm`
 --
 ALTER TABLE `img_confirm`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lottery`
@@ -269,13 +335,13 @@ ALTER TABLE `lottery`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -304,13 +370,14 @@ ALTER TABLE `fb_user`
 -- Constraints for table `img_confirm`
 --
 ALTER TABLE `img_confirm`
-  ADD CONSTRAINT `img_con_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`USER_ID`);
+  ADD CONSTRAINT `imgcon_fk_sales` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`);
 
 --
 -- Constraints for table `sales`
 --
 ALTER TABLE `sales`
-  ADD CONSTRAINT `sale_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`USER_ID`);
+  ADD CONSTRAINT `sale_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`USER_ID`),
+  ADD CONSTRAINT `sales_fk_admin` FOREIGN KEY (`confirm_by_admin`) REFERENCES `admin` (`id`);
 
 --
 -- Constraints for table `sales_det`
