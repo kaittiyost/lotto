@@ -44,7 +44,7 @@ $purchase_list = $purchase_list_GetData->purchase_list();
 								<span class="badge badge-success">ซื้อสำเร็จแล้ว</span>
 							<?php }} ?>
 							<h5>หมายเลข <?php echo $row['number'];?></h5>
-							<label><?php echo 'วันที่ '.$row['date'];?></label><br>			
+							<label><?php echo 'งวดวันที่ '.$row['lot_date'];?></label><br>			
 							<label style="color:red"><?php echo 'รวม ฿'.$row['price'];?></label><br>
 						</div>
 					</div>

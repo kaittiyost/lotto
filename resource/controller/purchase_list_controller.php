@@ -18,6 +18,7 @@ class GetData{
             "user.USER_NAME, \n".
             "user.USER_LASTNAME, \n".
             "DATE_FORMAT(sales.reg_date,'%d-%m-%Y') as date, \n".
+            "DATE_FORMAT(lottery.date,'%d-%m-%Y') as lot_date, \n".
             "TIME(sales.reg_date) as time ,\n".
             "lottery.number ,\n".
             "lottery.img,\n".
