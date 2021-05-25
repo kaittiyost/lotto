@@ -20,8 +20,7 @@ $purchase_list = $purchase_list_GetData->purchase_list();
 				<h2><i class="fas fa-list-ul"></i> รายการซื้อของฉัน</h2>			
 			</div>
 		</div>
-	</div>
-	<hr>
+		<hr>
 	<?php 
 	if(is_null($purchase_list)){?>
 		<h3 style="margin:auto;width:50%;">ไม่มีรายการซื้อ</h3>
@@ -60,6 +59,8 @@ $purchase_list = $purchase_list_GetData->purchase_list();
 
 			<?php }} ?>
 			<br>
+	</div>
+
 
 			<script src='../resource/script.js'></script>
 		</body>
