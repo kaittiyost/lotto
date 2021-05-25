@@ -20,8 +20,12 @@
 				<label>นาย อิอิ คริคริ</label>
 			</div>
 		</div>
+		<div class="shadow-sm p-3 mb-5 bg-body rounded">
+			<label>หมายเลขสั่งซื้อ 675 346 33452</label><br>
+			<label>ยอดที่ต้องชำระ ฿999</label><br>
+			<label>สถานะ รอส่งหลักฐาน</label>
+		</div>
 
-		<br>
 		<center>
 			<div id="deb_component">
 				<div class="row">

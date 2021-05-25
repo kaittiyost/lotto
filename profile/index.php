@@ -17,11 +17,11 @@ $profile = $profileGetData->profile();
 	<div class="container" style="text-align:center;">
 
 		<div class="alert alert-info text-dark" >
-			<h4>Profile</h4>
+			<h2>Profile</h2>
 		</div>
 		<div class="shadow-sm p-3 mb-5 bg-body rounded">
 			<i class="fas fa-user-circle" style="font-size: 30px"></i><br>
-			<p ><?php echo $profile["user_name"].'  '.$profile["user_lastname"]; ?> </p><hr>
+			<h4 ><?php echo $profile["user_name"].'  '.$profile["user_lastname"]; ?> </h4><hr>
 			<p style="text-align:left"><i class="fas fa-user"></i>  <?php echo $profile["user_username"]; ?> </p><hr>
 			<?php if($profile["user_tel"] == ""){?>
 				<div class="row">

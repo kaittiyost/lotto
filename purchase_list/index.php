@@ -1,4 +1,8 @@
-
+<?php 
+include(__DIR__."/../resource/controller/purchase_list_controller.php");
+$purchase_list_GetData = new GetData();
+$purchase_list = $purchase_list_GetData->purchase_list(); 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,169 +15,52 @@
 <body>
 	<br><br><br>
 	<div class="container" style="text-align:center;">
-		<a href="/home/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a><br><br>
-
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
-				<h2>รายการซื้อของฉัน</h2>
-				
+				<h2><i class="fas fa-list-ul"></i> รายการซื้อของฉัน</h2>			
 			</div>
 		</div>
 	</div>
-	<div id="accordion">
-		<div class="card">
-			<div class="card-header" id="headingOne">
-				<h5 class="mb-0">
-					<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						งวดวันที่ 16 มกราคม 2990
-					</button>
-				</h5>
-			</div>
-
-			<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-				<div class="card-body">
-					<div class="shadow-sm p-3 mb-1 bg-body rounded">
-						<div class="row">
-
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 1 ใบ</label>
-								<label>ราคารวม 100 บาท</label>
-								<span class="badge badge-primary">กำลังตรวจสอบ</span>
-							</div>
-
+	<hr>
+	<?php 
+	if(is_null($purchase_list)){?>
+		<h3 style="margin:auto;width:50%;">ไม่มีรายการซื้อ</h3>
+	<?php }else{ 
+		while(($row=$purchase_list->fetch_array())!=Null){
+			?>
+			<div class="shadow-sm p-3 mb-1 bg-body rounded" style="margin-top: 20px">
+				<div class="row">
+					<div class="col-6"  style="text-align: center">
+						<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
+						<label><?php echo 'x'.$row['quan'];?></label><br>
+					</div>
+					<div class="col-6" style="text-align: right;">
+						<?php if($row['slip'] == "0"){?>
+							<span class="badge badge-secondary">รอส่งหลักฐาน</span>
+						<?php }else{
+							if($row['status'] == '0'){?>
+								<span class="badge badge-warning">กำลังตรวจสอบ</span>
+							<?php }else{?>
+								<span class="badge badge-success">ซื้อสำเร็จแล้ว</span>
+							<?php }} ?>
+							<h5>หมายเลข <?php echo $row['number'];?></h5>
+							<label><?php echo 'วันที่ '.$row['date'];?></label><br>			
+							<label style="color:red"><?php echo 'รวม ฿'.$row['price'];?></label><br>
 						</div>
 					</div>
-					<div class="shadow-sm p-3 mb-1 bg-body rounded" style="margin-top: -15px">
-						<div class="row">
-
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 2 ใบ ราคารวม 200 บาท</label>
-								<span class="badge badge-secondary">รอส่งหลักฐาน</span>
-							</div>
-
+					<div class="row">
+						<div class="col-8">	
+							<label style="color: gray"> <?php echo '#หมายเลขสั่งซื้อ '.$row['id'];?> </label>
 						</div>
-					</div>
-					<div class="shadow-sm p-3 mb-1 bg-body rounded" style="margin-top: -15px">
-						<div class="row">
-
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 2 ใบ ราคารวม 200 บาท</label>
-								<span class="badge badge-success">ติดตามผลฉลาก</span>
-							</div>
-
+						<div class="col-4" style="text-align:right;">
+							<i class="fas fa-chevron-right"></i>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-header" id="headingTwo">
-				<h5 class="mb-0">
-					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-						งวดวันที่ 1 มกราคม 2990
-					</button>
-				</h5>
-			</div>
-			<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-				<div class="card-body">
-					<div class="shadow-sm p-3 mb-1 bg-body rounded">
-						<div class="row">
 
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 1 ใบ</label>
-								<label>ราคารวม 100 บาท</label>
-								<span class="badge badge-danger">การซื้อไม่สำเร็จ</span>
-							</div>
+			<?php }} ?>
+			<br>
 
-						</div>
-					</div>
-					<div class="shadow-sm p-3 mb-1 bg-body rounded">
-						<div class="row">
-
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 2 ใบ ราคารวม 200 บาท</label>
-								<span class="badge badge-success">ติดต่อกลับแล้ว</span>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-header" id="headingThree">
-				<h5 class="mb-0">
-					<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-						งวดวันที่ 16 ธันวาคม 2989
-					</button>
-				</h5>
-			</div>
-			<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-				<div class="card-body">
-					<div class="shadow-sm p-3 mb-1 bg-body rounded">
-						<div class="row">
-
-							<div class="col-6"  style="text-align: center">
-								<h5>หมายเลข 955 776</h5>
-								<img  class="responsive_img" src="../images/item/lotto_excemple.jpeg">
-							</div>
-							<div class="col-6" style="text-align: left">
-								<label>ราคา 80 บาท</label>
-								<label>ค่าธรรมเนียม 20 บาท</label>
-								<br>
-								<label>จำนวน 2 ใบ ราคารวม 200 บาท</label>
-								<span class="badge badge-info">ไม่ถูกรางวัล</span>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- -->
-
-
-
-	<br>
-
-
-	<script src='../resource/script.js'></script>
-</body>
-</html>
+			<script src='../resource/script.js'></script>
+		</body>
+		</html>
