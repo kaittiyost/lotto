@@ -238,4 +238,69 @@ function login_admin(){
 	}
 }
 
+$("#search_admin_btn").click((e)=>{
+	let key = "";
+	for(let i=0;i<6;i++){
+		let thisChar = $("#digit-"+(i+1)).val();
+		key+=(String(thisChar)=="")?"a":thisChar;
+	}
+	$("#lottery_all").load(projectPath+"/admin/?s="+key+" #lottery_rows");
+});
+
+$("#btn_add_lotto").click((e)=>{
+	let form = new FormData();
+	new Promise((resolve,reject)=>{
+		form.append("img",$("#img_lotto").prop("files")[0]);
+		form.append("number",$("#number_lotto").val());
+		form.append("stock",$("#stock_lotto").val());
+		form.append("price",$("#price_lotto").val());
+		form.append("date",$("#date_lotto").val());
+		form.append("status",$("#status_lotto").val());
+		resolve(form);
+	})
+	.then((form)=>{
+		let nullVal;
+		form.forEach((val)=>{
+			if(val=="undefined"||val==""){
+				nullVal = true;
+			}
+		});
+		return(nullVal);
+	})
+	.then((nullVal)=>{
+		if(nullVal){
+			Swal.fire({
+				icon:"warning",
+				title:"ข้อมูลไม่ครบ!",
+				text:"โปรดกรอกข้อมูลให้ครบถ้วน"
+			});
+		}else if(!nullVal){
+			$.ajax({
+				method:'POST',
+				url:projectPath+"/resource/controller/admin_controller.php",
+				contentType:false,
+				processData:false,
+			   	data:form
+		   }).done((rs)=>{
+			   console.log(rs);
+			   if(String(rs)==="non_type"){
+					Swal.fire({
+						icon:"error",
+						title:"ประเภทรูปภาพไม่ถูกต้อง!",
+						text:"โปรดเลือกไฟล์รูปภาพเท่านั้น"
+					});
+			   }else if(parseInt(rs)==1){
+					$("#img_lotto").val(null);
+					$("#number_lotto").val("");
+					$("#stock_lotto").val("");
+					Swal.fire({
+						icon:"success",
+						title:"สำเร็จ!",
+						text:"เพิ่มสินค้าแล้ว"
+					});
+			   }
+		   });
+		}
+	})
+});
 

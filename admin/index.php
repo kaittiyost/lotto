@@ -6,18 +6,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+<?php 
+	include(__DIR__."/include_admin/menu.php");	
+?>
 	<title>admin</title>
 </head>
 <body class="bg-dark">
 	<br><br><br>
 	<div class="container" style="text-align:center;">
-
+			<div class="card" style="margin-bottom:10px;">
+			<div class="card-header">
+				<h5 class="float-left"><i class="fas fa-cogs"></i> จัดการ</h5>
+			</div>
+			<div class="card-body">
+					<div class="row">
+						<div class="col">
+							<button type="button" class="btn btn-sm btn-success"  data-toggle="modal" data-target="#add_lottery_modal">
+								<i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี
+							</button>
+							<button type="button" class="btn btn-sm btn-dark"><i class="fas fa-calendar-week"></i> งวดเปิดขาย</button>
+							
+						</div>
+					</div>
+			</div>
+		</div>
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
 				<h2>รายการทั้งหมด</h2>
-				<label>งวดวันที่ 32 มกราคม 2555</label>
-
-				<div class="prompt text-secondary">ค้นหาเลขเด็ด</div>
+				<div class="prompt text-secondary">ค้นหาหมายเลข</div>
 				<form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
 					<input type="number" id="digit-1" name="digit-1" data-next="digit-2" />
 					<input type="number" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
@@ -28,12 +44,97 @@
 					<input type="number" id="digit-6" name="digit-6" data-previous="digit-5" />
 				</form>
 				<br>
-				<button id="search_btn" class="btn btn-dark btn-md-width">ค้นหา</button>
+				<button id="search_admin_btn" class="btn btn-dark btn-md-width">ค้นหา</button>
 			</div>
-            <pre><?php print_r($_SESSION["adminData"]) ?></pre>
+		</div>
+
+		<div class="card">
+			<div class="card-body" id="lottery_all">
+				<table class="table" id="lottery_rows">
+					<thead class="bg-primary text-white">
+						<tr>
+							<th>หมายเลข</th>
+							<th>งวด</th>
+							<th>คงเหลือ</th>
+							<th>สถานะ</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php 
+						$key = Null;
+						if(isset($_GET["s"])){
+							$key = $_GET["s"];
+						}
+						$lotterySet = GetData::lottery($key);
+						if(is_null($lotterySet)){ ?>
+							<h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1>
+						<?php }else{ 
+							while(($row=$lotterySet->fetch_array())!=Null){ ?>
+								<tr>
+									<td><?php echo $row["number"]; ?></td>
+									<td><?php echo $row["date"]; ?></td>
+									<td><?php echo $row["stock"]; ?></td>
+									<td style="font-size:20px;"><?php echo (intval( $row["status"])==1)?"<i class='far fa-check-circle text-success'></i>"
+																				:"<i class='fas fa-lock text-danger'></i>";
+													?></td>
+								</tr>
+								<?php
+							}  
+						} ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<br>
 		</div>
+	    <!-- ADD LOTTERY  MODAL -->
+		<div class="modal fade" id="add_lottery_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+				<div class="modal-header text-success">
+					<h5 class="modal-title" id="exampleModalCenterTitle"><i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="font-size:15px;">
+					<label for="img_lotto"><i class="fas fa-image"></i> ภาพ : </label>
+					<input id="img_lotto" type="file" class="form-control" value="เลือกรูปภาพ">
+					<br>
+					<label for="number_lotto"><i class="far fa-credit-card"></i> หมายเลข : </label>
+					<input id="number_lotto" type="text" class="form-control bg-dark text-light" maxlength="6" placeholder="123456">
+					<br>
+					<label for="stock_lotto"><i class="fas fa-box"></i> จำนวน : </label>
+					<input id="stock_lotto" type="number" class="form-control bg-dark text-light" placeholder="10,20,30">
+					<br>
+					<label for="price_lotto"><i class="fas fa-calendar-week"></i> ราคา : </label>
+					<input id="price_lotto" type="number" class="form-control bg-dark text-light" placeholder="80฿">
+					<br>
+					<label for="date_lotto"><i class="fas fa-calendar-week"></i> งวด : </label>
+					<input id="date_lotto" type="date" class="form-control bg-dark text-light" placeholder="วว/ดด/ปปปป">
+					<br>
+					<label for="status_lotto"><i class="fas fa-lock-open"></i> สถานะ : </label>
+					<select class="form-control" id="status_lotto">
+						<option value="1">เปิดขาย</option>
+						<option value="0">ยังไม่เปิดขาย</option>
+					</select>
+					<br>
+				<div class="modal-footer">
+					<button type="button" id="btn_add_lotto" class="btn btn-outline-primary" style="padding-left:15px;padding-right:15px;">
+						<i class="fas fa-plus-circle"></i>เพิ่ม
+					</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		<!--  ADD LOTTERY  MODA(end) -->
+
+		<style>
+			td{
+				border-right : 0.1px solid #A4A4A4;
+				border-left : 0.1px solid #A4A4A4;
+			}
+		</style>
 		<script src='../resource/script.js'></script>
 	</body>
 	</html>
