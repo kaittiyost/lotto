@@ -47,10 +47,13 @@ class GetData{
             "SUM(sales_det.quan) as quan , \n".
             "DATE(sales.reg_date) as date,\n".
             "TIME_FORMAT(sales.reg_date,'%H:%i') as time ,\n".
-            "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline\n".
-            "FROM sales , sales_det\n".
-            "WHERE sales.id=".$sale_id." \n".
-            "AND sales.id = sales_det.sale_id";
+            "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline,\n".
+            "img_confirm.img , \n".
+            "sales.`status`\n".
+            "FROM sales , sales_det , img_confirm\n".
+            "WHERE sales.id=".$sale_id."\n".
+            "AND sales.id = sales_det.sale_id\n".
+            "AND sales.id = img_confirm.sale_id";
 
             $result = $conn->query($sql);
             return (($conn->affected_rows)<=0)?Null:$result->fetch_array();
@@ -63,38 +66,46 @@ class GetData{
 class ExeData{
     public function add_slip(){
         try {
-            if(isset($_SESSION["loginStatus"])){
-                if(isset($_FILES['img'])){
-                    if($_FILES['img']['error']==0){
-                            if($_FILES['img']['type']!='image/jpeg'){
-                                echo 'file not jpg!';
-                            }else{
-                                $folder = 'slip';
-                                $dirImg = $_FILES['img']['tmp_name'];
-                                $targetPath = __DIR__.'/../images/'.$folder.'/'.$_FILES['img']['name'];
- 
-                                if(move_uploaded_file($dirImg,$targetPath)){
-                                    echo 'uploaded!';
-                                }else{
-                                    echo 'upload error!';
-                                }
-                            }
+         $conn = DB::getConnect();
+         if(isset($_SESSION["loginStatus"])){
+            if(isset($_FILES['img'])){
+                if($_FILES['img']['error']==0){
+                    if($_FILES['img']['type']!='image/jpeg'){
+                        echo 'file not jpg!';
                     }else{
-                        echo 'upload error!';
+                        $img = $_FILES['img'];
+                        $folder = 'slip';
+                        $imgName = 'SLIP'.date("d_m_Y")."SID".$_POST['sale_id'].'.'.explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];;
+                        $imgOnServer = __DIR__."/../../images/slip/".$imgName;
+                           //   echo 'img name = '.$imgName;
+                        if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
+                            $sql = "UPDATE `rotto`.`img_confirm` SET `img` = '".$imgName."', `date_upload` = '".$_POST['date_upload']."', `time_upload` = '".$_POST['time_upload']."', `bank_upload` = '".$_POST['bank']."' WHERE `sale_id` = ".$_POST['sale_id'];
+                            $result = $conn->query($sql);
+                            if($result){
+                                echo 1;
+                            }else{
+                                echo 0;
+                            }
+                        }else{
+
+                        }
                     }
+                }else{
+                    echo 'upload error!';
                 }
-  
-            }else{
-                echo "non_login";
-            }
-        } catch (Exception $e) {
-            echo "error-->".$e->getMessage();
+            }   
+
+        }else{
+            echo "non_login";
         }
+    } catch (Exception $e) {
+        echo "error-->".$e->getMessage();
     }
+}
 }
 
 if(isset($_POST["func"])){
- if($_POST["func"]== "add_slip"){
+   if($_POST["func"]== "add_slip"){
     $exeData = new ExeData();
     $exeData->add_slip();
     }
