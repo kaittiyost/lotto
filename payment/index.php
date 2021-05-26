@@ -96,7 +96,13 @@ $payment = $payment_GetData->payment_list($_POST["sale_id"]);
 					<button class="btn btn-info" style="width: 100% ; margin-bottom: 20%" onclick="upload_slip(<?php echo $payment['s_id'] ?>)">ส่ง</button>
 
 				</div>
-			<?php }?>
+			<?php }else{?>
+	<div class="shadow-sm p-3 mb-5 bg-body rounded">
+		<div class="row" style="margin:20px">
+			<img  class="responsive_img" src="../images/slip/<?php echo $payment["img"]; ?>">
+		</div>
+	</div>
+			<?php } ?>
 		</div>
 
 		<script src='../resource/script.js'></script>
