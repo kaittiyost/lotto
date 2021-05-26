@@ -52,7 +52,11 @@ $purchase_list = $purchase_list_GetData->purchase_list();
 							<label style="color: gray"> <?php echo '#หมายเลขสั่งซื้อ '.$row['id'];?> </label>
 						</div>
 						<div class="col-4" style="text-align:right;">
-							<i class="fas fa-chevron-right"></i>
+						<form action="../payment/" method="POST">
+						<input type="hidden" name="sale_id" id="sale_id" value="<?php echo $row['id'] ?>"></input>
+						<button class="btn btn-ligth" type="submit"><i class="fas fa-chevron-right"></i></button>
+						</form>
+							
 						</div>
 					</div>
 				</div>

@@ -1,16 +1,23 @@
+<?php
+include(__DIR__ . "/../resource/controller/purchase_list_controller.php");
+$payment_GetData = new GetData();
+$payment = $payment_GetData->payment_list($_POST["sale_id"]);
+?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<?php 
-	include(__DIR__.'/../resource/include/script.html');
-	include(__DIR__.'/../resource/include/menu.php');
+	<?php
+	include(__DIR__ . '/../resource/include/script.html');
+	include(__DIR__ . '/../resource/include/menu.php');
 	?>
 	<title>หวย</title>
 </head>
+
 <body>
 	<br><br><br>
 	<div class="container">
-		<a href="/home/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a><br><br>
+		<a href="/purchase_list/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a><br><br>
 
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
@@ -21,15 +28,24 @@
 			</div>
 		</div>
 		<div class="shadow-sm p-3 mb-5 bg-body rounded">
-			<label>หมายเลขสั่งซื้อ 675 346 33452</label><br>
-			<label>ยอดที่ต้องชำระ ฿999</label><br>
-			<label>สถานะ รอส่งหลักฐาน</label>
+			<div class="row">
+				<div class="col-6">
+					<label id="sale_id">หมายเลขสั่งซื้อ <?php echo $payment['s_id'] ?></label><br>
+				</div>
+				<div class="col-6">
+					<p class="badge badge-pill badge-secondary text-light">รอส่งหลักฐานชำระเงิน</p>
+				</div>
+			</div>
+			<label>ยอด ฿<?php echo $payment['price'] ?></label><br>
+			<label>ค่าธรมเนียม ฿<?php echo intval($payment['quan']) * 20 ?></label> <br>
+			<label class="text text-danger">รวม ฿<?php echo intval($payment['price']) + (intval($payment['quan']) * 20) ?></label>
+
 		</div>
 
 		<center>
 			<div id="deb_component">
 				<div class="row">
-					
+
 					<div class="col col-12">
 						<select id="" class="form-control">
 							<option selected>เลือกธนาคารของท่าน</option>
@@ -60,24 +76,22 @@
 					</div>
 				</div>
 
-				<div class="row" style="margin:20px">	
+				<div class="row" style="margin:20px">
 					<label style="text-align: left">แนบในเสร็จ</label>
-					<div class="form-group"> 
-						<input type="file" class="form-control-file">
+					<div class="form-group">
+						<input id="img_slip" type="file" class="form-control-file">
 						<br>
 
 					</div>
 				</div>
-				<button class="btn btn-info" style="width: 100% ; margin-bottom: 20%" onclick="go_comfirm()">ส่ง</button>
+				<button class="btn btn-info" style="width: 100% ; margin-bottom: 20%" onclick="upload_slip()">ส่ง</button>
 
 			</div>
-		</div>
+	</div>
 
-		<script src='../resource/script.js'></script>
-		<script type="text/javascript">
-			function go_comfirm(){
-				window.location = "wait_for_confirm.php";
-			}
-		</script>
-	</body>
-	</html>
+	<script src='../resource/script.js'></script>
+	<script src='../resource/include/purchase_script.js'></script>
+
+</body>
+
+</html>

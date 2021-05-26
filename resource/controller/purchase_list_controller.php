@@ -38,13 +38,65 @@ class GetData{
             echo $e->getMessage();
         }
     }
+
+    public static function payment_list($sale_id){
+        try{
+            $conn = DB::getConnect();
+            $sql = "SELECT sales.id as s_id , \n".
+            "SUM(sales_det.price) as price ,\n".
+            "SUM(sales_det.quan) as quan , \n".
+            "DATE(sales.reg_date) as date,\n".
+            "TIME_FORMAT(sales.reg_date,'%H:%i') as time ,\n".
+            "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline\n".
+            "FROM sales , sales_det\n".
+            "WHERE sales.id=".$sale_id." \n".
+            "AND sales.id = sales_det.sale_id";
+
+            $result = $conn->query($sql);
+            return (($conn->affected_rows)<=0)?Null:$result->fetch_array();
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
+    }
 }
 
 class ExeData{
-
+    public function add_slip(){
+        try {
+            if(isset($_SESSION["loginStatus"])){
+                if(isset($_FILES['img'])){
+                    if($_FILES['img']['error']==0){
+                            if($_FILES['img']['type']!='image/jpeg'){
+                                echo 'file not jpg!';
+                            }else{
+                                $folder = 'slip';
+                                $dirImg = $_FILES['img']['tmp_name'];
+                                $targetPath = __DIR__.'/../images/'.$folder.'/'.$_FILES['img']['name'];
+ 
+                                if(move_uploaded_file($dirImg,$targetPath)){
+                                    echo 'uploaded!';
+                                }else{
+                                    echo 'upload error!';
+                                }
+                            }
+                    }else{
+                        echo 'upload error!';
+                    }
+                }
+  
+            }else{
+                echo "non_login";
+            }
+        } catch (Exception $e) {
+            echo "error-->".$e->getMessage();
+        }
+    }
 }
 
 if(isset($_POST["func"])){
-    $choice = $_POST["func"];
+ if($_POST["func"]== "add_slip"){
+    $exeData = new ExeData();
+    $exeData->add_slip();
+    }
 }
 ?>
