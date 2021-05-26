@@ -11,13 +11,13 @@
             try{
                 $conn = DB::getConnect();
                 if(is_null($key)){
-                    $sql = "SELECT * FROM lottery WHERE status = 1";
+                    $sql = "SELECT * FROM lottery";
                     $result = $conn->query($sql);
                     return ($conn->affected_rows<=0)?NULL:$result;
                 }else{
                     $key = htmlentities($conn->escape_string($key));
                     $key = str_replace("a","_",$key);
-                    $sql = "SELECT * FROM lottery WHERE status = 1 AND number LIKE '".$key."'";
+                    $sql = "SELECT * FROM lottery WHERE number LIKE '".$key."'";
                     $result = $conn->query($sql);
                     return ($conn->affected_rows<=0)?NULL:$result;
                 }
@@ -55,6 +55,23 @@
                 }
             } catch (Exception $e) {
                 echo "error-->".$e->getMessage();
+            }
+        }
+        public function updateDate($startDate,$endDate){
+            try {
+                if(isset($_SESSION["adminLoginStatus"])){
+                    $conn = DB::getConnect();
+                    $startDate = htmlentities($conn->escape_string($startDate));
+                    $endDate = htmlentities($conn->escape_string($endDate));
+                    $sql = "UPDATE lottery SET status = 1 WHERE date BETWEEN '".$startDate."' AND '".$endDate."';";
+                    $conn->query($sql);
+                    $sql = "UPDATE lottery SET status = 0 WHERE date NOT BETWEEN '".$startDate."' AND '".$endDate."';";
+                    echo ($conn->query($sql))?"1":"0";
+                }else{
+                    echo "non_login:";
+                }
+            } catch (Exception $e) {
+                echo "error--->".$e->getMessage();
             }
         }
     }
@@ -104,6 +121,10 @@
             case "logout":
                 $api = new API();
                 $api->logout();
+                break;
+            case "updateDate":
+                $exeData = new ExeData();
+                $exeData->updateDate($_POST["startDate"],$_POST["endDate"]);
                 break;
         }
     }

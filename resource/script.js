@@ -16,7 +16,6 @@ function login(){
 						data:{"username":username,"password":password,"func":"login"}
 					}
 				).done((rs)=>{
-					console.log(rs)
 					if(rs==0){
 						Swal.fire({
 							icon: 'error',
@@ -138,9 +137,9 @@ function delBucket(lot_id){
 				url:projectPath+"/resource/controller/cart_controller.php",
 				contentType:"application/x-www-form-urlencoded; charset=utf-8",
 				data:{"lotId":lot_id,"func":"del"}
-			}).done((respones)=>{
-				respones = JSON.parse(respones);
-				if(String(respones.status)==0){
+			}).done((response)=>{
+				response = JSON.parse(response);
+				if(String(response.status)==0){
 					Swal.fire({
 						title:"เกิดข้อผิดพลาด!",
 						icon:"error"
@@ -174,7 +173,6 @@ $("#pay_order").click(()=>{
 				contentType:"application/x-www-form-urlencoded; charset=utf-8",
 				data:{"func":"confirm_cart"}
 			}).done((response)=>{
-				console.log(response);
 				response = JSON.parse(response);
 				if(parseInt(response.status)==1){
 					Swal.fire({
@@ -282,7 +280,6 @@ $("#btn_add_lotto").click((e)=>{
 				processData:false,
 			   	data:form
 		   }).done((rs)=>{
-			   console.log(rs);
 			   if(String(rs)==="non_type"){
 					Swal.fire({
 						icon:"error",
@@ -293,6 +290,7 @@ $("#btn_add_lotto").click((e)=>{
 					$("#img_lotto").val(null);
 					$("#number_lotto").val("");
 					$("#stock_lotto").val("");
+					$("#lottery_all").load(projectPath+"/admin/index.php #lottery_rows");
 					Swal.fire({
 						icon:"success",
 						title:"สำเร็จ!",
@@ -304,3 +302,38 @@ $("#btn_add_lotto").click((e)=>{
 	})
 });
 
+function edit_date_option(){
+	const startDate = String($("#start_date").val());
+	const endDate = String($("#end_date").val());
+	if(startDate===""||endDate===""){
+		Swal.fire({
+			icon:"warning",
+			title:"ข้อมูลไม่ครบ!",
+			text:"โปรดกรอกข้อมูลให้ครบถ้วน"
+		});
+	}else{
+		$.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/admin_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"startDate":startDate,"endDate":endDate,"func":"updateDate"}
+		})
+		.done((response)=>{
+			response = parseInt(response);
+			if(response===1){
+				Swal.fire({
+					icon:"success",
+					title:"สำเร็จ!",
+					text:"อัพเดทงวดที่เปิดขายแล้ว"
+				});
+				$("#lottery_all").load(projectPath+"/admin/index.php #lottery_rows");
+			}else{
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด!',
+					text: 'เกิดข้อผิดพลาดไม่ทราบสาเหตุโปรดลองอีกครั้งภายหลัง!'
+				});
+			}
+		})
+	}
+}

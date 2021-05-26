@@ -24,7 +24,7 @@
 							<button type="button" class="btn btn-sm btn-success"  data-toggle="modal" data-target="#add_lottery_modal">
 								<i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี
 							</button>
-							<button type="button" class="btn btn-sm btn-dark"><i class="fas fa-calendar-week"></i> งวดเปิดขาย</button>
+							<button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#option_date_modal"><i class="fas fa-calendar-week"></i> งวดเปิดขาย</button>
 							
 						</div>
 					</div>
@@ -88,46 +88,79 @@
 		<br>
 		</div>
 	    <!-- ADD LOTTERY  MODAL -->
-		<div class="modal fade" id="add_lottery_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal fade" id="add_lottery_modal" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-				<div class="modal-header text-success">
-					<h5 class="modal-title" id="exampleModalCenterTitle"><i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" style="font-size:15px;">
-					<label for="img_lotto"><i class="fas fa-image"></i> ภาพ : </label>
-					<input id="img_lotto" type="file" class="form-control" value="เลือกรูปภาพ">
-					<br>
-					<label for="number_lotto"><i class="far fa-credit-card"></i> หมายเลข : </label>
-					<input id="number_lotto" type="text" class="form-control bg-dark text-light" maxlength="6" placeholder="123456">
-					<br>
-					<label for="stock_lotto"><i class="fas fa-box"></i> จำนวน : </label>
-					<input id="stock_lotto" type="number" class="form-control bg-dark text-light" placeholder="10,20,30">
-					<br>
-					<label for="price_lotto"><i class="fas fa-calendar-week"></i> ราคา : </label>
-					<input id="price_lotto" type="number" class="form-control bg-dark text-light" placeholder="80฿">
-					<br>
-					<label for="date_lotto"><i class="fas fa-calendar-week"></i> งวด : </label>
-					<input id="date_lotto" type="date" class="form-control bg-dark text-light" placeholder="วว/ดด/ปปปป">
-					<br>
-					<label for="status_lotto"><i class="fas fa-lock-open"></i> สถานะ : </label>
-					<select class="form-control" id="status_lotto">
-						<option value="1">เปิดขาย</option>
-						<option value="0">ยังไม่เปิดขาย</option>
-					</select>
-					<br>
-				<div class="modal-footer">
-					<button type="button" id="btn_add_lotto" class="btn btn-outline-primary" style="padding-left:15px;padding-right:15px;">
-						<i class="fas fa-plus-circle"></i>เพิ่ม
-					</button>
-				</div>
+					<div class="modal-header text-success">
+						<h5 class="modal-title" id="exampleModalCenterTitle"><i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" style="font-size:15px;">
+						<label for="img_lotto"><i class="fas fa-image"></i> ภาพ : </label>
+						<input id="img_lotto" type="file" class="form-control" value="เลือกรูปภาพ">
+						<br>
+						<label for="number_lotto"><i class="far fa-credit-card"></i> หมายเลข : </label>
+						<input id="number_lotto" type="text" class="form-control bg-dark text-light" maxlength="6" placeholder="123456">
+						<br>
+						<label for="stock_lotto"><i class="fas fa-box"></i> จำนวน : </label>
+						<input id="stock_lotto" type="number" class="form-control bg-dark text-light" placeholder="10,20,30">
+						<br>
+						<label for="price_lotto"><i class="fas fa-calendar-week"></i> ราคา : </label>
+						<input id="price_lotto" type="number" class="form-control bg-dark text-light" placeholder="80฿">
+						<br>
+						<label for="date_lotto"><i class="fas fa-calendar-week"></i> งวด : </label>
+						<input id="date_lotto" type="date" class="form-control bg-primary text-light" placeholder="วว/ดด/ปปปป">
+						<br>
+						<label for="status_lotto"><i class="fas fa-lock-open"></i> สถานะ : </label>
+						<select class="form-control" id="status_lotto">
+							<option value="1">เปิดขาย</option>
+							<option value="0">ยังไม่เปิดขาย</option>
+						</select>
+						<br>
+					<div class="modal-footer">
+						<button type="button" id="btn_add_lotto" class="btn btn-outline-primary" style="padding-left:15px;padding-right:15px;">
+							<i class="fas fa-plus-circle"></i>เพิ่ม
+						</button>
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!--  ADD LOTTERY  MODA(end) -->
+	    <!-- ADD LOTTERY  MODAL -->
+		<div class="modal fade" id="option_date_modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header text-secondary">
+						<h5 class="modal-title"><i class="fas fa-cogs"></i> ตั้งค่าวันที่เปิดขาย</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col">
+								<label for="start_date">จาก</label>
+								<input type="date" id="start_date" class="form-control">
+							</div>
+							<div class="col">
+								<label for="end_date">ถึง</label>
+								<input type="date" id="end_date" class="form-control">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onClick="edit_date_option()" class="btn btn-outline-primary" style="padding-left:15px;padding-right:15px;">
+							<i class="fas fa-plus-circle"></i> บันทึก
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--  ADD LOTTERY  MODA(end) -->
+		
 
 		<style>
 			td{
