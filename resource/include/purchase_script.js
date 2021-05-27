@@ -4,13 +4,46 @@ function upload_slip(sale_id) {
   const bank = $("#bank").val();
   const date_upload = $("#date_upload").val();
   const time_upload = $("#time_upload").val();
+  const time_deadline = $("#deadline").val();
   const img = $("#img_slip").val();
-  if(bank == "" || date_upload == "" || time_upload =="" || img == ""){
+
+  var currentdate = new Date(); 
+  var time =  currentdate.getHours() + ":"  
+  + currentdate.getMinutes() + ":" 
+  + currentdate.getSeconds();
+
+ console.log('time =>'+time+' , time_deadline =>'+time_deadline);
+
+ if(bank == "" || date_upload == "" || time_upload =="" || img == ""){
+  Swal.fire({
+    icon: 'error',
+    title: 'ข้อมูลว่าง',
+    text: 'โปรดกรอกข้อมูลให้ครบ!'
+  });
+}else{
+  if(time > time_deadline){
     Swal.fire({
       icon: 'error',
-      title: 'ข้อมูลว่าง',
-      text: 'โปรดกรอกข้อมูลให้ครบ!'
+      title: 'เลยกำหนดเวลา',
+      text: 'ท่านอัปโหลดหลักฐานการชำระเงินไม่ทันเวลา โปรดสั่งซื้อใหม่อีกครั้ง!'
     });
+    //console.log('ไม่ทันเวลา');
+    $.ajax({
+      method: "POST",
+      url: projectPath + "/resource/controller/purchase_list_controller.php",
+      contentType:"application/x-www-form-urlencoded; charset=utf-8",
+      data:{"sale_id":sale_id,"func":"del_order"}
+    }).done((rs) => {
+      console.log(">>" + rs);
+     if(rs == 1){
+      setTimeout(()=>{
+         location.href ="/home/";
+      },1000);
+     
+     }else{
+
+     }
+   });
   }else{
 
     var form_data = new FormData();
@@ -20,7 +53,7 @@ function upload_slip(sale_id) {
     form_data.append("date_upload",  $("#date_upload").val());
     form_data.append("time_upload",  $("#time_upload").val());
     form_data.append("func", "add_slip");
-
+    $('#uploading').html('<p id="uploading" class="text-warning">กำลังอัปโหลด</p>');
     $.ajax({
       method: "POST",
       url: projectPath + "/resource/controller/purchase_list_controller.php",
@@ -37,8 +70,8 @@ function upload_slip(sale_id) {
         confirmButtonText: `ตกลง`
       });
       setTimeout(()=>{
-            location.reload();
-          },1000);
+        location.reload();
+      },1000);
 
     }else{
       Swal.fire({
@@ -48,4 +81,5 @@ function upload_slip(sale_id) {
       })
     }
   });
-  }}
+  }
+}}

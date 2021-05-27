@@ -66,8 +66,8 @@ class GetData{
 class ExeData{
     public function add_slip(){
         try {
-         $conn = DB::getConnect();
-         if(isset($_SESSION["loginStatus"])){
+           $conn = DB::getConnect();
+           if(isset($_SESSION["loginStatus"])){
             if(isset($_FILES['img'])){
                 if($_FILES['img']['error']==0){
                     if($_FILES['img']['type']!='image/jpeg'){
@@ -102,12 +102,37 @@ class ExeData{
         echo "error-->".$e->getMessage();
     }
 }
+
+function del_order(){
+    try{
+        if(isset($_SESSION["loginStatus"])){
+            $conn = DB::getConnect();
+            $sale_id = $_POST['sale_id'];
+            $sql_del_img = "DELETE FROM `rotto`.`img_confirm` WHERE `sale_id` = ".$sale_id;
+            $sql_sale_det = "DELETE FROM `rotto`.`sales_det` WHERE `sale_id` = ".$sale_id ;
+            $sql_sale = "DELETE FROM `rotto`.`sales` WHERE `id` = ".$sale_id;
+
+            $conn->query($sql_del_img);
+            $conn->query($sql_sale_det);
+            $conn->query($sql_sale);
+            
+            echo '1';
+        }else{
+          echo 'non login';
+      }
+  }catch(Exception $e){
+    echo "error -->".$e->getMessage();
+}
+}
 }
 
 if(isset($_POST["func"])){
-   if($_POST["func"]== "add_slip"){
+ if($_POST["func"]== "add_slip"){
     $exeData = new ExeData();
     $exeData->add_slip();
-    }
+}else  if($_POST["func"]== "del_order"){
+    $exeData = new ExeData();
+    $exeData->del_order();
+}
 }
 ?>

@@ -39,7 +39,7 @@ $payment = $payment_GetData->payment_list($_POST["sale_id"]);
 						<p class="badge badge-pill badge-warning text-dark">กำลังตรวจสอบ</p>
 					<?php }else if($payment['status'] == 1){ ?>
 						<p class="badge badge-pill badge-success text-light">ซื้อสำเร็จ</p>
-					<?php }else if($payment['status'] == 2 && $payment['img' == null]){?>
+					<?php }else if($payment['status'] == 2 ){?>
 						<p class="badge badge-pill badge-danger text-light">คำสั่งซื้อถูกยกเลิก</p>
 						<?php }?>
 				</div>
@@ -47,12 +47,15 @@ $payment = $payment_GetData->payment_list($_POST["sale_id"]);
 			<label>ยอด ฿<?php echo $payment['price'] ?></label><br>
 			<label>ค่าธรมเนียม ฿<?php echo intval($payment['quan']) * 20 ?></label> <br>
 			<label class="text text-danger">รวม ฿<?php echo intval($payment['price']) + (intval($payment['quan']) * 20) ?></label>
-			<p class="text text-danger" style="text-align:center ; "><i class="fas fa-hourglass-start"></i> โปรดชำระเงินก่อนเวลา <?php echo $payment['deadline'] ?></p>
+			
 		</div>
 
 		<center>
-			<?php  if(  $payment['img'] == null){?>
+			<?php  if( $payment['img'] == null ){?>
+				<p class="text text-danger" style="text-align:center ; "><i class="fas fa-hourglass-start" ></i> โปรดชำระเงินก่อนเวลา <?php echo $payment['deadline'] ?></p>
+				<input type="hidden" name="" id="deadline" value="<?php echo $payment['deadline'] ?>">
 				<div id="deb_component">
+					<p id="uploading" class="text-warning"></p>
 					<div class="row">
 
 						<div class="col col-12">
