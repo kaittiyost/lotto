@@ -1,6 +1,7 @@
 <?php 
 	include(__DIR__."/../resource/controller/home_controller.php");
 	include(__DIR__.'/../resource/include/script.html');
+	include(__DIR__.'/../resource/include/util.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,9 +50,15 @@
 							<div class="card" style="box-shadow: 5px 10px 8px #B9B9B9;">
 								<img class="card-img-top" style="height:200px;" src="../images/item/<?php echo $row["img"]; ?>">
 								<div class="card-body" style="text-align:left;">
-									<h5 class="card-title" style="color:orange;font-size:25px;letter-spacing: 3px;"><?php echo $row["number"]; ?></h5>
+									<h5 class="card-title" style="color:orange;font-size:25px;letter-spacing:5px;"><?php echo $row["number"]; ?></h5>
+									<p class="card-text text-success" style="font-size:12px;">( <?php echo Util::intToThai($row["number"]); ?> )</p>
 									<p class="card-text">ใบละ <?php echo $row["price"]; ?> ฿</p>
 									<p class="card-text text-secondary">คงเหลือ <?php echo $row["stock"]; ?> ใบ</p>
+									<footer class="blockquote-footer">
+										<small class="text-muted" style="font-size:12px">
+											งวดที่ <cite title="Source Title"><?php echo $row["date"]; ?></cite>
+										</small>
+									</footer>
 								</div>
 								<div class="card-footer">
 										<a data-toggle="modal" 
@@ -62,7 +69,7 @@
 												class="open-quan btn btn-primary" 
 												href="#DetailModal"
 												style="width: 70%;padding-top:10px;padding-bottom:10px;">
-												<i class="fas fa-shopping-cart"></i>
+												<i class="fas fa-shopping-cart"></i> หยิบลงตระกร้า
 										</a>
 								</div>
 							</div>
