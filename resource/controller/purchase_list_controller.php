@@ -109,13 +109,13 @@ function del_order(){
             $conn = DB::getConnect();
             $sale_id = $_POST['sale_id'];
             $sql_del_img = "DELETE FROM `rotto`.`img_confirm` WHERE `sale_id` = ".$sale_id;
-            $sql_sale_det = "DELETE FROM `rotto`.`sales_det` WHERE `sale_id` = ".$sale_id ;
+           // $sql_sale_det = "DELETE FROM `rotto`.`sales_det` WHERE `sale_id` = ".$sale_id ;
             $sql_sale = "DELETE FROM `rotto`.`sales` WHERE `id` = ".$sale_id;
 
             $conn->query($sql_del_img);
-            $conn->query($sql_sale_det);
+          //  $conn->query($sql_sale_det);
             $conn->query($sql_sale);
-            
+
             echo '1';
         }else{
           echo 'non login';
