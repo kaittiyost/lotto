@@ -21,7 +21,7 @@
 			<div class="card-body">
 					<div class="row">
 						<div class="col">
-							<button type="button" class="btn btn-sm btn-success"  data-toggle="modal" data-target="#add_lottery_modal">
+							<button onClick="switchModal('add',{})" type="button" class="btn btn-sm btn-success"  data-toggle="modal" data-target="#lottery_modal">
 								<i class="fas fa-folder-plus"></i> เพิ่มล๊อตเตอรี
 							</button>
 							<button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target="#option_date_modal"><i class="fas fa-calendar-week"></i> งวดเปิดขาย</button>
@@ -50,13 +50,17 @@
 
 		<div class="card">
 			<div class="card-body" id="lottery_all">
-				<table class="table" id="lottery_rows">
+				<table class="table" style="width:100%;" id="lottery_rows">
 					<thead class="bg-primary text-white">
 						<tr>
 							<th>หมายเลข</th>
 							<th>งวด</th>
+							<th>ราคา</th>
 							<th>คงเหลือ</th>
 							<th>สถานะ</th>
+							<th></th>
+							<th></th>
+
 						</tr>
 					</thead>
 					<tbody>
@@ -72,11 +76,24 @@
 							while(($row=$lotterySet->fetch_array())!=Null){ ?>
 								<tr>
 									<td><?php echo $row["number"]; ?></td>
-									<td><?php echo $row["date"]; ?></td>
+									<td><div class="badge"><?php echo $row["date"]; ?></div></td>
+									<td><?php echo $row["price"]; ?></td>
 									<td><?php echo $row["stock"]; ?></td>
 									<td style="font-size:20px;"><?php echo (intval( $row["status"])==1)?"<i class='far fa-check-circle text-success'></i>"
 																				:"<i class='fas fa-lock text-danger'></i>";
 													?></td>
+									<th>
+										<button type="button" style="width:100%;" onClick="switchModal('edit',{id:<?php echo $row["id"]; ?>
+																							,number:'<?php echo $row["number"]; ?>'
+																							,date:'<?php echo $row["date"]; ?>'
+																							,stock:<?php echo $row["stock"]; ?>
+																							,price:<?php echo $row["price"]; ?>
+																							,status:<?php echo $row["status"]; ?>})" 
+										class="btn btn-outline-primary"  data-toggle="modal" data-target="#lottery_modal"><i class="fas fa-pen-square"></i></button>
+									</th>
+									<th>
+										<button type="button" onClick="del_lottery(<?php echo $row["id"]; ?>)" style="width:100%;" class="btn btn-outline-danger"><i class="fas fa-minus-circle"></i></button>
+									</th>
 								</tr>
 								<?php
 							}  
@@ -88,7 +105,7 @@
 		<br>
 		</div>
 	    <!-- ADD LOTTERY  MODAL -->
-		<div class="modal fade" id="add_lottery_modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal fade" id="lottery_modal" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header text-success">
@@ -98,8 +115,13 @@
 						</button>
 					</div>
 					<div class="modal-body" style="font-size:15px;">
-						<label for="img_lotto"><i class="fas fa-image"></i> ภาพ : </label>
-						<input id="img_lotto" type="file" class="form-control" value="เลือกรูปภาพ">
+						<input type="hidden" id="id_lotto" value="">
+						<button id="edit_img_check" class="btn btn-sm btn-outline-primary"><i class="fas fa-image"></i> แก้ไขรูป</button>
+						<br>
+						<div id="img_lotto_g">
+							<label for="img_lotto"><i class="fas fa-image"></i> ภาพ : </label>
+							<input id="img_lotto" type="file" class="form-control" value="เลือกรูปภาพ">
+						</div>
 						<br>
 						<label for="number_lotto"><i class="far fa-credit-card"></i> หมายเลข : </label>
 						<input id="number_lotto" type="text" class="form-control bg-dark text-light" maxlength="6" placeholder="123456">
@@ -121,7 +143,10 @@
 						<br>
 					<div class="modal-footer">
 						<button type="button" id="btn_add_lotto" class="btn btn-outline-primary" style="padding-left:15px;padding-right:15px;">
-							<i class="fas fa-plus-circle"></i>เพิ่ม
+							<i class="fas fa-plus-circle"></i> เพิ่ม
+						</button>
+						<button type="button" id="btn_edit_lotto" class="btn btn-outline-dark" style="padding-left:15px;padding-right:15px;">
+							<i class="fas fa-minus-circle"></i> แก้ไข
 						</button>
 					</div>
 					</div>
@@ -169,5 +194,10 @@
 			}
 		</style>
 		<script src='../resource/script.js'></script>
+		<script>
+			window.onload =()=>{
+				loadDataTable();
+			}
+		</script>
 	</body>
 	</html>

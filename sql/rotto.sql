@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2021 at 05:36 PM
+-- Generation Time: May 27, 2021 at 04:17 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -80,6 +80,9 @@ CREATE TABLE `img_confirm` (
   `sale_id` int(10) DEFAULT NULL,
   `img` varchar(225) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
+  `date_upload` varchar(255) DEFAULT NULL,
+  `time_upload` varchar(255) DEFAULT NULL,
+  `bank_upload` varchar(255) DEFAULT NULL,
   `time_reg` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -87,8 +90,8 @@ CREATE TABLE `img_confirm` (
 -- Dumping data for table `img_confirm`
 --
 
-INSERT INTO `img_confirm` (`id`, `sale_id`, `img`, `status`, `time_reg`) VALUES
-(1, 21, NULL, 0, '2021-05-24 15:35:11');
+INSERT INTO `img_confirm` (`id`, `sale_id`, `img`, `status`, `date_upload`, `time_upload`, `bank_upload`, `time_reg`) VALUES
+(5, 25, NULL, 0, NULL, NULL, NULL, '2021-05-27 14:12:27');
 
 -- --------------------------------------------------------
 
@@ -112,10 +115,13 @@ CREATE TABLE `lottery` (
 --
 
 INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `price`, `status`, `reg_date`) VALUES
-(0, '999555', '2021-06-01', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-18'),
 (1, '123456', '2021-06-01', 'lotto_excemple.jpeg', 0, '80', 1, '2021-05-18'),
-(2, '654321', '2021-06-01', 'lotto_excemple.jpeg', 60, '80', 1, '2021-05-18'),
-(4, '000333', '2021-05-22', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-22');
+(2, '654321', '2021-06-01', 'lotto_excemple.jpeg', 65, '80', 0, '2021-05-18'),
+(4, '000333', '2021-05-22', 'lotto_excemple.jpeg', 9, '80', 1, '2021-05-22'),
+(8, '999320', '2021-06-01', '999320-26_05_2021.jpg', 200, '20', 1, '2021-05-26'),
+(9, '956321', '2021-06-01', '956321-26_05_2021.jpg', 9, '80', 1, '2021-05-26'),
+(10, '123213', '2021-06-01', '123213-26_05_2021.jpg', 32, '80', 1, '2021-05-26'),
+(11, '899566', '2021-06-01', '899566-26_05_2021.jpg', 69, '80', 1, '2021-05-26');
 
 -- --------------------------------------------------------
 
@@ -136,7 +142,7 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `user_id`, `status`, `confirm_by_admin`, `reg_date`) VALUES
-(21, 113, 0, 0, '2021-05-24 15:35:11');
+(25, 113, 0, 0, '2021-05-27 14:12:27');
 
 --
 -- Triggers `sales`
@@ -195,8 +201,7 @@ CREATE TABLE `sales_det` (
 --
 
 INSERT INTO `sales_det` (`id`, `sale_id`, `lottery_id`, `quan`, `price`) VALUES
-(18, 21, 1, 1, '80'),
-(19, 21, 2, 5, '400');
+(23, 25, 1, 1, '80');
 
 --
 -- Triggers `sales_det`
@@ -311,7 +316,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `bucket`
 --
 ALTER TABLE `bucket`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `fb_user`
@@ -323,25 +328,25 @@ ALTER TABLE `fb_user`
 -- AUTO_INCREMENT for table `img_confirm`
 --
 ALTER TABLE `img_confirm`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `lottery`
 --
 ALTER TABLE `lottery`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `user`

@@ -206,6 +206,19 @@ $("#pay_order").click(()=>{
 });
 //----------------------------------CART(END)---------------------------------------
 //---------------------------------- ADMIN ---------------------------------------
+function loadDataTable(){
+	$("#lottery_rows").DataTable({
+							"scrollY":"500px",
+							"scrollX":true,
+							"scrollCollapse":true,
+							"paging":false,
+							"bDestroy":true,
+							"bLengthChange": false,
+							"bFilter": false,
+							"ordering": false,
+							"bInfo": false
+	});
+}
 function login_admin(){
 	const username = $('#username').val();
 	const password = $('#password').val();
@@ -243,6 +256,96 @@ $("#search_admin_btn").click((e)=>{
 		key+=(String(thisChar)=="")?"a":thisChar;
 	}
 	$("#lottery_all").load(projectPath+"/admin/?s="+key+" #lottery_rows");
+	//----@admin.page--------------
+	setTimeout(()=>{loadDataTable();},500);
+});
+
+function switchModal(type,data){
+	switch(String(type)){
+		case "add" :
+			$("#btn_add_lotto,#img_lotto_g").show();
+			$("#btn_edit_lotto,#edit_img_check").hide();
+			$("#id_lotto,#number_lotto,#stock_lotto,#price_lotto,#date_lotto").val(data.id);
+			break;
+		case "edit":
+			$("#btn_add_lotto,#img_lotto_g").hide();
+			$("#btn_edit_lotto,#edit_img_check").show();
+
+			$("#id_lotto").val(data.id);
+			$("#number_lotto").val(data.number);
+			$("#stock_lotto").val(data.stock);
+			$("#price_lotto").val(data.price);
+			$("#date_lotto").val(data.date);
+			document.getElementById("status_lotto").selectedIndex = (parseInt(data.status)==1)?0:1;
+			break;
+	}
+}
+
+var editImgLottery = false;
+
+$("#edit_img_check").click((e)=>{
+	$("#img_lotto_g").toggle();
+	editImgLottery = (editImgLottery)?false:true;
+});
+
+$("#btn_edit_lotto").click((e)=>{
+	let form = new FormData();
+	new Promise((resolve,reject)=>{
+		if(editImgLottery){
+			form.append("img",$("#img_lotto").prop("files")[0]);
+		}
+		form.append("id",$("#id_lotto").val());
+		form.append("number",$("#number_lotto").val());
+		form.append("stock",$("#stock_lotto").val());
+		form.append("price",$("#price_lotto").val());
+		form.append("date",$("#date_lotto").val());
+		form.append("status",$("#status_lotto").val());
+		form.append("func","edit_lottery");
+		resolve(form);
+	})
+	.then((form)=>{
+		let nullVal;
+		form.forEach((val)=>{
+			if(val=="undefined"||val==""){
+				nullVal = true;
+			}
+		});
+		return(nullVal);
+	})
+	.then((nullVal)=>{
+		if(nullVal){
+			Swal.fire({
+				icon:"warning",
+				title:"ข้อมูลไม่ครบ!",
+				text:"โปรดกรอกข้อมูลให้ครบถ้วน"
+			});
+		}else if(!nullVal){
+			$.ajax({
+				method:'POST',
+				url:projectPath+"/resource/controller/admin_controller.php",
+				contentType:false,
+				processData:false,
+			   	data:form
+		   }).done((rs)=>{
+			   if(String(rs)==="non_type"){
+					Swal.fire({
+						icon:"error",
+						title:"ประเภทรูปภาพไม่ถูกต้อง!",
+						text:"โปรดเลือกไฟล์รูปภาพเท่านั้น"
+					});
+			   }else if(parseInt(rs)==1){
+					$("#lottery_all").load(projectPath+"/admin/index.php #lottery_rows");
+					Swal.fire({
+						icon:"success",
+						title:"สำเร็จ!",
+						text:"แก้ไขสินค้าสำเร็จ"
+					});
+			   }else if(String(rs)==="non_login"){
+				location.href = projectPath+"/admin/login_admin.php";
+				}
+		   });
+		}
+	})
 });
 
 $("#btn_add_lotto").click((e)=>{
@@ -296,6 +399,8 @@ $("#btn_add_lotto").click((e)=>{
 						title:"สำเร็จ!",
 						text:"เพิ่มสินค้าแล้ว"
 					});
+			   }else if(String(rs)==="non_login"){
+				   location.href = projectPath+"/admin/login_admin.php";
 			   }
 		   });
 		}
@@ -327,6 +432,15 @@ function edit_date_option(){
 					text:"อัพเดทงวดที่เปิดขายแล้ว"
 				});
 				$("#lottery_all").load(projectPath+"/admin/index.php #lottery_rows");
+			}else if(String(rs)==="non_login"){
+				location.href = projectPath+"/admin/login_admin.php";
+			}
+			else if(String(response)==="had_sales"){
+				Swal.fire({
+					icon:"warning",
+					title:"สินค้าถูกขาย",
+					text:"สินค้าชิ้นนี้มีผู้ซื้อแล้ว!"
+				});
 			}else{
 				Swal.fire({
 					icon: 'error',
@@ -336,4 +450,46 @@ function edit_date_option(){
 			}
 		})
 	}
+}
+
+function del_lottery(lotteryId){
+	Swal.fire({
+		title: 'ลบสินค้า?',
+		text: "คุณต้องการลบสินค้านี้หรือไม่!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ยืนยัน'
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/admin_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"id":lotteryId,"func":"delLottery"}
+			})
+			.done((response)=>{
+				console.log(response);
+
+				if(String(response)==="non_login"){
+					location.href = projectPath+"/admin/login_admin.php";
+				}else if(parseInt(response)===1){
+					$("#lottery_all").load(projectPath+"/admin/index.php #lottery_rows");
+					Swal.fire({
+						icon:"success",
+						title:"สำเร็จ!",
+						text:"ลบสินค้าแล้ว"
+					});
+				}else if(String(response)==="had_sales"){
+					Swal.fire({
+						icon:"warning",
+						title:"สินค้าถูกขาย",
+						text:"สินค้าชิ้นนี้มีผู้ซื้อแล้ว!"
+					});
+				}
+			});
+		}
+	  })
+
 }

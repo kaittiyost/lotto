@@ -48,8 +48,50 @@
                             $sql = "INSERT INTO lottery SET number='".$number."',date='".$date."',stock=".$stock.",img='".$imgName."'"
                                    .",price=".$price.",status=".$status;
                             echo ($conn->query($sql))?"1":"error";
+                            $conn->close();
                         }
                     }
+                }else{
+                    echo "non_login";
+                }
+            } catch (Exception $e) {
+                echo "error-->".$e->getMessage();
+            }
+        }
+        public function editLottery($lottoData){
+            try {
+                if(isset($_SESSION["adminLoginStatus"])){
+                        //---move file----
+                        $conn = DB::getConnect();
+                        $id =  htmlentities($conn->escape_string($lottoData["id"]));
+                        $sql = "SELECT * FROM sales_det WHERE lottery_id =".$id;
+                        $conn->query($sql);
+                        if($conn->affected_rows<=0){
+                            $number  = htmlentities($conn->escape_string($lottoData["number"]));
+                            $stock = htmlentities($conn->escape_string($lottoData["stock"]));
+                            $price = htmlentities($conn->escape_string($lottoData["price"]));
+                            $date = htmlentities($conn->escape_string($lottoData["date"]));
+                            $status = htmlentities($conn->escape_string($lottoData["status"]));
+                            $sql = "UPDATE lottery SET number='".$number."',date='".$date."',stock=".$stock
+                                    .",price=".$price.",status=".$status;
+                            if(isset($_FILES["img"])){
+                                $img = $_FILES["img"];
+                                if(((string)$img["type"])!="image/jpeg"){
+                                    echo "non_type";
+                                }else{
+                                    $imgName = $number."-".date("d_m_Y").".".explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];
+                                    $imgOnServer = __DIR__."/../../images/item/".$imgName;
+                                    if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
+                                        $sql .= ",img = '".$imgName."'";     
+                                    }
+                                }
+                            }
+                            $sql .= " WHERE id = ".$id;
+                            echo ($conn->query($sql))?"1":"error";
+                        }else{
+                            echo "had_sales";
+                        }
+                        $conn->close();
                 }else{
                     echo "non_login";
                 }
@@ -67,8 +109,30 @@
                     $conn->query($sql);
                     $sql = "UPDATE lottery SET status = 0 WHERE date NOT BETWEEN '".$startDate."' AND '".$endDate."';";
                     echo ($conn->query($sql))?"1":"0";
+                    $conn->close();
                 }else{
                     echo "non_login:";
+                }
+            } catch (Exception $e) {
+                echo "error--->".$e->getMessage();
+            }
+        }
+        public function delLottery($id){
+            try {
+                if(isset($_SESSION["adminLoginStatus"])){
+                    $conn = DB::getConnect();
+                    $id = htmlentities($conn->escape_string($id));
+                    $sql = "SELECT * FROM sales_det WHERE lottery_id =".$id;
+                    $conn->query($sql);
+                    if($conn->affected_rows<=0){
+                        $sql = "DELETE FROM lottery WHERE id = ".$id;
+                        echo ($conn->query($sql))?"1":"0";
+                    }else{
+                        echo "had_sales";
+                    }
+                    $conn->close();
+                }else{
+                    echo "non_login";
                 }
             } catch (Exception $e) {
                 echo "error--->".$e->getMessage();
@@ -126,6 +190,13 @@
                 $exeData = new ExeData();
                 $exeData->updateDate($_POST["startDate"],$_POST["endDate"]);
                 break;
+            case "edit_lottery":
+                $exeData = new ExeData();
+                $exeData->editLottery($_POST);
+                break;
+            case "delLottery":
+                $exeData = new ExeData();
+                $exeData->delLottery($_POST["id"]);
         }
     }
 
