@@ -56,6 +56,7 @@
 							<th>หมายเลข</th>
 							<th>งวด</th>
 							<th>ราคา</th>
+							<th>ขายไปแล้ว</th>
 							<th>คงเหลือ</th>
 							<th>สถานะ</th>
 							<th></th>
@@ -78,6 +79,7 @@
 									<td><?php echo $row["number"]; ?></td>
 									<td><div class="badge"><?php echo $row["date"]; ?></div></td>
 									<td><?php echo $row["price"]; ?></td>
+									<td><?php echo $row["quan"]; ?></td>
 									<td><?php echo $row["stock"]; ?></td>
 									<td style="font-size:20px;"><?php echo (intval( $row["status"])==1)?"<i class='far fa-check-circle text-success'></i>"
 																				:"<i class='fas fa-lock text-danger'></i>";

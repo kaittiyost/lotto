@@ -11,13 +11,25 @@
             try{
                 $conn = DB::getConnect();
                 if(is_null($key)){
-                    $sql = "SELECT * FROM lottery";
+                    $sql = "SELECT lot.*,IFNULL(SUM(sd.quan),0) AS quan FROM \n".
+                            "lottery as lot\n".
+                            "LEFT JOIN \n".
+                            "sales_det sd\n".
+                            "ON lot.id = sd.lottery_id\n".
+                            "GROUP BY lot.id";
                     $result = $conn->query($sql);
                     return ($conn->affected_rows<=0)?NULL:$result;
                 }else{
                     $key = htmlentities($conn->escape_string($key));
                     $key = str_replace("a","_",$key);
-                    $sql = "SELECT * FROM lottery WHERE number LIKE '".$key."'";
+                    $sql = "SELECT lot.*,IFNULL(SUM(sd.quan),0) AS quan FROM \n".
+                            "lottery as lot\n".
+                            "LEFT JOIN \n".
+                            "sales_det sd\n".
+                            "ON lot.id = sd.lottery_id\n".
+                            "WHERE number LIKE '".$key."'\n".
+                            "GROUP BY lot.id";
+;
                     $result = $conn->query($sql);
                     return ($conn->affected_rows<=0)?NULL:$result;
                 }
