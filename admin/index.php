@@ -198,7 +198,7 @@
 		<script src='../resource/script.js'></script>
 		<script>
 			window.onload =()=>{
-				loadDataTable();
+				loadDataTable(null);
 			}
 		</script>
 	</body>
