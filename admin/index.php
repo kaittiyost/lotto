@@ -50,8 +50,8 @@
 
 		<div class="card">
 			<div class="card-body" id="lottery_all">
-				<table class="table" style="width:100%;" id="lottery_rows">
-					<thead class="bg-primary text-white">
+				<table class="table table-striped" style="width:100%;" id="lottery_rows">
+					<thead class="bg-info text-white">
 						<tr>
 							<th>หมายเลข</th>
 							<th>งวด</th>
@@ -64,7 +64,7 @@
 
 						</tr>
 					</thead>
-					<tbody>
+					<tbody style="font-size:16px;">
 					<?php 
 						$key = Null;
 						if(isset($_GET["s"])){
