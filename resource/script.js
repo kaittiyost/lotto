@@ -500,5 +500,36 @@ function del_lottery(lotteryId){
 			});
 		}
 	  })
-
 }
+//---------------------------------- ADMIN(End) ---------------------------------------
+//---------------------------------- SALES_REPORT -------------------------------------
+function loadDatableSales(){
+	setTimeout(()=>{
+		$(".table").DataTable({
+			"scrollY":"500px",
+			"scrollX":true,
+			"scrollCollapse":true,
+			"paging":false,
+			"bDestroy":true,
+			"bLengthChange": false,
+			"bFilter": false,
+			"ordering": false,
+			"bInfo": false
+		});
+	},500);
+}
+
+function switchSalesTb(tbNum){
+	if(parseInt(tbNum)===0){
+		$("#btn_sw_not_con").attr("class","btn btn-primary float-right");
+		$("#btn_sw_con").attr("class","btn btn-outline-primary float-left");
+		$("#non_confirm_tb").show();
+		$("#confirm_tb").hide();
+	}else{
+		$("#btn_sw_not_con").attr("class","btn btn-outline-primary float-right");
+		$("#btn_sw_con").attr("class","btn btn-primary float-left");
+		$("#non_confirm_tb").hide();
+		$("#confirm_tb").show();
+	}
+}
+//---------------------------------- SALES_REPORT(End)---------------------------------

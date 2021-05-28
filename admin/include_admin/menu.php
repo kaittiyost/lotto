@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/admin/">หน้าแรก<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">ยอดขาย</a>
+      <a class="nav-item nav-link" href="/admin/sales_report/">ยอดขาย</a>
       <a class="nav-item nav-link" id="logout_btn">ออกจากระบบ</a>
     </div>
   </div>
