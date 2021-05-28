@@ -82,6 +82,7 @@ if(!is_null($cart)){
 		<div class="row" style="padding: 10px">
 			<div class="col-8">
 				<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getDataProfile->totalOncart()["total"]; ?>฿</b> </p>
+				<p  class="text text-dark" style="width:50%;margin:auto;margin-top: 0px; font-size: 10px;">ค่าธรรมเนียมใบละ 20฿</p>
 			</div>
 			<div class="col-4" style="">
 				<a class="btn btn-info text-light" id="pay_order">ชำระเงิน</a>

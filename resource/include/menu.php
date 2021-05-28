@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/home/"><i class="fas fa-home"></i> หน้าแรก <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/home/"><i class="fas fa-store"></i> ร้านค้าลอตเตอรี่ <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/profile/"><i class="fas fa-user"></i> โปรไฟล์</a>

@@ -14,60 +14,60 @@ function upload_slip(sale_id) {
 
  // console.log('time =>'+time+' > time_deadline =>'+time_deadline);
 
- if(bank == "" || date_upload == "" || time_upload =="" || img == ""){
-  Swal.fire({
-    icon: 'error',
-    title: 'ข้อมูลว่าง',
-    text: 'โปรดกรอกข้อมูลให้ครบ!'
-  });
-}else{
-  if(time > time_deadline){
-
+  if(bank == "" || date_upload == "" || time_upload =="" || img == ""){
     Swal.fire({
-     icon: 'error',
-     title: 'เลยกำหนดเวลา',
-     text: 'ท่านอัปโหลดหลักฐานการชำระเงินไม่ทันเวลา โปรดสั่งซื้อใหม่อีกครั้ง!',
-     confirmButtonText: `ตกลง`
+      icon: 'error',
+      title: 'ข้อมูลว่าง',
+      text: 'โปรดกรอกข้อมูลให้ครบ!'
+    });
+  }else{
+    if(time > time_deadline){
 
-   }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        method: "POST",
-        url: projectPath + "/resource/controller/purchase_list_controller.php",
-        contentType:"application/x-www-form-urlencoded; charset=utf-8",
-        data:{"sale_id":sale_id,"func":"del_order"}
-      }).done((rs) => {
-        console.log(">>" + rs);
-        if(rs == 1){
-          setTimeout(()=>{
-           location.href ="/home/";
-         },1000);
+      Swal.fire({
+       icon: 'error',
+       title: 'เลยกำหนดเวลา',
+       text: 'ท่านอัปโหลดหลักฐานการชำระเงินไม่ทันเวลา โปรดสั่งซื้อใหม่อีกครั้ง!',
+       confirmButtonText: `ตกลง`
 
-        }else{
+     }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          method: "POST",
+          url: projectPath + "/resource/controller/purchase_list_controller.php",
+          contentType:"application/x-www-form-urlencoded; charset=utf-8",
+          data:{"sale_id":sale_id,"func":"del_order"}
+        }).done((rs) => {
+          console.log(">>" + rs);
+          if(rs == 1){
+            setTimeout(()=>{
+             location.href ="/home/";
+           },1000);
 
-        }
-      });
-      
-    } 
-  });
+          }else{
+
+          }
+        });
    
- }else{
+  } 
+});
+ 
+  }else{
 
-  var form_data = new FormData();
-  form_data.append("img", $("#img_slip").prop("files")[0]);
-  form_data.append("sale_id", sale_id);
-  form_data.append("bank",  $("#bank").val());
-  form_data.append("date_upload",  $("#date_upload").val());
-  form_data.append("time_upload",  $("#time_upload").val());
-  form_data.append("func", "add_slip");
-  $('#uploading').html('<p id="uploading" class="text-warning">กำลังอัปโหลด</p>');
-  $.ajax({
-    method: "POST",
-    url: projectPath + "/resource/controller/purchase_list_controller.php",
-    contentType: false,
-    processData: false,
-    data: form_data,
-  }).done((rs) => {
+    var form_data = new FormData();
+    form_data.append("img", $("#img_slip").prop("files")[0]);
+    form_data.append("sale_id", sale_id);
+    form_data.append("bank",  $("#bank").val());
+    form_data.append("date_upload",  $("#date_upload").val());
+    form_data.append("time_upload",  $("#time_upload").val());
+    form_data.append("func", "add_slip");
+    $('#uploading').html('<p id="uploading" class="text-warning">กำลังอัปโหลด</p>');
+    $.ajax({
+      method: "POST",
+      url: projectPath + "/resource/controller/purchase_list_controller.php",
+      contentType: false,
+      processData: false,
+      data: form_data,
+    }).done((rs) => {
      // console.log(">>" + rs);
      if(rs == 1){
       Swal.fire({
@@ -84,10 +84,10 @@ function upload_slip(sale_id) {
       Swal.fire({
         icon: 'error',
         title: 'เกิดข้อผิดพลาด!',
-        text: 'โปรดอัปโหลดรูปภาพ jpg เท่านั้น!'
+        text: 'โปรดอัปโหลดรูปภาพ jpg และ png เท่านั้น!'
       });
       $('#uploading').hide();
     }
   });
-}
+  }
 }}

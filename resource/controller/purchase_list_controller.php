@@ -9,6 +9,7 @@ class GetData{
     }
     public static function purchase_list(){
         try{
+           if(isset($_SESSION["loginStatus"])){
             $conn = DB::getConnect();
             $sql = "SELECT sales.id ,\n".
             "sales.`status`,\n".
@@ -30,22 +31,27 @@ class GetData{
             "LEFT JOIN img_confirm ON img_confirm.sale_id = sales.id  \n".
             "AND sales.id = img_confirm.sale_id\n".
             "WHERE user.USER_ID = ".$_SESSION['userData']['USER_ID']." \n".
-            "ORDER BY  sales.reg_date DESC";
+            "GROUP BY sales.id ORDER BY  sales.reg_date DESC ";
 
             $result = $conn->query($sql);
             return (($conn->affected_rows)<=0)?Null:$result;
-        }catch(Exception $e){
-            echo $e->getMessage();
+        }else{
+            echo "non_login";
         }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
+}
 
-    public static function payment_list($sale_id){
-        try{
+public static function payment_list($sale_id){
+    try{
+        if(isset($_SESSION["loginStatus"])){
             $conn = DB::getConnect();
             $sql = "SELECT sales.id as s_id , \n".
             "SUM(sales_det.price) as price ,\n".
             "SUM(sales_det.quan) as quan , \n".
             "DATE(sales.reg_date) as date,\n".
+            "img_confirm.img as slip_img , ".
             "TIME_FORMAT(sales.reg_date,'%H:%i') as time ,\n".
             "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline,\n".
             "img_confirm.img , \n".
@@ -56,11 +62,33 @@ class GetData{
             "AND sales.id = img_confirm.sale_id";
 
             $result = $conn->query($sql);
-            return (($conn->affected_rows)<=0)?Null:$result->fetch_array();
-        }catch(Exception $e){
-            echo $e->getMessage();
+            return (($conn->affected_rows)<=0)?Null:$result;
+
+        }else{
+            echo "non_login";
         }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
+}
+
+public static function lottery_set_by_sale_id($sale_id){
+    try{
+        $conn = DB::getConnect();
+        $sql = "SELECT sales.id , \n".
+        "lottery.number\n".
+        "FROM \n".
+        "sales\n".
+        "LEFT JOIN sales_det ON sales.id = sales_det.sale_id\n".
+        "LEFT JOIN lottery ON sales_det.lottery_id = lottery.id\n".
+        "WHERE sales.id = ".$sale_id;
+
+        $result = $conn->query($sql);
+        return (($conn->affected_rows)<=0)?Null:$result;
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+}
 }
 
 class ExeData{
@@ -70,7 +98,7 @@ class ExeData{
            if(isset($_SESSION["loginStatus"])){
             if(isset($_FILES['img'])){
                 if($_FILES['img']['error']==0){
-                    if($_FILES['img']['type']!='image/jpeg'){
+                    if($_FILES['img']['type']!='image/jpeg' && $_FILES['img']['type']!='image/png'){
                         echo 'file not jpg!';
                     }else{
                         $img = $_FILES['img'];
