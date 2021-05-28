@@ -115,7 +115,7 @@ transition: 0.3s all ease-out;
 							</div>
 							<div class="row">
 								<div class="col-6" style="text-align:center;width: 100%;">	
-									<p class="text-info">วันสั่งซื้อ <?php echo $row['date'];?></p>
+									<p class="text-info" style="font-size:13px">วันสั่งซื้อ <?php echo $row['date'];?></p>
 								</div>
 								<div class="col-6" style="text-align:right;">
 									<form action="../payment/" method="POST">
