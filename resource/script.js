@@ -1,32 +1,32 @@
 var projectPath = location.origin;
 function login(){
-			const username = $('#username').val();
-			const password = $('#password').val();
-			if(username==''||password==''){
-						Swal.fire({
-							icon: 'error',
-							title: 'ข้อมูลว่าง',
-							text: 'โปรดกรอกข้อมูลให้ครบ!'
-						});
-			}else{
-				$.ajax({
-						method:"POST",
-						url:projectPath+"/resource/controller/login.php",
-						contentType:"application/x-www-form-urlencoded; charset=utf-8",
-						data:{"username":username,"password":password,"func":"login"}
-					}
-				).done((rs)=>{
-					if(rs==0){
-						Swal.fire({
-							icon: 'error',
-							title: 'เกิดข้อผิดพลาด!',
-							text: 'usernameหรือรหัสผ่านไม่ตรงกัน!'
-						});
-					}else if(rs==1){
-						location.href = projectPath+'/home';
-					}
+	const username = $('#username').val();
+	const password = $('#password').val();
+	if(username==''||password==''){
+		Swal.fire({
+			icon: 'error',
+			title: 'ข้อมูลว่าง',
+			text: 'โปรดกรอกข้อมูลให้ครบ!'
+		});
+	}else{
+		$.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/login.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"username":username,"password":password,"func":"login"}
+		}
+		).done((rs)=>{
+			if(rs==0){
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด!',
+					text: 'usernameหรือรหัสผ่านไม่ตรงกัน!'
 				});
+			}else if(rs==1){
+				location.href = projectPath+'/home';
 			}
+		});
+	}
 }
 
 //----------------------------------HOME----------------------------------
@@ -60,7 +60,7 @@ $("#search_btn").click((e)=>{
 	$("#lotery_all").load(projectPath+"/home/?s="+key+" #lotery_rows");
 });
 
-			
+
 $(document).on("click", ".open-quan", function () {
 	new Promise((resolve,reject)=>{
 		let lotto_quan = $(this).data('quantity');
@@ -82,42 +82,42 @@ $(document).on("click", ".open-quan", function () {
 });
 
 $("#add_to_card_btn").click(()=>{
-		let lot_id = $("#lottoly_id").val();
-		let lot_quan = $("#quan_select").val();
-		if(String(lot_quan)==="เลือกจำนวน"){
-			Swal.fire({
-				icon: 'warning',
-				title: 'โปรดเลือกจำนวน'
-			  })
-		}else{
-			$.ajax({
-				method:"POST",
-				url:projectPath+"/resource/controller/home_controller.php",
-				contentType:"application/x-www-form-urlencoded; charset=utf-8",
-				data:{"lotId":lot_id,"quan":lot_quan,"func":"toCart"}
-			})
-			.done((response)=>{
-				response = JSON.parse(response);
-				switch(String(response.status)){
-					case "1":
-						Swal.fire({
-							icon: 'success',
-							title: 'เพิ่มในตระกร้าแล้ว'
-						  })
-						
-						break;
-					case "0":
-						Swal.fire({
-							icon: 'error',
-							title: 'เกิดข้อผิดพลาด!'
-						  })
-						break;
-					case "non_login":
-						location.href = projectPath;
-						break;
-				}
-			});
-		}
+	let lot_id = $("#lottoly_id").val();
+	let lot_quan = $("#quan_select").val();
+	if(String(lot_quan)==="เลือกจำนวน"){
+		Swal.fire({
+			icon: 'warning',
+			title: 'โปรดเลือกจำนวน'
+		})
+	}else{
+		$.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/home_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"lotId":lot_id,"quan":lot_quan,"func":"toCart"}
+		})
+		.done((response)=>{
+			response = JSON.parse(response);
+			switch(String(response.status)){
+				case "1":
+				Swal.fire({
+					icon: 'success',
+					title: 'เพิ่มในตระกร้าแล้ว'
+				})
+
+				break;
+				case "0":
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด!'
+				})
+				break;
+				case "non_login":
+				location.href = projectPath;
+				break;
+			}
+		});
+	}
 });
 //----------------------------------HOME(END)----------------------------------
 //----------------------------------CART---------------------------------------
@@ -130,7 +130,7 @@ function delBucket(lot_id){
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'ใช่'
-	  }).then((result) => {
+	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
 				method:"POST",
@@ -152,9 +152,9 @@ function delBucket(lot_id){
 					$("#lottery_list").load(location.href+" #lottery_list_in");
 				}
 			})
-	
+
 		}
-	  })
+	})
 }
 $("#pay_order").click(()=>{
 	Swal.fire({
@@ -165,7 +165,7 @@ $("#pay_order").click(()=>{
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'ใช่'
-	  }).then((result)=>{
+	}).then((result)=>{
 		if(result.isConfirmed){
 			$.ajax({
 				method:"POST",
@@ -178,11 +178,26 @@ $("#pay_order").click(()=>{
 					Swal.fire({
 						icon:"success",
 						title:"ยืนยันการซื้อแล้ว",
-						text:"โปรดส่งหลักฐานการโอนเงินภายในเวลา30นาที"
+						text:"โปรดส่งหลักฐานการโอนเงินภายในเวลา30นาที",
+						showDenyButton: false,
+						showCancelButton: false,
+						confirmButtonText: `ตกลง`
+					}).then((result) => {
+						if (result.isConfirmed) {
+							$.ajax({
+								method:"POST",
+								url:projectPath+"/resource/controller/purchase_list_controller.php",
+								contentType:"application/x-www-form-urlencoded; charset=utf-8",
+								data:{"func":"find_max_sale_id"}
+							}
+							).done((rs)=>{
+								console.log(rs)
+								$('#max_sale_id').html('<input id="max_sale_id" type="hidden" name="sale_id" value="'+rs+'">');
+								$( "#form_max_id" ).submit();
+							});
+						} 
 					});
-					setTimeout(()=>{
-						location.reload();
-					},1000);
+
 				}else if(String(response.status)=="out_stock"){
 					Swal.fire({
 						icon:"warning",
@@ -202,7 +217,7 @@ $("#pay_order").click(()=>{
 			})
 
 		}
-	  })
+	})
 });
 //----------------------------------CART(END)---------------------------------------
 //---------------------------------- ADMIN ---------------------------------------
@@ -210,35 +225,35 @@ function loadDataTable(key){
 	const link = (key==null)?projectPath+"/admin/index.php #lottery_rows":projectPath+"/admin/?s="+key+" #lottery_rows";
 	$("#lottery_all").load(link);
 	setTimeout(()=>{
-			$("#lottery_rows").DataTable({
-				"scrollY":"500px",
-				"scrollX":true,
-				"scrollCollapse":true,
-				"paging":false,
-				"bDestroy":true,
-				"bLengthChange": false,
-				"bFilter": false,
-				"ordering": false,
-				"bInfo": false
-			});
+		$("#lottery_rows").DataTable({
+			"scrollY":"500px",
+			"scrollX":true,
+			"scrollCollapse":true,
+			"paging":false,
+			"bDestroy":true,
+			"bLengthChange": false,
+			"bFilter": false,
+			"ordering": false,
+			"bInfo": false
+		});
 	},500)
 }
 function login_admin(){
 	const username = $('#username').val();
 	const password = $('#password').val();
 	if(username==''||password==''){
-				Swal.fire({
-					icon: 'error',
-					title: 'ข้อมูลว่าง',
-					text: 'โปรดกรอกข้อมูลให้ครบ!'
-				});
+		Swal.fire({
+			icon: 'error',
+			title: 'ข้อมูลว่าง',
+			text: 'โปรดกรอกข้อมูลให้ครบ!'
+		});
 	}else{
 		$.ajax({
-				method:"POST",
-				url:projectPath+"/resource/controller/admin_controller.php",
-				contentType:"application/x-www-form-urlencoded; charset=utf-8",
-				data:{"username":username,"password":password,"func":"login_admin"}
-			}
+			method:"POST",
+			url:projectPath+"/resource/controller/admin_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"username":username,"password":password,"func":"login_admin"}
+		}
 		).done((rs)=>{
 			if(rs==0){
 				Swal.fire({
@@ -266,21 +281,21 @@ $("#search_admin_btn").click((e)=>{
 function switchModal(type,data){
 	switch(String(type)){
 		case "add" :
-			$("#btn_add_lotto,#img_lotto_g").show();
-			$("#btn_edit_lotto,#edit_img_check").hide();
-			$("#id_lotto,#number_lotto,#stock_lotto,#price_lotto,#date_lotto").val(data.id);
-			break;
+		$("#btn_add_lotto,#img_lotto_g").show();
+		$("#btn_edit_lotto,#edit_img_check").hide();
+		$("#id_lotto,#number_lotto,#stock_lotto,#price_lotto,#date_lotto").val(data.id);
+		break;
 		case "edit":
-			$("#btn_add_lotto,#img_lotto_g").hide();
-			$("#btn_edit_lotto,#edit_img_check").show();
+		$("#btn_add_lotto,#img_lotto_g").hide();
+		$("#btn_edit_lotto,#edit_img_check").show();
 
-			$("#id_lotto").val(data.id);
-			$("#number_lotto").val(data.number);
-			$("#stock_lotto").val(data.stock);
-			$("#price_lotto").val(data.price);
-			$("#date_lotto").val(data.date);
-			document.getElementById("status_lotto").selectedIndex = (parseInt(data.status)==1)?0:1;
-			break;
+		$("#id_lotto").val(data.id);
+		$("#number_lotto").val(data.number);
+		$("#stock_lotto").val(data.stock);
+		$("#price_lotto").val(data.price);
+		$("#date_lotto").val(data.date);
+		document.getElementById("status_lotto").selectedIndex = (parseInt(data.status)==1)?0:1;
+		break;
 	}
 }
 
@@ -328,23 +343,23 @@ $("#btn_edit_lotto").click((e)=>{
 				url:projectPath+"/resource/controller/admin_controller.php",
 				contentType:false,
 				processData:false,
-			   	data:form
-		   }).done((rs)=>{
-			   if(String(rs)==="non_type"){
+				data:form
+			}).done((rs)=>{
+				if(String(rs)==="non_type"){
 					Swal.fire({
 						icon:"error",
 						title:"ประเภทรูปภาพไม่ถูกต้อง!",
 						text:"โปรดเลือกไฟล์รูปภาพเท่านั้น"
 					});
-			   }else if(parseInt(rs)==1){
+				}else if(parseInt(rs)==1){
 					loadDataTable(null);
 					Swal.fire({
 						icon:"success",
 						title:"สำเร็จ!",
 						text:"แก้ไขสินค้าสำเร็จ"
 					});
-			   }else if(String(rs)==="non_login"){
-				location.href = projectPath+"/admin/login_admin.php";
+				}else if(String(rs)==="non_login"){
+					location.href = projectPath+"/admin/login_admin.php";
 				}else if(String(rs)==="had_sales"){
 					Swal.fire({
 						icon:"warning",
@@ -352,7 +367,7 @@ $("#btn_edit_lotto").click((e)=>{
 						text:"สินค้าชิ้นนี้มีผู้ซื้อแล้วไม่สามารถแก้ไขได้!"
 					});
 				}
-		   });
+			});
 		}
 	})
 });
@@ -390,15 +405,15 @@ $("#btn_add_lotto").click((e)=>{
 				url:projectPath+"/resource/controller/admin_controller.php",
 				contentType:false,
 				processData:false,
-			   	data:form
-		   }).done((rs)=>{
-			   if(String(rs)==="non_type"){
+				data:form
+			}).done((rs)=>{
+				if(String(rs)==="non_type"){
 					Swal.fire({
 						icon:"error",
 						title:"ประเภทรูปภาพไม่ถูกต้อง!",
 						text:"โปรดเลือกไฟล์รูปภาพเท่านั้น"
 					});
-			   }else if(parseInt(rs)==1){
+				}else if(parseInt(rs)==1){
 					$("#img_lotto").val(null);
 					$("#number_lotto").val("");
 					$("#stock_lotto").val("");
@@ -408,10 +423,10 @@ $("#btn_add_lotto").click((e)=>{
 						title:"สำเร็จ!",
 						text:"เพิ่มสินค้าแล้ว"
 					});
-			   }else if(String(rs)==="non_login"){
-				   location.href = projectPath+"/admin/login_admin.php";
-			   }
-		   });
+				}else if(String(rs)==="non_login"){
+					location.href = projectPath+"/admin/login_admin.php";
+				}
+			});
 		}
 	})
 });
@@ -470,7 +485,7 @@ function del_lottery(lotteryId){
 		confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
 		confirmButtonText: 'ยืนยัน'
-	  }).then((result) => {
+	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
 				method:"POST",
@@ -499,7 +514,7 @@ function del_lottery(lotteryId){
 				}
 			});
 		}
-	  })
+	})
 }
 //---------------------------------- ADMIN(End) ---------------------------------------
 //---------------------------------- SALES_REPORT -------------------------------------

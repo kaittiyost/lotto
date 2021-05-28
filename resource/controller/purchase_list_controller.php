@@ -90,6 +90,22 @@ public static function lottery_set_by_sale_id($sale_id){
         echo $e->getMessage();
     }
 }
+public static function find_max_sale_id(){
+    try{
+       if(isset($_SESSION["loginStatus"])){
+        $conn = DB::getConnect();
+        $sql = "SELECT MAX(sales.id) as max_id FROM sales";
+
+        $result = $conn->query($sql);
+        $max_id = $result->fetch_array();
+        echo $max_id['max_id'];
+    }else{
+        echo "non_login";
+    }
+}catch(Exception $e){
+    echo $e->getMessage();
+}
+}
 }
 
 class ExeData{
@@ -162,6 +178,9 @@ if(isset($_POST["func"])){
 }else  if($_POST["func"]== "del_order"){
     $exeData = new ExeData();
     $exeData->del_order();
+}else  if($_POST["func"]== "find_max_sale_id"){
+    $getData = new GetData();
+    $getData->find_max_sale_id();
 }
 }
 ?>
