@@ -9,29 +9,30 @@ class GetData{
     }
     public static function purchase_list(){
         try{
-           if(isset($_SESSION["loginStatus"])){
+         if(isset($_SESSION["loginStatus"])){
             $conn = DB::getConnect();
-            $sql = "SELECT sales.id ,\n".
+            $sql="SELECT sales.id ,\n".
             "sales.`status`,\n".
             "sales_det.lottery_id,\n".
             "sales_det.price as price,\n".
-            "sales_det.quan ,\n".
-            "user.USER_NAME, \n".
-            "user.USER_LASTNAME, \n".
-            "DATE_FORMAT(sales.reg_date,'%d-%m-%Y') as date, \n".
-            "DATE_FORMAT(lottery.date,'%d-%m-%Y') as lot_date, \n".
+            "SUM(sales_det.quan) as quan ,\n".
+            "`user`.USER_NAME, \n".
+            "`user`.USER_LASTNAME, \n".
+            "DATE_FORMAT(sales.reg_date,\"%d-%m-%Y\") as date, \n".
+            "DATE_FORMAT(lottery.date,\"%d-%m-%Y\") as lot_date,\n".
             "TIME(sales.reg_date) as time ,\n".
             "lottery.number ,\n".
             "lottery.img,\n".
             "img_confirm.img,\n".
-            "IFNULL(img_confirm.img ,'0') as slip\n".
+            "IFNULL(img_confirm.img ,\"0\") as slip\n".
             "FROM sales LEFT JOIN sales_det ON sales_det.sale_id = sales.id \n".
             "LEFT JOIN lottery ON sales_det.lottery_id = lottery.id\n".
             "LEFT JOIN user ON sales.user_id = user.USER_ID\n".
             "LEFT JOIN img_confirm ON img_confirm.sale_id = sales.id  \n".
             "AND sales.id = img_confirm.sale_id\n".
             "WHERE user.USER_ID = ".$_SESSION['userData']['USER_ID']." \n".
-            "GROUP BY sales.id ORDER BY  sales.reg_date DESC ";
+            "GROUP BY sales.id\n".
+            "ORDER BY sales.id DESC";
 
             $result = $conn->query($sql);
             return (($conn->affected_rows)<=0)?Null:$result;
@@ -76,7 +77,7 @@ public static function lottery_set_by_sale_id($sale_id){
     try{
         $conn = DB::getConnect();
         $sql = "SELECT sales.id , \n".
-        "lottery.number\n".
+        "lottery.number , sales_det.quan\n".
         "FROM \n".
         "sales\n".
         "LEFT JOIN sales_det ON sales.id = sales_det.sale_id\n".
@@ -94,8 +95,8 @@ public static function lottery_set_by_sale_id($sale_id){
 class ExeData{
     public function add_slip(){
         try {
-           $conn = DB::getConnect();
-           if(isset($_SESSION["loginStatus"])){
+         $conn = DB::getConnect();
+         if(isset($_SESSION["loginStatus"])){
             if(isset($_FILES['img'])){
                 if($_FILES['img']['error']==0){
                     if($_FILES['img']['type']!='image/jpeg' && $_FILES['img']['type']!='image/png'){
@@ -155,7 +156,7 @@ function del_order(){
 }
 
 if(isset($_POST["func"])){
- if($_POST["func"]== "add_slip"){
+   if($_POST["func"]== "add_slip"){
     $exeData = new ExeData();
     $exeData->add_slip();
 }else  if($_POST["func"]== "del_order"){

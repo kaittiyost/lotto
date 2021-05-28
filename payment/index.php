@@ -61,9 +61,17 @@ $lottery_data = $payment_GetData->lottery_set_by_sale_id($sale_id);
 					<?php }else{ 
 						while($lottery = $lottery_data->fetch_array()){ 
 							?>
-							<label><i class="fas fa-dot-circle"></i> หมายเลข <?php echo $lottery['number'] ?> </label><br>
+							<div class="row">
+								<div class="col-8">
+										<label><i class="fas fa-dot-circle"></i> หมายเลข <?php echo $lottery['number'] ?> 
+								</div>
+								<div class="col-4" style="text-align: right;">
+									<label> <?php echo $lottery['quan'].' ใบ' ?></label>
+								</div>
+							</div>
 
 						<?php } ?>
+						<br>
 						<div style="text-align:right">
 							<label>ยอด ฿<?php echo $payment['price'] ?></label><br>
 							<label>ค่าธรมเนียม ฿<?php echo intval($payment['quan']) * 20 ?></label> <br>
