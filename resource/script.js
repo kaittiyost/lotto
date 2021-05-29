@@ -191,7 +191,6 @@ $("#pay_order").click(()=>{
 								data:{"func":"find_max_sale_id"}
 							}
 							).done((rs)=>{
-								console.log(rs)
 								$('#max_sale_id').html('<input id="max_sale_id" type="hidden" name="sale_id" value="'+rs+'">');
 								$( "#form_max_id" ).submit();
 							});
@@ -494,8 +493,6 @@ function del_lottery(lotteryId){
 				data:{"id":lotteryId,"func":"delLottery"}
 			})
 			.done((response)=>{
-				console.log(response);
-
 				if(String(response)==="non_login"){
 					location.href = projectPath+"/admin/login_admin.php";
 				}else if(parseInt(response)===1){
@@ -519,6 +516,7 @@ function del_lottery(lotteryId){
 //---------------------------------- ADMIN(End) ---------------------------------------
 //---------------------------------- SALES_REPORT -------------------------------------
 function loadDatableSales(){
+	$("#sales_all").load(projectPath+"/admin/sales_report/index.php #sales_rows");
 	setTimeout(()=>{
 		$(".table").DataTable({
 			"scrollY":"500px",
@@ -535,16 +533,84 @@ function loadDatableSales(){
 }
 
 function switchSalesTb(tbNum){
+	let color = "primary";
 	if(parseInt(tbNum)===0){
-		$("#btn_sw_not_con").attr("class","btn btn-primary float-right");
-		$("#btn_sw_con").attr("class","btn btn-outline-primary float-left");
+		$("#btn_sw_not_con").attr("class","btn btn-"+color+" float-right");
+		$("#btn_sw_con").attr("class","btn btn-outline-"+color+" float-left");
 		$("#non_confirm_tb").show();
 		$("#confirm_tb").hide();
-	}else{
-		$("#btn_sw_not_con").attr("class","btn btn-outline-primary float-right");
-		$("#btn_sw_con").attr("class","btn btn-primary float-left");
+	}else if(parseInt(tbNum)===1){
+		$("#btn_sw_not_con").attr("class","btn btn-outline-"+color+" float-right");
+		$("#btn_sw_con").attr("class","btn btn-"+color+" float-left");
 		$("#non_confirm_tb").hide();
 		$("#confirm_tb").show();
 	}
+}
+
+function openSalesReportModal(id,sumPrice,imgCofirm,type){
+	(parseInt(type)===1)?$("#sale_btn_confirm").hide():$("#sale_btn_confirm").show();
+	$("#sales_title_id").html('<i class="fas fa-file-invoice-dollar"></i> รายการขายหมายเลข ['+id+']');
+	$("#sale_btn_confirm").attr("onClick","confirmSale("+id+")");
+	$.ajax({
+		method:"POST",
+		url:projectPath+"/resource/controller/sales_report_controller.php",
+		contentType:"application/x-www-form-urlencoded; charset=utf-8",
+		data:{"sales_id":id,"func":"getSalesDet"}
+	}).done((response)=>{
+		response = JSON.parse(response);
+		$("#bill_content,#bill_content_img").empty();
+		response.forEach((item,i)=>{
+			$("#bill_content").append("<tr>"+
+				"<td style='border:none;'>"+item.number+"</td>"+
+				"<td style='float:right;border:none;'>x"+item.quan+" ใบ</td>"+
+			"</tr>");
+			if(i===(response.length-1)){
+				$("#bill_content").append("<tr style='font-size:18px;'>"+
+												"<td style='border:none;'>ราคารวม</td>"+
+												"<td style='float:right;border:none;'>"+sumPrice+"บาท</td>"+
+											"</tr>");
+				let img = new Image(200,200);
+				img.src = (String(imgCofirm)==="no_confirm")?projectPath+"/images/slip/non_confirm.jpg"
+															:projectPath+"/images/slip/"+imgCofirm;
+				$("#bill_content_img").append(img);
+			}
+		});
+	});
+}
+function confirmSale(id){
+	Swal.fire({
+		title: 'ยืนยันรายการซื้อ?',
+		text: "คุณต้องการยืนยันรายการซื้อหรือไม่!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'ใช่'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				method:"POST",
+				url:projectPath+"/resource/controller/sales_report_controller.php",
+				contentType:"application/x-www-form-urlencoded; charset=utf-8",
+				data:{"sales_id":id,"func":"confirmSale"}
+			}).done((response)=>{
+				if(parseInt(response)===1){
+					Swal.fire({
+						icon:"success",
+						title:"สำเร็จ",
+						text:"ยืนยันใบเสร็จนี้แล้ว!"
+					});
+					$("#sales_modal").modal("hide");
+					loadDatableSales();
+				}else{
+					Swal.fire({
+						icon:"error",
+						title:"เกิดข้อผิดพลาด!",
+						text:"เกิดข้อผิดพลาดไม่สราบสาเหตุโปรดลองอีกครั้งในภายหลัง"
+					});
+				}
+			});
+		}
+	});
 }
 //---------------------------------- SALES_REPORT(End)---------------------------------
