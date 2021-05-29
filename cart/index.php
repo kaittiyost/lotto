@@ -41,7 +41,7 @@ include(__DIR__.'/../resource/include/menu.php');
 		</form>
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
-				<h2><i class="fas fa-shopping-bag"></i> ตระกร้าของฉัน</h2>
+				<h2><i class="fas fa-shopping-basket"></i> ตะกร้าของฉัน</h2>
 				
 			</div>
 		</div>

@@ -12,7 +12,7 @@
 			<br><br>
 			<div class="row">
 				<div class="col" >
-					<div class="card">
+					<div class="card shadow p-3 mb-5 bg-white rounded">
 						<div class="card-body">
 							<h1>Sangtian lotto</h1>
 							<p style="font-size:10px">สมัครสมาชิกใหม่</p>
@@ -48,16 +48,16 @@
 				<script src="resource/script.js"></script>	
 				<script src="resource/include/register_script.js"></script>			
 				<style>
-					@media (min-width:425px) {
-						.card{
-							width:400px;
-						}
+				@media (min-width:425px) {
+					.card{
+						width:400px;
 					}
-				</style>
-				<script type="text/javascript">
-					function go_login(){
-						window.location = "index.php";
-					}
-				</script>
-			</body>
-			</html>
+				}
+			</style>
+			<script type="text/javascript">
+				function go_login(){
+					window.location = "index.php";
+				}
+			</script>
+		</body>
+		</html>

@@ -9,28 +9,38 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v10.0&appId=156740843128977&autoLogAppEvents=1" nonce="khs2hvpO"></script> 	<br><br><br>
 	<center>
-	<div class="container">
-		<br><br>
-		<div class="row">
-			<div class="col" >
-				<div class="card">
-				   <div class="card-body">
-					<h1>Sangtian lotto</h1>
-					<p style="font-size:10px">Sangtian lotto</p>
-					<p class="badge badge-pill badge-warning text-light" >กรุณาเข้าสู่ระบบ</p>
-					<form style="width:60%">
-						  <div class="form-group">
-						    <input type="text" class="form-control" id="username" placeholder="username">
-						  </div>
-						 <div class="form-group">
-						    <input type="password" class="form-control" id="password" placeholder="รหัสผ่าน">
-						  </div>
-						  <button type="button" onClick="login()" class="btn btn-outline-primary" style="width:100%;">เข้าสู่ระบบ</button>
-						  <br><br>
-						  <div onlogin="checkLoginStateFB();" class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
-						  <br><br>
-						  <button type="button" onClick="go_register()" class="btn btn-outline-warning">สมัครสมาชิก</button>
-					</form>
+		<div class="container">
+			<br><br>
+			<div class="row ">
+				<div class="col" >
+					<div class="card shadow p-3 mb-5 bg-white rounded">
+						<div class="card-body">
+							<h1>Sangtian lotto</h1>
+							<p style="font-size:10px">เว็บแอพลิเคชั่นขายลอตเตอรี่ออนไลน์</p>
+							<p class="badge badge-pill badge-warning text-light" >กรุณาเข้าสู่ระบบ</p>
+							<form style="width:80%">
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-user"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control" id="username" placeholder="username">
+								</div>
+								<div class="input-group mb-2">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-unlock"></i>
+										</div>
+									</div>
+									<input type="password" class="form-control" id="password" placeholder="รหัสผ่าน">
+								</div><br>
+								<button type="button" onClick="login()" class="btn btn-outline-primary" style="width:60%;"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</button>
+								<br><br>
+								<div onlogin="checkLoginStateFB();" class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
+								<br><br>
+								<button type="button" onClick="go_register()" class="btn btn-outline-warning"><i class="fas fa-user-plus"></i> สมัครสมาชิก</button>
+							</form>
 					</div>
 				<div>
 			</div>
