@@ -56,7 +56,7 @@
 						echo "<div class='card-deck'>";
 						while(($row=$lotterySet->fetch_array())!=Null){ ?>
 							<div class="card" style="box-shadow: 5px 10px 8px #B9B9B9;">
-								<img class="card-img-top responsive_img" src="../images/item/<?php echo $row["img"]; ?>">
+								<img class="card-img-top" src="../images/item/<?php echo $row["img"]; ?>">
 								<div class="card-body" style="text-align:left;">
 									<h5 class="card-title" style="color:orange;font-size:25px;letter-spacing:5px;"><?php echo $row["number"]; ?></h5>
 									<p class="card-text text-success" style="font-size:12px;">( <?php echo Util::intToThai($row["number"]); ?> )</p>
