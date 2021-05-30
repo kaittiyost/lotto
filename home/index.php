@@ -69,7 +69,7 @@
 									</footer>
 								</div>
 								<div class="card-footer">
-										<a data-toggle="modal" 
+										<button data-toggle="modal" 
 												data-id="<?php echo $row["id"]; ?>"
 												data-quantity="<?php echo $row["stock"]; ?>" 
 												data-number="<?php echo $row["number"]; ?>"  
@@ -78,7 +78,7 @@
 												href="#DetailModal"
 												style="width: 70%;padding-top:10px;padding-bottom:10px;background:coral;">
 												<i class="fas fa-shopping-cart"></i> หยิบลงตระกร้า
-										</a>
+										</button>
 								</div>
 							</div>
 							<?php }  

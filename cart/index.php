@@ -13,7 +13,7 @@ include(__DIR__.'/../resource/include/menu.php');
 		overflow: hidden;
 		background-color: #f8f9fa!important;
 		position: fixed;
-		bottom: 0;
+		bottom:60;
 		width: 100%;
 
 	}
@@ -81,13 +81,13 @@ include(__DIR__.'/../resource/include/menu.php');
 if(!is_null($cart)){
 	?>
 	<div class="total">
-		<div class="row" style="padding: 10px">
+		<div class="row" style="padding:10px">
 			<div class="col-8">
 				<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getData->totalOncart()["total"]; ?>฿</b> </p>
 				<p  class="text text-dark" style="width:50%;margin:auto;margin-top: 0px; font-size: 10px;">ค่าธรรมเนียมใบละ 20฿</p>
 			</div>
-			<div class="col-4" style="">
-				<a class="btn btn-info text-light" id="pay_order">ชำระเงิน</a>
+			<div class="col-4" style="padding:0;padding-right:15px;">
+				<button class="btn btn-info text-light" style="margin:0;padding:10px 40px;width:100%;" id="pay_order">ชำระเงิน</button>
 			</div>
 		</div>
 	</div>

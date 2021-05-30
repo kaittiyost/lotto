@@ -70,7 +70,28 @@
 
 </style>
 <script>
+
     window.onload =()=>{
+        coutBucket();
+        makeBottomMenu();
+    }
+
+    function coutBucket(){
+        $.ajax({
+			method:"POST",
+			url:projectPath+"/resource/controller/cart_controller.php",
+			contentType:"application/x-www-form-urlencoded; charset=utf-8",
+			data:{"func":"cart_count"}
+        })
+        .done((response)=>{
+        response = JSON.parse(response);
+        if(parseInt(response.status)==1){
+            $("#cart_count").html(response.result.quan);
+        }
+        });
+    }
+
+    function makeBottomMenu(){
         let thisPage = "<?php echo $getData->getPageName(); ?>";
         switch(String(thisPage)){
             case "home" :
@@ -87,4 +108,8 @@
                 break;
         }
     }
+   $("a").click((e)=>{
+        Swal.fire({title:'โปรดรอซักครู่...',background:"#D2D2D2"});
+        Swal.showLoading();
+   });
 </script>

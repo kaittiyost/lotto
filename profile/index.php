@@ -29,7 +29,7 @@ $profile = $getData->profile();
 						<p style="text-align:left ;"><i class="fas fa-phone-alt"></i> ยังไม่ได้บันทึกหมายเลข <i class="fas fa-exclamation-circle" style="color:gold"></i></p> 
 					</div>
 					<div class="col-4">
-						<a href=""  data-toggle="modal" data-target=".bd-tel-modal-sm">เพิ่ม <i class="fas fa-plus-circle"></i></a>
+						<button class="btn btn-link" data-toggle="modal" data-target=".bd-tel-modal-sm">เพิ่ม <i class="fas fa-plus-circle"></i></button>
 					</div>
 				</div>
 				<hr>
@@ -42,7 +42,7 @@ $profile = $getData->profile();
 						<p style="text-align:left ;"><i class="fas fa-envelope"></i> ยังไม่ได้บันทึก Email <i class="fas fa-exclamation-circle" style="color:gold"></i></p> 
 					</div>
 					<div class="col-4">
-						<a href="" data-toggle="modal" data-target=".bd-email-modal-sm">เพิ่ม <i class="fas fa-plus-circle"></i></a>
+						<button class="btn btn-link" data-toggle="modal" data-target=".bd-email-modal-sm">เพิ่ม <i class="fas fa-plus-circle"></i></button>
 					</div>
 				</div>
 
@@ -52,7 +52,7 @@ $profile = $getData->profile();
 		</div>
 		<div class="row">
 		<div class="col">
-			<a href="#edit_password" class="btn btn-outline-danger" style="width :100%" data-toggle="modal" data-target=".bd-password-modal-sm"><i class="far fa-edit"></i> เปลี่ยนรหัสผ่าน</a>
+			<button href="#edit_password" class="btn btn-outline-danger" style="width :100%" data-toggle="modal" data-target=".bd-password-modal-sm"><i class="far fa-edit"></i> เปลี่ยนรหัสผ่าน</button>
 		</div>
 	</div>
 	<br>
@@ -63,10 +63,9 @@ $profile = $getData->profile();
 			</div>
 		</div>
 	</div>
-
 	<!-- modal add email -->
 	<div class="modal fade bd-email-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-sm modal-dialog-centered">
 
 			<div class="modal-content">
 				<div class="modal-header">
@@ -87,8 +86,7 @@ $profile = $getData->profile();
 	</div>
 	<!-- modal add tel -->
 	<div class="modal fade bd-tel-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-
+		<div class="modal-dialog modal-sm modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle"></i> เพิ่มหมายเลขโทรศัพท์</h5>
@@ -108,7 +106,7 @@ $profile = $getData->profile();
 	</div>
 	<!-- modal change password -->
 	<div class="modal fade bd-password-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-sm modal-dialog-centered">
 
 			<div class="modal-content">
 				<div class="modal-header">
