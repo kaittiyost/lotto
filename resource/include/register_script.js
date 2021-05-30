@@ -29,7 +29,7 @@ function check_username(username){
 }
 
 function check_confirm_password(password,confirm_password){
-	if(password.length < 8 || confirm_password.length < 8){
+	if(password.length < 8 && confirm_password.length < 8){
 		$('#alert_password').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> รหัสผ่านอย่างน้อย 8 ตัวอักษร</p>');
 		return '0';
 	}else{
@@ -118,5 +118,77 @@ function check_email(email){
 					return '1';
 				}
 			});
+
+}
+
+function change_password() {
+	let email_or_tel = $('#email_or_tel').val();
+	let new_password = $('#password').val();
+	let confirm_new_password = $('#confirm_password').val();
+
+	$.ajax({
+		method:"POST",
+		url:projectPath+"/resource/controller/check_register_controller.php",
+		contentType:"application/x-www-form-urlencoded; charset=utf-8",
+		data:{"email_or_tel":email_or_tel,"func":"check_email_or_tel"},
+		success: function (rs){
+
+			//console.log('email or tel >> '+rs);
+			if(rs == 1){
+				$('#alert_email_or_tel').html('<p style="color:green"><i class="fas fa-check-circle"></i></p>');
+				//console.log('email ใช้งานได้');
+				let password_status = check_confirm_password(new_password,confirm_new_password);
+				//console.log('pass >> '+password_status);
+				if(password_status == '1' && rs == '1'){
+					//console.log('OK');
+					Swal.fire({
+						title: 'คุณต้องการบันทึกใช่หรือไม่?',
+						text: 'กดปุ่ม "บันทึก" เพื่อยืนยัน',
+						showDenyButton: true,
+						showCancelButton: true,
+						confirmButtonText: `บันทึก`,
+						denyButtonText: `ยกเลิก`,
+					}).then((result) => {
+						if (result.isConfirmed) {
+							$.ajax({
+								method:"POST",
+								url:projectPath+"/resource/controller/check_register_controller.php",
+								contentType:"application/x-www-form-urlencoded; charset=utf-8",
+								data:{"email_or_tel":email_or_tel,"password":new_password,"func":"update_password"},
+								success: function (rs){
+									console.log('rsssssss >'+rs);
+									if(rs== '0'){
+										Swal.fire({
+											icon: 'error',
+											title: 'เกิดข้อผิดพลาด!',
+											text: 'เปลี่ยนหัสผ่านไม่ได้!'
+										});
+									}else if(rs== '1'){
+										Swal.fire({
+											icon: 'success',
+											title: 'ยินดีด้วย!',
+											text: 'เปลี่ยนรหัสผ่านสำเร็จแล้ว'
+
+										}).then((result) => {
+											location.href = '/';
+										})
+
+									}else{
+								//console.log('someting wrong!'+rs);
+							}
+						}
+					});
+						} else if (result.isDenied) {
+							Swal.fire('ถูกยกเลิกโดยผู้ใช้', '', 'info')
+						}
+					});
+				}else{
+					//console.log('5555');
+				}
+			}else{
+				$('#alert_email_or_tel').html('<p style="color:red"><i class="fas fa-exclamation-triangle"></i> ไม่พบผู้ใช้งาน</p>');
+			}
+		}
+	});
 
 }

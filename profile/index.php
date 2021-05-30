@@ -15,7 +15,7 @@ $profile = $profileGetData->profile();
 <body>
 	<br><br><br>
 	<div class="container" style="text-align:center;">
-
+		<a href="/home/" class="btn btn-outline-info" style="width: 100%;text-align: center"><i class="fas fa-store"></i> ไปร้านค้าลอตเตอรี่ </a><br><br>
 		<div class="alert alert-info text-dark" >
 			<h2>Profile</h2>
 		</div>
@@ -47,7 +47,7 @@ $profile = $profileGetData->profile();
 				</div>
 
 			<?php }else{ ?>
-				<p style="text-align:left"><i class="fas fa-phone-alt">  <?php echo $profile["user_tel"]; ?></i></p><hr>
+				<p style="text-align:left"><i class="fas fa-envelope"></i> <?php echo $profile["user_email"]; ?></p><hr>
 			<?php } ?>
 		</div>
 		<div class="row">
@@ -77,7 +77,7 @@ $profile = $profileGetData->profile();
 				</div>
 				<div class="modal-body">
 					<div id="alert_email"></div>
-					<input type="email" name="email" class="form-control" placeholder="กรอก Email ของคุณ">
+					<input type="email" name="email" id="email" class="form-control" placeholder="กรอก Email ของคุณ">
 				</div>
 				<div class="modal-footer">
 					<a  class="btn btn-outline-success" id="btn_add_email">บันทึก</a>
@@ -118,13 +118,14 @@ $profile = $profileGetData->profile();
 					</button>
 				</div>
 				<div class="modal-body">
-					<div id="alert_tel"></div>
-					<input type="text" id="old_password" class="form-control" placeholder="รหัสผ่านเดิม"><br>
-					<input type="text" id="new_password" class="form-control" placeholder="รหัสผ่านใหม่"><br>
-					<input type="text" id="confirm_new_password" class="form-control" placeholder="ยืนยันรหัสผ่านใหม่">
+					<div id="alert_old_password"></div>
+					<input type="password" id="old_password" class="form-control" placeholder="รหัสผ่านเดิม"><br>
+					<div id="alert_password"></div>
+					<input type="password" id="new_password" class="form-control" placeholder="รหัสผ่านใหม่"><br>
+					<input type="password" id="confirm_new_password" class="form-control" placeholder="ยืนยันรหัสผ่านใหม่">
 				</div>
 				<div class="modal-footer">
-					<a type="button" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
+					<a class="btn btn-outline-success" id="btn_change_password">บันทึก</a>
 				</div>
 			</div>
 		</div>

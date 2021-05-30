@@ -24,12 +24,12 @@ class EexData{
         try{
             if(isset($_SESSION["loginStatus"])){
                 $conn = DB::getConnect();
-    
+
                 $name = htmlentities($conn->escape_string( $_POST['name']));
                 $lastname = htmlentities($conn->escape_string( $_POST['lastname']));
                 $tel = htmlentities($conn->escape_string( $_POST['tel']));
                 $email = htmlentities($conn->escape_string( $_POST['email']));
-    
+
                 $sql = "UPDATE user SET  USER_NAME ='".$name."' , USER_LASTNAME ='".$lastname."' , USER_TEL = '".$tel."' , USER_EMAIL = '".$email."' WHERE USER_ID = ".$_SESSION['userData']['USER_ID'];
                 $result = $conn->query($sql);
                 if($result){
@@ -40,31 +40,73 @@ class EexData{
             }else{
               echo 'non login';
           }
-            }catch(Exception $e){
-                echo "error -->".$e->getMessage();
-            }
+      }catch(Exception $e){
+        echo "error -->".$e->getMessage();
     }
-    
-    public function add_tel(){
-       try{
-        if(isset($_SESSION["loginStatus"])){
-                $conn = DB::getConnect();
-                $tel = htmlentities($conn->escape_string( $_POST['tel']));
+}
+
+public function add_tel(){
+   try{
+    if(isset($_SESSION["loginStatus"])){
+        $conn = DB::getConnect();
+        $tel = htmlentities($conn->escape_string( $_POST['tel']));
         
-                $sql = "UPDATE user SET  USER_TEL = '".$tel."' WHERE USER_ID = ".$_SESSION['userData']['USER_ID'];
-                $result = $conn->query($sql);
-                if($result){
-                    echo 1;
-                }else{
-                    echo 0;
-                }
-            }else{
-                echo 'non login';
-            }
-        }catch(Exception $e){
-            echo "error -->".$e->getMessage();
+        $sql = "UPDATE user SET  USER_TEL = '".$tel."' WHERE USER_ID = ".$_SESSION['userData']['USER_ID'];
+        $result = $conn->query($sql);
+        if($result){
+            echo 1;
+        }else{
+            echo 0;
         }
+    }else{
+        echo 'non login';
     }
+}catch(Exception $e){
+    echo "error -->".$e->getMessage();
+}
+}
+public function add_email(){
+   try{
+    if(isset($_SESSION["loginStatus"])){
+        $conn = DB::getConnect();
+        $email = htmlentities($conn->escape_string( $_POST['email']));
+        
+        $sql = "UPDATE user SET  USER_EMAIL = '".$email."' WHERE USER_ID = ".$_SESSION['userData']['USER_ID'];
+        $result = $conn->query($sql);
+        if($result){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }else{
+        echo 'non login';
+    }
+}catch(Exception $e){
+    echo "error -->".$e->getMessage();
+}
+}
+
+public function update_password(){
+   try{
+    if(isset($_SESSION["loginStatus"])){
+        $conn = DB::getConnect();
+        $new_password = htmlentities($conn->escape_string( $_POST['new_password']));
+        $password_hash = hash("sha256",$new_password,false);
+
+        $sql = "UPDATE user SET  USER_PASSWORD = '".$password_hash."' WHERE USER_ID = ".$_SESSION['userData']['USER_ID'];
+        $result = $conn->query($sql);
+        if($result){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }else{
+        echo 'non login';
+    }
+}catch(Exception $e){
+    echo "error -->".$e->getMessage();
+}
+}
 }
 
 class API{
@@ -72,11 +114,15 @@ class API{
 }
 
 if(isset($_POST["func"])){
-    
+
     if($_POST["func"]== "update_profile"){
        // update_profile();
     }else  if($_POST["func"]== "add_tel"){
         EexData::add_tel();
+    }else  if($_POST["func"]== "add_email"){
+        EexData::add_email();
+    }else  if($_POST["func"]== "update_password"){
+        EexData::update_password();
     }
 }
 ?>
