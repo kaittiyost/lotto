@@ -18,18 +18,25 @@
   </a>
 </nav>
 <style>
-.nav-menu-bottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 55px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-    display: flex;
-    overflow-x: auto;
-    z-index:5000;
+@media (min-width:762px) {
+    .nav-menu-bottom {
+        display:none;
+    }
 }
-
+@media (max-width:762px) {
+    .nav-menu-bottom {
+        display:block;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 55px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+        background-color: #ffffff;
+        display: flex;
+        overflow-x: auto;
+        z-index:5000;
+    }
+}
 .nav__link {
     display: flex;
     flex-direction: column;
