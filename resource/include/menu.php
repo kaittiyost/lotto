@@ -3,11 +3,11 @@
     <div class="arrow"></div>
   </div>
   <div class="dropdown">
-    <a href="/home/"><p>ร้านค้าลอตเตอรี่ <span class="menu-span fas fa-store"></span></p></a>
-    <a  href="/cart/"><p>ตระกร้าสินค้า <span class="menu-span fas fa-shopping-basket"></span> <span class="badge badge-pill badge-danger" id="cart_count">0</span></p></a>
-    <a  href="/purchase_list/"><p>การสั่งซื้อ <span class="menu-span fas fa-bars"></span></p></a>
-    <a  href="/profile/"><p>โปรไฟล์ <span class="menu-span fas fa-user"></span></p></a>
-    <p id="logout_btn">ออกจากระบบ <span class="menu-span fa fa-sign-out"></span></p>
+    <a href="/home/"><p class="p-menu">ร้านค้าลอตเตอรี่ <span class="menu-span fas fa-store"></span></p></a>
+    <a  href="/cart/"><p class="p-menu">ตระกร้าสินค้า <span class="menu-span fas fa-shopping-basket"></span> <span class="badge badge-pill badge-danger" id="cart_count">0</span></p></a>
+    <a  href="/purchase_list/"><p class="p-menu">การสั่งซื้อ <span class="menu-span fas fa-bars"></span></p></a>
+    <a  href="/profile/"><p class="p-menu">โปรไฟล์ <span class="menu-span fas fa-user"></span></p></a>
+    <p class="p-menu" id="logout_btn">ออกจากระบบ <span class="menu-span fa fa-sign-out"></span></p>
   </div>
 </div>
 <br>
@@ -20,8 +20,8 @@
     .down{max-height:250px}
     .arrow{border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:10px solid #fff;position:absolute;right:20px;bottom:-24px;display:none}
     .arrow.gone{display:block}
-    p{padding:15px 14px;margin:0;transition:all .1s}
-    p:hover{background:coral;-webkit-transform:scale(1.05);color:rgba(255,255,255,0.8);box-shadow:0 0 30px -10px #000}
+    .p-menu{padding:15px 14px;margin:0;transition:all .1s}
+    .p-menu:hover{background:coral;-webkit-transform:scale(1.05);color:rgba(255,255,255,0.8);box-shadow:0 0 30px -10px #000}
     a{color:#505050}
 </style>
 <script>
