@@ -1,34 +1,41 @@
-<div style="background-color:#E3E3E3;height:50px;position:fixed;width:100%;z-index:1000;font-size:20px;opacity:1;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Sangtian lotto</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/home/"><i class="fas fa-store"></i> ร้านค้าลอตเตอรี่ <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/profile/"><i class="fas fa-user"></i> โปรไฟล์</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cart/"><i class="fas fa-shopping-basket"></i> ตะกร้าของฉัน <span class="badge badge-info" id="cart_count">0</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/purchase_list/"><i class="fas fa-bars"></i> การซื้อของฉัน</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" id="logout_btn"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
-      </li>
-    </ul>
-    <span class="navbar-text">
-      
-    </span>
+<div class="menu">
+  <div class="title" onclick="openDropDownMenu()">แสงทองขายเลข<span class="fa fa-bars"></span>
+    <div class="arrow"></div>
   </div>
-</nav>
+  <div class="dropdown">
+    <a href="/home/"><p>ร้านค้าลอตเตอรี่ <span class="fas fa-store"></span></p></a>
+    <a  href="/cart/"><p>ตระกร้าสินค้า <span class="fas fa-shopping-basket"></span> <span class="badge badge-pill badge-danger" id="cart_count">0</span></p></a>
+    <a  href="/purchase_list/"><p>การสั่งซื้อ <span class="fas fa-bars"></span></p></a>
+    <a  href="/profile/"><p>โปรไฟล์ <span class="fas fa-user"></span></p></a>
+    <p id="logout_btn">ออกจากระบบ <span class="fa fa-sign-out"></span></p>
+  </div>
 </div>
+<br>
+<!-- MENU STYLE -->
+<style>
+    .menu{width:80%;cursor:pointer;z-index:3000;position:fixed;left:10%;}
+    .title{width:100%;box-sizing:border-box;background:#fff;padding:14px;border-radius:4px;position:relative;box-shadow:0 0 40px -10px #000;color:#505050}
+    span{float:right;font-size:18px!important}
+    .dropdown{width:100%;background:#fff;border-radius:4px;box-shadow:0 0 40px -10px #000;color:#505050;margin-top:24px;max-height:0;h;overflow:hidden;transition:all .5s}
+    .down{max-height:250px}
+    .arrow{border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:10px solid #fff;position:absolute;right:20px;bottom:-24px;display:none}
+    .arrow.gone{display:block}
+    p{padding:15px 14px;margin:0;transition:all .1s}
+    p:hover{background:coral;-webkit-transform:scale(1.05);color:rgba(255,255,255,0.8);box-shadow:0 0 30px -10px #000}
+    a{color:#505050}
+</style>
 <script>
+  function openDropDownMenu() {
+  document.getElementsByClassName('dropdown')[0].classList.toggle('down');
+  document.getElementsByClassName('arrow')[0].classList.toggle('gone');
+  if (document.getElementsByClassName('dropdown')[0].classList.contains('down')) {
+    setTimeout(function() {
+      document.getElementsByClassName('dropdown')[0].style.overflow = 'visible'
+    }, 500)
+  } else {
+    document.getElementsByClassName('dropdown')[0].style.overflow = 'hidden'
+  }
+}
   window.onload = ()=>{
     $.ajax({
 			method:"POST",

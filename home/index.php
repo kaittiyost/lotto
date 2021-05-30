@@ -4,6 +4,13 @@
 	include(__DIR__.'/../resource/include/util.php');
 ?>
 <!DOCTYPE html>
+<style>
+	@media (min-width:425px) {
+		.container{
+			width:100%;
+		}
+	}
+</style>
 <html>
 <head>
 	<?php 
@@ -66,9 +73,9 @@
 												data-quantity="<?php echo $row["stock"]; ?>" 
 												data-number="<?php echo $row["number"]; ?>"  
 												data-img="<?php echo $row["img"]; ?>" 
-												class="open-quan btn btn-primary" 
+												class="open-quan btn text-white" 
 												href="#DetailModal"
-												style="width: 70%;padding-top:10px;padding-bottom:10px;">
+												style="width: 70%;padding-top:10px;padding-bottom:10px;background:coral;">
 												<i class="fas fa-shopping-cart"></i> หยิบลงตระกร้า
 										</a>
 								</div>
