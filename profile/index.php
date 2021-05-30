@@ -1,7 +1,7 @@
 <?php 
 include(__DIR__."/../resource/controller/profile_controller.php");
-$profileGetData = new GetData();
-$profile = $profileGetData->profile(); 
+$getData = new GetData();
+$profile = $getData->profile(); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -133,5 +133,8 @@ $profile = $profileGetData->profile();
 
 	<script src='../resource/script.js'></script>
 	<script src='../resource/include/profile_script.js'></script>
+	<?php 
+		include(__DIR__.'/../resource/include/footer_menu.php');
+	?>
 </body>
 </html>

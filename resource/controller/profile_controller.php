@@ -17,6 +17,10 @@ class GetData{
             echo "error->".$e->getMessage();
         }
     }
+    public function getPageName(){
+        $this->pageName = "profile";
+        return $this->pageName;
+    }
 }
 
 class EexData{

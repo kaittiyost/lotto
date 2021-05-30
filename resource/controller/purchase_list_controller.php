@@ -39,73 +39,77 @@ class GetData{
         }else{
             echo "non_login";
         }
-    }catch(Exception $e){
-        echo $e->getMessage();
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
     }
-}
 
-public static function payment_list($sale_id){
-    try{
-        if(isset($_SESSION["loginStatus"])){
+    public static function payment_list($sale_id){
+        try{
+            if(isset($_SESSION["loginStatus"])){
+                $conn = DB::getConnect();
+                $sql = "SELECT sales.id as s_id , \n".
+                "SUM(sales_det.price) as price ,\n".
+                "SUM(sales_det.quan) as quan , \n".
+                "DATE(sales.reg_date) as date,\n".
+                "img_confirm.img as slip_img , ".
+                "TIME_FORMAT(sales.reg_date,'%H:%i') as time ,\n".
+                "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline,\n".
+                "img_confirm.img , \n".
+                "sales.`status`\n".
+                "FROM sales , sales_det , img_confirm\n".
+                "WHERE sales.id=".$sale_id."\n".
+                "AND sales.id = sales_det.sale_id\n".
+                "AND sales.id = img_confirm.sale_id";
+
+                $result = $conn->query($sql);
+                return (($conn->affected_rows)<=0)?Null:$result;
+
+            }else{
+                echo "non_login";
+            }
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
+    }
+
+    public static function lottery_set_by_sale_id($sale_id){
+        try{
             $conn = DB::getConnect();
-            $sql = "SELECT sales.id as s_id , \n".
-            "SUM(sales_det.price) as price ,\n".
-            "SUM(sales_det.quan) as quan , \n".
-            "DATE(sales.reg_date) as date,\n".
-            "img_confirm.img as slip_img , ".
-            "TIME_FORMAT(sales.reg_date,'%H:%i') as time ,\n".
-            "ADDTIME(TIME_FORMAT(sales.reg_date,'%H:%i'), '0:30:0') as deadline,\n".
-            "img_confirm.img , \n".
-            "sales.`status`\n".
-            "FROM sales , sales_det , img_confirm\n".
-            "WHERE sales.id=".$sale_id."\n".
-            "AND sales.id = sales_det.sale_id\n".
-            "AND sales.id = img_confirm.sale_id";
+            $sql = "SELECT sales.id , \n".
+            "lottery.number , sales_det.quan\n".
+            "FROM \n".
+            "sales\n".
+            "LEFT JOIN sales_det ON sales.id = sales_det.sale_id\n".
+            "LEFT JOIN lottery ON sales_det.lottery_id = lottery.id\n".
+            "WHERE sales.id = ".$sale_id;
 
             $result = $conn->query($sql);
             return (($conn->affected_rows)<=0)?Null:$result;
-
-        }else{
-            echo "non_login";
+        }catch(Exception $e){
+            echo $e->getMessage();
         }
-    }catch(Exception $e){
-        echo $e->getMessage();
     }
-}
+    public static function find_max_sale_id(){
+        try{
+        if(isset($_SESSION["loginStatus"])){
+                $conn = DB::getConnect();
+                $sql = "SELECT MAX(sales.id) as max_id FROM sales";
 
-public static function lottery_set_by_sale_id($sale_id){
-    try{
-        $conn = DB::getConnect();
-        $sql = "SELECT sales.id , \n".
-        "lottery.number , sales_det.quan\n".
-        "FROM \n".
-        "sales\n".
-        "LEFT JOIN sales_det ON sales.id = sales_det.sale_id\n".
-        "LEFT JOIN lottery ON sales_det.lottery_id = lottery.id\n".
-        "WHERE sales.id = ".$sale_id;
-
-        $result = $conn->query($sql);
-        return (($conn->affected_rows)<=0)?Null:$result;
-    }catch(Exception $e){
-        echo $e->getMessage();
+                $result = $conn->query($sql);
+                $max_id = $result->fetch_array();
+                echo $max_id['max_id'];
+            }else{
+                echo "non_login";
+            }
+        }catch(Exception $e){
+            echo $e->getMessage();
+        }
     }
-}
-public static function find_max_sale_id(){
-    try{
-       if(isset($_SESSION["loginStatus"])){
-        $conn = DB::getConnect();
-        $sql = "SELECT MAX(sales.id) as max_id FROM sales";
-
-        $result = $conn->query($sql);
-        $max_id = $result->fetch_array();
-        echo $max_id['max_id'];
-    }else{
-        echo "non_login";
+    public function getPageName(){
+        $this->pageName = "purchase";
+        return $this->pageName;
     }
-}catch(Exception $e){
-    echo $e->getMessage();
-}
-}
 }
 
 class ExeData{

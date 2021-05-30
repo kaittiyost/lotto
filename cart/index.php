@@ -1,7 +1,7 @@
 <?php 
 include(__DIR__."/../resource/controller/cart_controller.php");
-$getDataProfile = new GetData();
-$cart = $getDataProfile->cart();
+$getData = new GetData();
+$cart = $getData->cart();
 include(__DIR__.'/../resource/include/script.html');
 include(__DIR__.'/../resource/include/menu.php');
 ?>
@@ -83,7 +83,7 @@ if(!is_null($cart)){
 	<div class="total">
 		<div class="row" style="padding: 10px">
 			<div class="col-8">
-				<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getDataProfile->totalOncart()["total"]; ?>฿</b> </p>
+				<p class="text text-dark" style="width:50%;margin:auto;margin-top: 15px; font-size: 20px;">ทั้งหมด <b><?php echo $getData->totalOncart()["total"]; ?>฿</b> </p>
 				<p  class="text text-dark" style="width:50%;margin:auto;margin-top: 0px; font-size: 10px;">ค่าธรรมเนียมใบละ 20฿</p>
 			</div>
 			<div class="col-4" style="">
@@ -93,5 +93,8 @@ if(!is_null($cart)){
 	</div>
 <?php } ?>
 <script src='../resource/script.js'></script>
+<?php 
+	include(__DIR__.'/../resource/include/footer_menu.php');
+?>
 </body>
 </html>

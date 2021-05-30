@@ -1,13 +1,13 @@
 <?php
 include(__DIR__ . "/../resource/controller/purchase_list_controller.php");
-$payment_GetData = new GetData();
+$getData = new GetData();
 $sale_id = "";
 if(!empty($_POST['sale_id'])){
 	$sale_id = $_POST["sale_id"];
 
 }
-$payment_data = $payment_GetData->payment_list($sale_id);
-$lottery_data = $payment_GetData->lottery_set_by_sale_id($sale_id);
+$payment_data = $getData->payment_list($sale_id);
+$lottery_data = $getData->lottery_set_by_sale_id($sale_id);
 ?>
 <!DOCTYPE html>
 <html>
@@ -141,7 +141,8 @@ $lottery_data = $payment_GetData->lottery_set_by_sale_id($sale_id);
 
 			<script src='../resource/script.js'></script>
 			<script src='../resource/include/purchase_script.js'></script>
-
+			<?php 
+				include(__DIR__.'/../resource/include/footer_menu.php');
+			?>
 		</body>
-
-		</html>
+</html>

@@ -20,6 +20,11 @@
                 echo $e->getMessage();
             }
         }
+
+        public function getPageName(){
+            $this->pageName = "home";
+            return $this->pageName;
+        }
     }
 
     class ExeData{

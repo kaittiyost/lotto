@@ -67,6 +67,11 @@
                  echo "error".$e->getMessage();
             }
         }
+
+        public function getPageName(){
+            $this->pageName = "cart";
+            return $this->pageName;
+        }
     }
     class ExeData{
         public function del($lotId){

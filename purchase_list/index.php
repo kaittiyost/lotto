@@ -1,7 +1,7 @@
 <?php 
 include(__DIR__."/../resource/controller/purchase_list_controller.php");
-$purchase_list_GetData = new GetData();
-$purchase_list = $purchase_list_GetData->purchase_list(); 
+$getData = new GetData();
+$purchase_list = $getData->purchase_list(); 
 ?>
 <!DOCTYPE html>
 <html>
@@ -130,8 +130,9 @@ transition: 0.3s all ease-out;
 					<?php }} ?>
 					<br>
 				</div>
-
-
 				<script src='../resource/script.js'></script>
+				<?php 
+					include(__DIR__.'/../resource/include/footer_menu.php');
+				?>
 			</body>
 			</html>

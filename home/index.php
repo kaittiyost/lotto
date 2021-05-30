@@ -2,6 +2,7 @@
 	include(__DIR__."/../resource/controller/home_controller.php");
 	include(__DIR__.'/../resource/include/script.html');
 	include(__DIR__.'/../resource/include/util.php');
+	$getData = new GetData();
 ?>
 <!DOCTYPE html>
 <style>
@@ -47,7 +48,7 @@
 					if(isset($_GET["s"])){
 						$key = $_GET["s"];
 					}
-					$lotterySet = GetData::lottery($key);
+					$lotterySet = $getData->lottery($key);
 					$i = 0;
 					if(is_null($lotterySet)){ ?>
 						<h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1>
@@ -132,5 +133,8 @@
 			</div>
 		</div>
 		<script src='../resource/script.js'></script>
+		<?php 
+			include(__DIR__.'/../resource/include/footer_menu.php');
+		?>
 	</body>
 	</html>
