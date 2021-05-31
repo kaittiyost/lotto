@@ -8,24 +8,37 @@ include(__DIR__.'/../resource/include/menu.php');
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-	.total {
-		overflow: hidden;
-		background-color: #f8f9fa!important;
-		position: fixed;
-		bottom:60;
-		width: 100%;
+<style type="text/css">
+	@media (max-width:700px){
+		.total {
+			overflow: hidden;
+			background-color: #f8f9fa!important;
+			position: fixed;
+			bottom:60;
+			width: 100%;
+		}
+		.total button {
+			margin:0;
+			padding:10px 40px;
+			width:100%;
+		}
+	}
+	@media (min-width:702px){
+		.total {
+			overflow: hidden;
+			background-color: #f8f9fa!important;
+			position: fixed;
+			left:250px;
+			bottom:0;
+			width: 60%;
+		}
+		.total button {
+			margin:0;
+			padding:10px 40px;
+			width:100%;
+		}
+	}
 
-	}
-	.total a {
-		float: left;
-		display: block;
-		color: black;
-		text-align: center;
-		padding: 14px 16px;
-		text-decoration: none;
-		font-size: 17px;
-	}
 </style>
 
 <title>ตระกร้าสินค้า</title>
@@ -87,7 +100,7 @@ if(!is_null($cart)){
 				<p  class="text text-dark" style="width:50%;margin:auto;margin-top: 0px; font-size: 10px;">ค่าธรรมเนียมใบละ 20฿</p>
 			</div>
 			<div class="col-4" style="padding:0;padding-right:15px;">
-				<button class="btn btn-info text-light" style="margin:0;padding:10px 40px;width:100%;" id="pay_order">ชำระเงิน</button>
+				<button class="btn btn-info text-light" id="pay_order">ชำระเงิน</button>
 			</div>
 		</div>
 	</div>

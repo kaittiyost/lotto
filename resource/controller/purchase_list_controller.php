@@ -115,64 +115,61 @@ class GetData{
 class ExeData{
     public function add_slip(){
         try {
-         $conn = DB::getConnect();
-         if(isset($_SESSION["loginStatus"])){
-            if(isset($_FILES['img'])){
-                if($_FILES['img']['error']==0){
-                    if($_FILES['img']['type']!='image/jpeg' && $_FILES['img']['type']!='image/png'){
-                        echo 'file not jpg!';
-                    }else{
-                        $img = $_FILES['img'];
-                        $folder = 'slip';
-                        $imgName = 'SLIP'.date("d_m_Y")."SID".$_POST['sale_id'].'.'.explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];;
-                        $imgOnServer = __DIR__."/../../images/slip/".$imgName;
-                           //   echo 'img name = '.$imgName;
-                        if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
-                            $sql = "UPDATE `rotto`.`img_confirm` SET `img` = '".$imgName."', `date_upload` = '".$_POST['date_upload']."', `time_upload` = '".$_POST['time_upload']."', `bank_upload` = '".$_POST['bank']."' WHERE `sale_id` = ".$_POST['sale_id'];
-                            $result = $conn->query($sql);
-                            if($result){
-                                echo 1;
+                if(isset($_SESSION["loginStatus"])){
+                    $conn = DB::getConnect();
+                    $sales_id  = htmlentities($conn->escape_string($_POST['sale_id'])); 
+                    $sql = "SELECT *,TIMESTAMPDIFF(MINUTE,reg_date,CURRENT_TIMESTAMP) as 'use_time'\n".
+                            "FROM sales\n".
+                            "WHERE id =".$sales_id;
+                    $salesData = $conn->query($sql)->fetch_array();
+                    if(intval($salesData["use_time"])>=30){
+                        $this->del_order($sales_id);
+                        echo "time_out";
+                    }else if(intval($salesData["use_time"])<30){
+                        if($_FILES['img']['error']==0){
+                            if($_FILES['img']['type']!='image/jpeg' && $_FILES['img']['type']!='image/png'){
+                                    echo 'file_not_jpg';
                             }else{
-                                echo 0;
+                                    $img = $_FILES['img'];
+                                    $folder = 'slip';
+                                    $imgName = 'SLIP'.date("d_m_Y")."SID".$sales_id.'.'.explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];;
+                                    $imgOnServer = __DIR__."/../../images/slip/".$imgName;
+                                    if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
+                                        $sql = "UPDATE `rotto`.`img_confirm` SET `img` = '".$imgName."', `date_upload` = '".$_POST['date_upload']."', `time_upload` = '"
+                                                .$_POST['time_upload']."', `bank_upload` = '".$_POST['bank']."' WHERE `sale_id` = ".$sales_id;
+                                        $result = $conn->query($sql);
+                                        echo ($result)?"ok":"0";
+
+                                    }
                             }
                         }else{
-
+                            echo 'upload error!';
                         }
-                    }
+                    } 
                 }else{
-                    echo 'upload error!';
+                    echo "non_login";
                 }
-            }   
-
-        }else{
-            echo "non_login";
+        } catch (Exception $e) {
+            echo "error-->".$e->getMessage();
         }
-    } catch (Exception $e) {
-        echo "error-->".$e->getMessage();
     }
-}
 
-function del_order(){
-    try{
-        if(isset($_SESSION["loginStatus"])){
-            $conn = DB::getConnect();
-            $sale_id = $_POST['sale_id'];
-            $sql_del_img = "DELETE FROM `rotto`.`img_confirm` WHERE `sale_id` = ".$sale_id;
-           // $sql_sale_det = "DELETE FROM `rotto`.`sales_det` WHERE `sale_id` = ".$sale_id ;
-            $sql_sale = "DELETE FROM `rotto`.`sales` WHERE `id` = ".$sale_id;
-
-            $conn->query($sql_del_img);
-          //  $conn->query($sql_sale_det);
-            $conn->query($sql_sale);
-
-            echo '1';
-        }else{
-          echo 'non login';
-      }
-  }catch(Exception $e){
-    echo "error -->".$e->getMessage();
-}
-}
+    function del_order($sale_id){
+        try{
+            if(isset($_SESSION["loginStatus"])){
+                $conn = DB::getConnect();
+                $sale_id  = htmlentities($conn->escape_string($sale_id)); 
+                $sql_del_img = "DELETE FROM `rotto`.`img_confirm` WHERE `sale_id` = ".$sale_id;
+                $sql_sale = "DELETE FROM `rotto`.`sales` WHERE `id` = ".$sale_id;
+                $conn->query($sql_del_img);
+                return ( $conn->query($sql_sale))?1:0;
+            }else{
+            return 'non login';
+        }
+        }catch(Exception $e){
+            return "error -->".$e->getMessage();
+        }
+    }
 }
 
 if(isset($_POST["func"])){
@@ -181,7 +178,7 @@ if(isset($_POST["func"])){
     $exeData->add_slip();
 }else  if($_POST["func"]== "del_order"){
     $exeData = new ExeData();
-    $exeData->del_order();
+    $exeData->del_order($_POST['sale_id']);
 }else  if($_POST["func"]== "find_max_sale_id"){
     $getData = new GetData();
     $getData->find_max_sale_id();
