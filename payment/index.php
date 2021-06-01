@@ -8,6 +8,7 @@ if(!empty($_POST['sale_id'])){
 }
 $payment_data = $getData->payment_list($sale_id);
 $lottery_data = $getData->lottery_set_by_sale_id($sale_id);
+$bank_account = $getData->bank_account();
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,15 +25,21 @@ $lottery_data = $getData->lottery_set_by_sale_id($sale_id);
 	<br><br><br>
 	<div class="container">
 		<a href="/purchase_list/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a><br><br>
+<?php
+if($bank_account == null){
 
+}
+	else{
+ while($bank = $bank_account->fetch_array()){ ?>
 		<div class="alert alert-info text-dark" style="width:100%">
 			<div class="alert-body">
 				<h2>ช่องทางการชำระเงิน</h2>
-				<label>ธนาคารกรุงสุโขทัย</label><br>
-				<label>เลขบัญชี 675 346 33452</label><br>
-				<label>นาย อิอิ คริคริ</label>
+				<label>ธนาคาร<?php echo $bank['name'] ?> (<?php echo $bank['bank_type'] ?>)</label><br>
+				<label>เลขบัญชี <?php echo $bank['bank_account_id'] ?></label><br>
+				<label><?php echo $bank['bank_account_name'] ?></label>
 			</div>
 		</div>
+	<?php }}?>
 		<?php if(is_null($payment_data)){?>
 			<label style="margin:auto;width:50%;text-align: center;">ไม่ได้เลือกรายการซื้อ</label>
 		<?php }else{ 
