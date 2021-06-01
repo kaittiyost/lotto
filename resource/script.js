@@ -149,7 +149,8 @@ function delBucket(lot_id){
 						title:"ลบสำเร็จ",
 						icon:"success"
 					});
-					$("#lottery_list").load(location.href+" #lottery_list_in");
+					$("#all_body_content").load(location.href+" #in_body_content");
+
 				}
 			})
 
