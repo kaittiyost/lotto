@@ -47,7 +47,6 @@
 						</div>
 					</div>
 				</div>
-
 				<script src="resource/script.js"></script>			
 				<style>
 				@media (min-width:425px) {
@@ -80,7 +79,6 @@
 						"data":{"fb_id":data.id,"fb_name":data.name,"func":"loginFb"}
 					})
 					.done((response)=>{
-						console.log(response);
 						if(String(response)==="new_user"||String(response)==="old_user"){
 							location.href = projectPath+'/home';
 						}

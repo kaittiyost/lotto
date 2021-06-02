@@ -29,12 +29,14 @@
                                     <button class="btn btn-primary float-right" id="btn_sw_not_con" onClick="switchSalesTb(0)">รายการยังไม่ชำระ</button>
                                 </div>
                                 <div class="col  col-6" style="padding-left:0px;">
-                                    <button class="btn btn-outline-primary float-left" id="btn_sw_con" onClick="switchSalesTb(1)">รายการยังไม่ชำระ</button>
+                                    <button class="btn btn-outline-primary float-left" id="btn_sw_con" onClick="switchSalesTb(1)">ตรวจสอบแล้ว</button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body" id="sales_all">
                             <div id="sales_rows">
+                                <span style="font-size:15px" class="text-warning"><i class="fas fa-circle"></i></span>
+                                <span style="font-size:15px"> = อัพโหลดหลักฐานยืนยัน</span>
                                 <table class="table table-striped" style="width:100%;" id="non_confirm_tb">
                                     <thead class="bg-info text-white">
                                         <tr>
@@ -53,7 +55,7 @@
                                                 if(is_null($sales_non_confirm)){ ?>
                                                     <!-- <h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1> -->
                                         <?php }else{ while(($row=$sales_non_confirm->fetch_array())!=Null) { ?>
-                                                                    <tr>
+                                                                    <tr class="<?php echo ($row["img"]==="no_confirm")?"":"bg-warning"; ?>">
                                                                         <td><?php echo $row["id"]; ?></td>
                                                                         <td><?php echo $row["USER_USERNAME"]; ?></td>
                                                                         <td><?php echo $row["sum"]; ?></td>

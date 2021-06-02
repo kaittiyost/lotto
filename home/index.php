@@ -69,16 +69,24 @@
 									</footer>
 								</div>
 								<div class="card-footer">
+									<?php if((intval($row["stock"])<=0)){ ?>
+											<button 
+													class="open-quan btn btn-secondary text-white" 
+													style="width: 70%;padding-top:10px;padding-bottom:10px;">
+													<i class="fas fa-exclamation-triangle"></i> สินค้าหมด
+											</button>
+									<?php }else{ ?>
 										<button data-toggle="modal" 
-												data-id="<?php echo $row["id"]; ?>"
-												data-quantity="<?php echo $row["stock"]; ?>" 
-												data-number="<?php echo $row["number"]; ?>"  
-												data-img="<?php echo $row["img"]; ?>" 
-												class="open-quan btn text-white" 
-												href="#DetailModal"
-												style="width: 70%;padding-top:10px;padding-bottom:10px;background:coral;">
-												<i class="fas fa-shopping-cart"></i> หยิบลงตระกร้า
-										</button>
+													data-id="<?php echo $row["id"]; ?>"
+													data-quantity="<?php echo $row["stock"]; ?>" 
+													data-number="<?php echo $row["number"]; ?>"  
+													data-img="<?php echo $row["img"]; ?>" 
+													class="open-quan btn text-white" 
+													href="#DetailModal"
+													style="width: 70%;padding-top:10px;padding-bottom:10px;background:coral;">
+													<i class="fas fa-shopping-cart"></i> หยิบลงตระกร้า
+											</button>
+									<?php  }  ?>
 								</div>
 							</div>
 							<?php }  
