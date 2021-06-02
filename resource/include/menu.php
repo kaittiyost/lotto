@@ -4,7 +4,9 @@
   </div>
   <div class="dropdown">
     <a href="/home/"><p class="p-menu">ร้านค้าลอตเตอรี่ <span class="menu-span fas fa-store"></span></p></a>
-    <a  href="/cart/"><p class="p-menu">ตระกร้าสินค้า <span class="menu-span fas fa-shopping-basket"></span> <span class="badge badge-pill badge-danger" id="cart_count">0</span></p></a>
+    <a  href="/cart/"><p class="p-menu">ตระกร้าสินค้า <span class="menu-span fas fa-shopping-basket"></span>
+        <span class="badge badge-pill badge-danger" id="cart_count" style="font-size:15px;">0</span>
+      </p></a>
     <a  href="/purchase_list/"><p class="p-menu">การสั่งซื้อ <span class="menu-span fab fa-bitcoin"></span></p></a>
     <a  href="/profile/"><p class="p-menu">โปรไฟล์ <span class="menu-span fas fa-user"></span></p></a>
     <p class="p-menu" id="logout_btn">ออกจากระบบ <span class="menu-span fa fa-sign-out"></span></p>

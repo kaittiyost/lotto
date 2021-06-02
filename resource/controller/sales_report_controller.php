@@ -10,7 +10,7 @@
         public function sales($status){
             try {
                 $conn = DB::getConnect();
-                $sql = "SELECT sales.*,user.USER_USERNAME,SUM(sd.price) as sum,IFNULL(img_confirm.img,'no_confirm') as img FROM \n".
+                $sql = "SELECT sales.*,user.USER_USERNAME,USER_NAME,USER_LASTNAME,SUM(sd.price) as sum,IFNULL(img_confirm.img,'no_confirm') as img FROM \n".
                     "(\n".
                     "	SELECT * FROM sales\n".
                     ") as sales\n".

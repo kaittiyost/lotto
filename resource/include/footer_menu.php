@@ -1,19 +1,20 @@
 <br><br><br>
 <nav class="nav-menu-bottom">
   <a href="/home/" id="home_btn_a" class="nav__link">
-  <i class="fas fa-store"></i>
+        <i class="fas fa-store"></i>
       <span class="nav__text">ซื้อล็อตเตอรี</span>
   </a>
   <a href="/cart/" id="cart_btn_a" class="nav__link">
-  <i class="fas fa-shopping-cart"></i>
+        <p class="badge badge-pill badge-danger" id="cart_count_bottom" style="position:absolute;top:2;left:45%;font-size:15px;">0</p>
+        <i class="fas fa-shopping-cart"></i>
       <span class="nav__text">ตระกร้าสินค้า</span>
   </a>
   <a href="/purchase_list/" id="purchase_btn_a" class="nav__link nav__link">
-    <i class="fab fa-bitcoin"></i>
+        <i class="fab fa-bitcoin"></i>
       <span class="nav__text">การสั่งซื้อ</span>
   </a>
   <a href="/profile/" id="profile_btn_a" class="nav__link">
-  <i class="fas fa-user"></i>
+         <i class="fas fa-user"></i>
       <span class="nav__text">โปรไฟล์</span>
   </a>
 </nav>
@@ -87,7 +88,7 @@
         .done((response)=>{
         response = JSON.parse(response);
         if(parseInt(response.status)==1){
-            $("#cart_count").html(response.result.quan);
+            $("#cart_count,#cart_count_bottom").html(response.result.quan);
         }
         });
     }

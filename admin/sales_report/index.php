@@ -57,7 +57,7 @@
                                         <?php }else{ while(($row=$sales_non_confirm->fetch_array())!=Null) { ?>
                                                                     <tr class="<?php echo ($row["img"]==="no_confirm")?"":"bg-warning"; ?>">
                                                                         <td><?php echo $row["id"]; ?></td>
-                                                                        <td><?php echo $row["USER_USERNAME"]; ?></td>
+                                                                        <td><?php echo $row["USER_NAME"]." ".$row["USER_LASTNAME"]; ?></td>
                                                                         <td><?php echo $row["sum"]; ?></td>
                                                                         <td><div class="badge"><?php echo explode(" ",$row["reg_date"])[0]; ?></div></td>
                                                                         <td><?php echo explode(" ",$row["reg_date"])[1]; ?></td>
@@ -92,7 +92,7 @@
                                         <?php }else{ while(($row=$sales_confirm->fetch_array())!=Null) { ?>
                                                                     <tr>
                                                                         <td><?php echo $row["id"]; ?></td>
-                                                                        <td><?php echo $row["USER_USERNAME"]; ?></td>
+                                                                        <td><?php echo $row["USER_NAME"]." ".$row["USER_LASTNAME"]; ?></td>
                                                                         <td><?php echo $row["sum"]; ?></td>
                                                                         <td><div class="badge"><?php echo explode(" ",$row["reg_date"])[0]; ?></div></td>
                                                                         <td><?php echo explode(" ",$row["reg_date"])[1]; ?></td>

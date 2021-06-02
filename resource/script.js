@@ -100,21 +100,26 @@ $("#add_to_card_btn").click(()=>{
 			response = JSON.parse(response);
 			switch(String(response.status)){
 				case "1":
-				Swal.fire({
-					icon: 'success',
-					title: 'เพิ่มในตระกร้าแล้ว'
-				})
-
-				break;
+					Swal.fire({
+						icon: 'success',
+						title: 'เพิ่มในตระกร้าแล้ว'
+					});
+					$('#DetailModal').modal('hide');
+					$.post(projectPath+"/resource/controller/cart_controller.php","func=cart_count")
+					.done((response)=>{
+						response = JSON.parse(response);
+						$("#cart_count,#cart_count_bottom").html(response.result.quan);
+					});
+					break;
 				case "0":
-				Swal.fire({
-					icon: 'error',
-					title: 'เกิดข้อผิดพลาด!'
-				})
-				break;
+					Swal.fire({
+						icon: 'error',
+						title: 'เกิดข้อผิดพลาด!'
+					})
+					break;
 				case "non_login":
-				location.href = projectPath;
-				break;
+					location.href = projectPath;
+					break;
 			}
 		});
 	}
@@ -157,7 +162,7 @@ function delBucket(lot_id){
 		}
 	})
 }
-$("#pay_order").click(()=>{
+function pay_order(){
 	Swal.fire({
 		title: 'ยืนยันการซื้อสินค้า?',
 		text: "คุณต้องการยืนยันการหรือไม่!",
@@ -218,7 +223,7 @@ $("#pay_order").click(()=>{
 
 		}
 	})
-});
+}
 //----------------------------------CART(END)---------------------------------------
 //---------------------------------- ADMIN ---------------------------------------
 function loadDataTable(key){

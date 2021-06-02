@@ -101,7 +101,7 @@ include(__DIR__.'/../resource/include/menu.php');
 						<p  class="text text-dark" style="width:50%;margin:auto;margin-top: 0px; font-size: 10px;">ค่าธรรมเนียมใบละ 20฿</p>
 					</div>
 					<div class="col-4" style="padding:0;padding-right:15px;">
-						<button class="btn btn-info text-light" id="pay_order">ชำระเงิน</button>
+						<button class="btn btn-info text-light" onClick="pay_order()">ชำระเงิน</button>
 					</div>
 				</div>
 			</div>
