@@ -13,7 +13,7 @@ function check_tel(tel){
 			data:{"tel":tel,"func":"check_tel"},
 			success:function(rs){
 
-				console.log('status :'+rs);
+				//console.log('status :'+rs);
 
 				if(rs==0){
 					res = '0';
@@ -58,8 +58,6 @@ function check_tel(tel){
 
 								}
 							});
-						} else if (result.isDenied) {
-							Swal.fire('ถูกยกเลิกโดยผู้ใช้', '', 'info')
 						}
 					})
 				}
@@ -71,14 +69,14 @@ function check_tel(tel){
 }
 
 function check_email(email){
-	console.log('check_email_func data:'+email);
+	//console.log('check_email_func data:'+email);
 	$.ajax({
 		method:"POST",
 		url:projectPath+"/resource/controller/check_register_controller.php",
 		dataType:"json",
 		data:{"email":email,"func":"check_email"},
 		success:function(rs){
-			console.log('status :'+rs);
+			//console.log('status :'+rs);
 
 			if(rs==0){
 				res = '0';
@@ -86,7 +84,7 @@ function check_email(email){
 			}else if(rs==1){
 				res= '1';
 				$('#alert_email').html('<p style="color:green"><i class="fas fa-check-circle"></i> Email เลขนี้ใช้งานได้</p>');
-				console.log('เบอร์นี้ใช้งานได้');
+				//console.log('เบอร์นี้ใช้งานได้');
 
 				Swal.fire({
 					title: 'คุณต้องการบันทึกใช่หรือไม่?',
@@ -123,8 +121,6 @@ function check_email(email){
 
 							}
 						});
-					} else if (result.isDenied) {
-						Swal.fire('ถูกยกเลิกโดยผู้ใช้', '', 'info')
 					}
 				})
 			}

@@ -50,11 +50,12 @@ $profile = $getData->profile();
 				<p style="text-align:left"><i class="fas fa-envelope"></i> <?php echo $profile["user_email"]; ?></p><hr>
 			<?php } ?>
 		</div>
+		<!--
 		<div class="row">
 		<div class="col">
 			<button href="#edit_password" class="btn btn-outline-danger" style="width :100%" data-toggle="modal" data-target=".bd-password-modal-sm"><i class="far fa-edit"></i> เปลี่ยนรหัสผ่าน</button>
 		</div>
-	</div>
+	</div> -->
 	<br>
 	<center>
 		<div id="lotery_all">
@@ -79,7 +80,7 @@ $profile = $getData->profile();
 					<input type="email" name="email" id="email" class="form-control" placeholder="กรอก Email ของคุณ">
 				</div>
 				<div class="modal-footer">
-					<a  class="btn btn-outline-success" id="btn_add_email">บันทึก</a>
+					<button  class="btn btn-outline-success" id="btn_add_email">บันทึก</button>
 				</div>
 			</div>
 		</div>
@@ -99,7 +100,7 @@ $profile = $getData->profile();
 					<input type="number" id="tel" class="form-control" placeholder="กรอกหมายเลขโทรศัพท์ของคุณ">
 				</div>
 				<div class="modal-footer">
-					<a type="button" class="btn btn-outline-success" id="btn_add_tel">บันทึก</a>
+					<button type="button" class="btn btn-outline-success" id="btn_add_tel">บันทึก</button>
 				</div>
 			</div>
 		</div>

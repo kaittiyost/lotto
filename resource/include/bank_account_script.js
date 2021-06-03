@@ -67,7 +67,7 @@ $.ajax({
 	data:{"account_id":account_id,"func":"del_bank_account"}
 }
 ).done((rs)=>{
-	console.log('rs > '+rs);
+	//console.log('rs > '+rs);
 	Swal.fire({
 		title: 'คุณต้องการลบใช่หรือไม่?',
 		text: 'กดปุ่ม "ลบ" เพื่อลบบัญชีนี้',
@@ -107,7 +107,7 @@ function edit_bank_account() {
 	let account_type = $('#account_type').val();
 	let account_bank = $('#account_bank').val();
 	let account_status = $('#account_status').val();
-	console.log('bank_account_id :'+bank_account_id+',account_id:'+account_id+',account_name:'+account_name+",account_type:"+account_type+",account_bank:"+account_bank+",account_status:"+account_status);
+	//console.log('bank_account_id :'+bank_account_id+',account_id:'+account_id+',account_name:'+account_name+",account_type:"+account_type+",account_bank:"+account_bank+",account_status:"+account_status);
 	
 	Swal.fire({
 		title: 'คุณต้องการแก้ใช่หรือไม่?',
@@ -125,7 +125,7 @@ function edit_bank_account() {
 				data:{"bank_account_id":bank_account_id,"account_id":account_id,"account_type":account_type,"account_name":account_name,"account_status":account_status,"account_bank":account_bank,"func":"edit_bank_account"}
 			}
 			).done((rs)=>{
-				console.log('rs > '+rs);
+				//console.log('rs > '+rs);
 				if(rs==0){
 					Swal.fire({
 						icon: 'error',
@@ -161,7 +161,7 @@ $(document).on("click", ".open-edit_account", function () {
 		let account_bank = $(this).data('account_bank');
 		let account_status = $(this).data('account_status');
 
-		console.log('account_status -> '+account_status);
+		//console.log('account_status -> '+account_status);
 
 		if(account_type == 'PromtPay'){
 			$('#account_type')[0].selectedIndex = 0;
