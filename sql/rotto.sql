@@ -1,11 +1,47 @@
-DROP TABLE IF EXISTS `admin`;
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 04, 2021 at 09:15 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `rotto`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
 CREATE TABLE `admin` (
   `id` int(10) NOT NULL,
   `name` varchar(225) DEFAULT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(70) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `name`, `username`, `password`, `reg_date`) VALUES
+(0, 'unknow', 'uncheck', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', '2021-05-24 15:33:28'),
+(2, 'เทวินทร์', 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', '2021-05-24 09:15:40');
 
 -- --------------------------------------------------------
 
@@ -13,12 +49,23 @@ CREATE TABLE `admin` (
 -- Table structure for table `bank`
 --
 
-DROP TABLE IF EXISTS `bank`;
 CREATE TABLE `bank` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `img` varchar(255) NOT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bank`
+--
+
+INSERT INTO `bank` (`id`, `name`, `img`) VALUES
+(1, 'กรุงเทพ', 'krungthep.png'),
+(2, 'กรุงไทย', 'krungthai.png'),
+(3, 'กรุงศรี', 'krungsri.png'),
+(4, 'ธกส', 'tgs.png'),
+(5, 'TMB', 'tmb.png'),
+(6, 'ออมสิน', 'ormsin.png');
 
 -- --------------------------------------------------------
 
@@ -26,7 +73,6 @@ CREATE TABLE `bank` (
 -- Table structure for table `bank_account`
 --
 
-DROP TABLE IF EXISTS `bank_account`;
 CREATE TABLE `bank_account` (
   `id` int(11) NOT NULL,
   `bank_account_name` varchar(255) NOT NULL,
@@ -35,8 +81,15 @@ CREATE TABLE `bank_account` (
   `bank_account_id` varchar(20) NOT NULL,
   `bank_user` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `time_reg` timestamp NOT NULL DEFAULT current_timestamp()
-) ;
+  `time_reg` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bank_account`
+--
+
+INSERT INTO `bank_account` (`id`, `bank_account_name`, `bank_id`, `bank_type`, `bank_account_id`, `bank_user`, `status`, `time_reg`) VALUES
+(30, 'เทวินทร์ คุง', 1, 'บัญชีธนาคาร', '43656565656', 2, 0, '2021-06-02 06:13:12');
 
 -- --------------------------------------------------------
 
@@ -44,14 +97,13 @@ CREATE TABLE `bank_account` (
 -- Table structure for table `bucket`
 --
 
-DROP TABLE IF EXISTS `bucket`;
 CREATE TABLE `bucket` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `lottery_id` int(20) NOT NULL,
   `quan` int(6) DEFAULT NULL,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -59,12 +111,20 @@ CREATE TABLE `bucket` (
 -- Table structure for table `fb_user`
 --
 
-DROP TABLE IF EXISTS `fb_user`;
 CREATE TABLE `fb_user` (
   `FB_USER_ID` int(10) NOT NULL,
   `USER_ID` int(15) DEFAULT NULL,
   `FB_ID` varchar(225) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `fb_user`
+--
+
+INSERT INTO `fb_user` (`FB_USER_ID`, `USER_ID`, `FB_ID`) VALUES
+(26, 139, '3046775725645790'),
+(27, 140, '100132518969104'),
+(28, 141, '100955595551546');
 
 -- --------------------------------------------------------
 
@@ -72,7 +132,6 @@ CREATE TABLE `fb_user` (
 -- Table structure for table `img_confirm`
 --
 
-DROP TABLE IF EXISTS `img_confirm`;
 CREATE TABLE `img_confirm` (
   `id` int(9) NOT NULL,
   `sale_id` int(10) DEFAULT NULL,
@@ -82,7 +141,7 @@ CREATE TABLE `img_confirm` (
   `time_upload` varchar(255) DEFAULT NULL,
   `bank_upload` varchar(255) DEFAULT NULL,
   `time_reg` timestamp NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90,7 +149,6 @@ CREATE TABLE `img_confirm` (
 -- Table structure for table `lottery`
 --
 
-DROP TABLE IF EXISTS `lottery`;
 CREATE TABLE `lottery` (
   `id` int(20) NOT NULL,
   `number` varchar(6) NOT NULL,
@@ -100,7 +158,20 @@ CREATE TABLE `lottery` (
   `price` decimal(10,0) DEFAULT 80,
   `status` tinyint(1) DEFAULT 1,
   `reg_date` timestamp NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lottery`
+--
+
+INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `price`, `status`, `reg_date`) VALUES
+(14, '595959', '2021-06-30', '595959-02_06_2021.jpeg', 96, '80', 1, '2021-06-02 17:00:00'),
+(15, '589811', '2021-06-30', '589811-02_06_2021.jpeg', 80, '80', 1, '2021-06-02 17:00:00'),
+(16, '895656', '2021-06-30', '895656-02_06_2021.jpeg', 72, '80', 1, '2021-06-02 17:00:00'),
+(17, '312312', '2021-06-30', '312312-02_06_2021.jpeg', 32, '80', 1, '2021-06-02 17:00:00'),
+(18, '232131', '2021-06-30', '232131-02_06_2021.jpeg', 112, '80', 1, '2021-06-02 17:00:00'),
+(19, '312312', '2021-06-30', '312312-02_06_2021.jpeg', 32, '80', 1, '2021-06-02 17:00:00'),
+(20, '023020', '2021-06-30', '023020-02_06_2021.jpeg', 21, '80', 1, '2021-06-02 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -108,19 +179,17 @@ CREATE TABLE `lottery` (
 -- Table structure for table `sales`
 --
 
-DROP TABLE IF EXISTS `sales`;
 CREATE TABLE `sales` (
   `id` int(10) NOT NULL,
   `user_id` int(10) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   `confirm_by_admin` int(10) DEFAULT 0,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `sales`
 --
-DROP TRIGGER IF EXISTS `TG_INSERT_IMG_CONFIRM`;
 DELIMITER $$
 CREATE TRIGGER `TG_INSERT_IMG_CONFIRM` AFTER INSERT ON `sales` FOR EACH ROW BEGIN
 	INSERT INTO img_confirm (sale_id, img) 
@@ -128,7 +197,6 @@ CREATE TRIGGER `TG_INSERT_IMG_CONFIRM` AFTER INSERT ON `sales` FOR EACH ROW BEGI
 END
 $$
 DELIMITER ;
-DROP TRIGGER IF EXISTS `bf_del_sales`;
 DELIMITER $$
 CREATE TRIGGER `bf_del_sales` BEFORE DELETE ON `sales` FOR EACH ROW BEGIN
 		DECLARE xlot_id int(10);
@@ -163,19 +231,17 @@ DELIMITER ;
 -- Table structure for table `sales_det`
 --
 
-DROP TABLE IF EXISTS `sales_det`;
 CREATE TABLE `sales_det` (
   `id` int(10) NOT NULL,
   `sale_id` int(10) DEFAULT NULL,
   `lottery_id` int(20) DEFAULT NULL,
   `quan` int(6) DEFAULT NULL,
   `price` decimal(10,0) DEFAULT NULL
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Triggers `sales_det`
 --
-DROP TRIGGER IF EXISTS `af_add_sales_det`;
 DELIMITER $$
 CREATE TRIGGER `af_add_sales_det` AFTER INSERT ON `sales_det` FOR EACH ROW BEGIN
 		UPDATE lottery 
@@ -191,7 +257,6 @@ DELIMITER ;
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `USER_ID` int(10) NOT NULL,
   `USER_USERNAME` varchar(50) NOT NULL,
@@ -201,8 +266,18 @@ CREATE TABLE `user` (
   `USER_NAME` varchar(225) NOT NULL DEFAULT '',
   `USER_EMAIL` varchar(225) DEFAULT '',
   `USER_TEL` varchar(20) DEFAULT '',
-  `REGIS_TIME` timestamp NULL DEFAULT NULL
-) ;
+  `REGIS_TIME` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`USER_ID`, `USER_USERNAME`, `USER_PASSWORD`, `USER_UUID`, `USER_LASTNAME`, `USER_NAME`, `USER_EMAIL`, `USER_TEL`, `REGIS_TIME`) VALUES
+(113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '', '', '', '0970655563', '2021-05-24 09:25:38'),
+(139, '3046775725645790', 'ff36ef386ed5717ad8c78dd7a1098146cf37056ebf09281e8460262c16293999', NULL, 'Thamma', 'Thewin', 'zza@drao.com', '0941562858', '2021-06-02 16:00:16'),
+(140, '100132518969104', '5c0ded348d734300c6360a771aeb9a3ab90361287c07d0f3aef9d8048680cabb', NULL, 'ขอทดสอบ', 'โอ๊ค', '', '', NULL),
+(141, '100955595551546', '8e225d90f2650bb090281a4dd01b4939577ab7dc4be3d872e30b7e5070236af3', NULL, 'User', 'Open', '', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -241,8 +316,8 @@ ALTER TABLE `bucket`
 -- Indexes for table `fb_user`
 --
 ALTER TABLE `fb_user`
-  ADD PRIMARY KEY (`FB_USER_ID`),
-  ADD KEY `FB_USER_FK` (`USER_ID`);
+  ADD PRIMARY KEY (`FB_USER_ID`) USING BTREE,
+  ADD KEY `FB_USER_FK` (`USER_ID`) USING BTREE;
 
 --
 -- Indexes for table `img_confirm`
@@ -277,8 +352,8 @@ ALTER TABLE `sales_det`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`USER_ID`),
-  ADD UNIQUE KEY `USER_USERNAME` (`USER_USERNAME`);
+  ADD PRIMARY KEY (`USER_ID`) USING BTREE,
+  ADD UNIQUE KEY `USER_USERNAME` (`USER_USERNAME`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -288,61 +363,61 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `bank_account`
 --
 ALTER TABLE `bank_account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `bucket`
 --
 ALTER TABLE `bucket`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `fb_user`
 --
 ALTER TABLE `fb_user`
-  MODIFY `FB_USER_ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `FB_USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `img_confirm`
 --
 ALTER TABLE `img_confirm`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `lottery`
 --
 ALTER TABLE `lottery`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `USER_ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
 
 --
 -- Constraints for dumped tables
