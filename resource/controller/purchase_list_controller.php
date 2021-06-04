@@ -161,7 +161,7 @@ class ExeData{
                             $imgName = 'SLIP'.date("d_m_Y")."SID".$sales_id.'.'.explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];;
                             $imgOnServer = __DIR__."/../../images/slip/".$imgName;
                             if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
-                                $sql = "UPDATE `rotto`.`img_confirm` SET `img` = '".$imgName."', `date_upload` = '".$_POST['date_upload']."', `time_upload` = '"
+                                $sql = "UPDATE `img_confirm` SET `img` = '".$imgName."', `date_upload` = '".$_POST['date_upload']."', `time_upload` = '"
                                 .$_POST['time_upload']."', `bank_upload` = '".$_POST['bank']."' WHERE `sale_id` = ".$sales_id;
                                 $result = $conn->query($sql);
                                 echo ($result)?"ok":"0";
@@ -185,8 +185,8 @@ class ExeData{
             if(isset($_SESSION["loginStatus"])){
                 $conn = DB::getConnect();
                 $sale_id  = htmlentities($conn->escape_string($sale_id)); 
-                $sql_del_img = "DELETE FROM `rotto`.`img_confirm` WHERE `sale_id` = ".$sale_id;
-                $sql_sale = "DELETE FROM `rotto`.`sales` WHERE `id` = ".$sale_id;
+                $sql_del_img = "DELETE FROM `img_confirm` WHERE `sale_id` = ".$sale_id;
+                $sql_sale = "DELETE FROM `sales` WHERE `id` = ".$sale_id;
                 $conn->query($sql_del_img);
                 return ( $conn->query($sql_sale))?1:0;
             }else{
