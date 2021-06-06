@@ -6,6 +6,7 @@
 				echo 'connection ERROR!';
 			}
 			$conn->set_charset('utf8mb4');
+			$conn->query("SET TIME_ZONE = '+07:00'");
 			return $conn;
 		}
 	}
