@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2021 at 09:15 AM
+-- Generation Time: Jun 06, 2021 at 07:50 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -105,6 +105,15 @@ CREATE TABLE `bucket` (
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `bucket`
+--
+
+INSERT INTO `bucket` (`id`, `user_id`, `lottery_id`, `quan`, `reg_date`) VALUES
+(128, 153, 14, 16, '2021-06-06 17:05:32'),
+(132, 156, 14, 13, '2021-06-06 17:48:00'),
+(133, 156, 15, 14, '2021-06-06 17:48:06');
+
 -- --------------------------------------------------------
 
 --
@@ -124,7 +133,30 @@ CREATE TABLE `fb_user` (
 INSERT INTO `fb_user` (`FB_USER_ID`, `USER_ID`, `FB_ID`) VALUES
 (26, 139, '3046775725645790'),
 (27, 140, '100132518969104'),
-(28, 141, '100955595551546');
+(28, 141, '100955595551546'),
+(29, 142, '100368212278084'),
+(30, 155, '499051518011527');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gg_user`
+--
+
+CREATE TABLE `gg_user` (
+  `id` int(10) NOT NULL,
+  `user_id` int(10) DEFAULT NULL,
+  `gg_id` int(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `gg_user`
+--
+
+INSERT INTO `gg_user` (`id`, `user_id`, `gg_id`) VALUES
+(3, 153, 2147483647),
+(4, 154, 2147483647),
+(5, 156, 2147483647);
 
 -- --------------------------------------------------------
 
@@ -142,6 +174,13 @@ CREATE TABLE `img_confirm` (
   `bank_upload` varchar(255) DEFAULT NULL,
   `time_reg` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `img_confirm`
+--
+
+INSERT INTO `img_confirm` (`id`, `sale_id`, `img`, `status`, `date_upload`, `time_upload`, `bank_upload`, `time_reg`) VALUES
+(41, 61, NULL, 0, NULL, NULL, NULL, '2021-06-06 17:27:25');
 
 -- --------------------------------------------------------
 
@@ -165,8 +204,8 @@ CREATE TABLE `lottery` (
 --
 
 INSERT INTO `lottery` (`id`, `number`, `date`, `img`, `stock`, `price`, `status`, `reg_date`) VALUES
-(14, '595959', '2021-06-30', '595959-02_06_2021.jpeg', 96, '80', 1, '2021-06-02 17:00:00'),
-(15, '589811', '2021-06-30', '589811-02_06_2021.jpeg', 80, '80', 1, '2021-06-02 17:00:00'),
+(14, '595959', '2021-06-30', '595959-02_06_2021.jpeg', 71, '80', 1, '2021-06-02 17:00:00'),
+(15, '589811', '2021-06-30', '589811-02_06_2021.jpeg', 70, '80', 1, '2021-06-02 17:00:00'),
 (16, '895656', '2021-06-30', '895656-02_06_2021.jpeg', 72, '80', 1, '2021-06-02 17:00:00'),
 (17, '312312', '2021-06-30', '312312-02_06_2021.jpeg', 32, '80', 1, '2021-06-02 17:00:00'),
 (18, '232131', '2021-06-30', '232131-02_06_2021.jpeg', 112, '80', 1, '2021-06-02 17:00:00'),
@@ -186,6 +225,13 @@ CREATE TABLE `sales` (
   `confirm_by_admin` int(10) DEFAULT 0,
   `reg_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `user_id`, `status`, `confirm_by_admin`, `reg_date`) VALUES
+(61, 139, 0, 0, '2021-06-06 17:27:25');
 
 --
 -- Triggers `sales`
@@ -240,6 +286,14 @@ CREATE TABLE `sales_det` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `sales_det`
+--
+
+INSERT INTO `sales_det` (`id`, `sale_id`, `lottery_id`, `quan`, `price`) VALUES
+(63, 61, 14, 25, '2000'),
+(64, 61, 15, 10, '800');
+
+--
 -- Triggers `sales_det`
 --
 DELIMITER $$
@@ -277,7 +331,12 @@ INSERT INTO `user` (`USER_ID`, `USER_USERNAME`, `USER_PASSWORD`, `USER_UUID`, `U
 (113, 'admin', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', 'test', '', '', '', '0970655563', '2021-05-24 09:25:38'),
 (139, '3046775725645790', 'ff36ef386ed5717ad8c78dd7a1098146cf37056ebf09281e8460262c16293999', NULL, 'Thamma', 'Thewin', 'zza@drao.com', '0941562858', '2021-06-02 16:00:16'),
 (140, '100132518969104', '5c0ded348d734300c6360a771aeb9a3ab90361287c07d0f3aef9d8048680cabb', NULL, 'ขอทดสอบ', 'โอ๊ค', '', '', NULL),
-(141, '100955595551546', '8e225d90f2650bb090281a4dd01b4939577ab7dc4be3d872e30b7e5070236af3', NULL, 'User', 'Open', '', '', NULL);
+(141, '100955595551546', '8e225d90f2650bb090281a4dd01b4939577ab7dc4be3d872e30b7e5070236af3', NULL, 'User', 'Open', '', '', NULL),
+(142, '100368212278084', '7f0eb70225f7623b83a05619cd1f7c6350f6867d97069b87e53ba3acd97c3056', NULL, 'lnwza', 'dragon', '555@wow.com', '', '2021-06-06 16:37:24'),
+(153, '117977242365607815986', '14bc8a22bf2d0e4f5bb26042a59bb7d18feb552a3578fab0e227223421b3651a', NULL, 'ก้อน', 'เฮีย', 'dragonxxxvvv000@gmail.com', '', NULL),
+(154, '101906620268573247784', '6d0662969df77c4c45f83cd22d4d6aaf6b0514e1830800b58a75d23c7336922e', NULL, 'ธรรมา', 'เทวินทร์', '62011211015@msu.ac.th', '', NULL),
+(155, '499051518011527', '069b735a04ef5693a5536531618b8be87d7d03ea6054abf2e0ed88e6b6e35d9f', NULL, 'Pang', 'Thung', '', '', NULL),
+(156, '106245787745347199127', '6736f72cf1ff33bfad63546c853f88d7c8e165d1c6115e3adf2f9cd9c38ab289', NULL, 'Thamma', 'Thewin', 'dragon123789555@gmail.com', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -318,6 +377,13 @@ ALTER TABLE `bucket`
 ALTER TABLE `fb_user`
   ADD PRIMARY KEY (`FB_USER_ID`) USING BTREE,
   ADD KEY `FB_USER_FK` (`USER_ID`) USING BTREE;
+
+--
+-- Indexes for table `gg_user`
+--
+ALTER TABLE `gg_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `gg_fk_user_tb` (`user_id`);
 
 --
 -- Indexes for table `img_confirm`
@@ -381,19 +447,25 @@ ALTER TABLE `bank_account`
 -- AUTO_INCREMENT for table `bucket`
 --
 ALTER TABLE `bucket`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- AUTO_INCREMENT for table `fb_user`
 --
 ALTER TABLE `fb_user`
-  MODIFY `FB_USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `FB_USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `gg_user`
+--
+ALTER TABLE `gg_user`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `img_confirm`
 --
 ALTER TABLE `img_confirm`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `lottery`
@@ -405,19 +477,19 @@ ALTER TABLE `lottery`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `sales_det`
 --
 ALTER TABLE `sales_det`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `USER_ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- Constraints for dumped tables
@@ -442,6 +514,12 @@ ALTER TABLE `bucket`
 --
 ALTER TABLE `fb_user`
   ADD CONSTRAINT `FB_USER_FK` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `gg_user`
+--
+ALTER TABLE `gg_user`
+  ADD CONSTRAINT `gg_fk_user_tb` FOREIGN KEY (`user_id`) REFERENCES `user` (`USER_ID`);
 
 --
 -- Constraints for table `img_confirm`
