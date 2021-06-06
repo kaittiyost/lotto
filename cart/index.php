@@ -48,7 +48,7 @@ include(__DIR__.'/../resource/include/menu.php');
 		<div id="in_body_content">
 			<br><br><br>
 			<div class="container">
-				<a href="/home/" class="btn btn-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
+				<a href="/home/" class="btn btn-outline-info" style="width: 100%;text-align: left"><i class="fas fa-arrow-left"></i> ย้อนกลับ</a>
 				<form action="/payment/" id="form_max_id" method="post">
 					<input id="max_sale_id" type="hidden" name="sale_id" value="">
 				</form>
@@ -58,14 +58,14 @@ include(__DIR__.'/../resource/include/menu.php');
 					</div>
 				</div>
 				<div id="lottery_list" style="margin-bottom: 30% ; margin-top: 15px">
-					<div id="lottery_list_in">
+					<div id="lottery_list_in" style="text-align:center;"> 
 						<?php 
 						if(is_null($cart)){?>
 							<h1 style="margin:auto;width:50%;">ไม่มีสินค้า</h1>
 						<?php }else{ 
 							while(($row=$cart->fetch_array())!=Null){
 								?>
-								<div class="shadow-sm p-3 mb-1 bg-body rounded bg-white" style="width:100% ; text-align: left">
+								<div class="shadow-sm p-3 mb-1 bg-body rounded bg-white" style="width:100% ; text-align:left">
 									<div class="alert-body">
 										<div class="row">
 											<div class="col-8" style="text-align: center">

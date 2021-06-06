@@ -14,11 +14,11 @@
 			<br><br>
 			<div class="row">
 				<div class="col" >
-					<div class="card shadow p-3 mb-5 bg-white rounded">
+					<div class="card shadow p-3 mb-5 rounded" style="background-color:#FFCBE3">
 						<div class="card-body">
 							<h1>Sangtian lotto</h1>
 							<p style="font-size:10px">เว็บแอพลิเคชั่นขายลอตเตอรี่ออนไลน์</p>
-							<p class="badge badge-pill badge-warning text-light" >กรุณาเข้าสู่ระบบ</p>
+							<p class="badge badge-pill badge-dark text-light" >กรุณาเข้าสู่ระบบ</p>
 							<br>
 								<div onlogin="checkLoginStateFB();" class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="rounded" data-auto-logout-link="false" data-use-continue-as="true"></div>
 								<br><br>
@@ -29,6 +29,8 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
 				<script src="resource/script.js"></script>			
 				<style>
 				@media (min-width:425px) {

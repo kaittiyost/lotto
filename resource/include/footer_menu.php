@@ -61,7 +61,8 @@
 
 .nav__link--active {
     color: white;
-    background:#0086b3;
+    background:#FF81BA;
+    /* background:#0086b3; */
     border-radius:15px 15px 0px 0px;
     box-shadow:2px 10px 10px 5px #aaaaaa;
 }
