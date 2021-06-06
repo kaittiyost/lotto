@@ -20,7 +20,7 @@ $profile = $getData->profile();
 			<h2>Profile</h2>
 		</div>
 		<div class="shadow-sm p-3 mb-5 bg-body rounded">
-			<i class="fas fa-user-circle" style="font-size: 30px"></i><br>
+			<img src="<?php echo $profile["img"]; ?>" style="<width:15></width:15>0px;height:150px; border-radius: 50%;"><br>
 			<h4 ><?php echo $profile["user_name"].'  '.$profile["user_lastname"]; ?> </h4><hr>
 			<p style="text-align:left"><i class="fas fa-user"></i>  <?php echo $profile["user_username"]; ?> </p><hr>
 			<?php if($profile["user_tel"] == ""){?>

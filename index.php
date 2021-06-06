@@ -31,8 +31,8 @@
 				</div>
 			</div>
 		</div>
-				<script src="resource/script.js"></script>			
-				<style>
+		<script src="resource/script.js"></script>			
+			<style>
 				@media (min-width:425px) {
 					.card{
 						width:400px;
@@ -40,6 +40,10 @@
 				}
 			</style>
 			<script type="text/javascript">
+				window.onload = ()=>{
+					var auth2 = gapi.auth2.getAuthInstance();
+          			auth2.signOut();
+				}
 				function go_register(){
 					window.location = "register.php";
 				}
@@ -49,6 +53,7 @@
 							new Promise((resolve,reject)=>{
 								FB.api("/me",(res)=>{resolve(res);});
 							}).then((result)=>{
+								console.log(result);
 								loginByFB(result);
 							})
 						}
@@ -59,9 +64,10 @@
 						"type":"POST",
 						"contentType":"application/x-www-form-urlencoded;charset=utf-8",
 						"url":projectPath+"/resource/controller/login.php",
-						"data":{"fb_id":data.id,"fb_name":data.name,"func":"loginFb"}
+						"data":{"fb_id":data.id,"fb_name":data.name,"img":"http://graph.facebook.com/"+data.id+"/picture?type=large","func":"loginFb"}
 					})
 					.done((response)=>{
+						console.log(response);
 						if(String(response)==="new_user"||String(response)==="old_user"){
 							location.href = projectPath+'/home';
 						}

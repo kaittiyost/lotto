@@ -2,29 +2,14 @@
     session_start();
     include(__DIR__."/../database/db_config.php");
     include(__DIR__."/../include/util.php");
-    require(__DIR__."/../ex_package/google/autoload.php");
-    // function login(){
-    //     $conn = DB::getConnect();
+    require(__DIR__."/../ex_package/vendor/autoload.php");
 
-    //     $username =$conn->escape_string( $_POST['username']);
-    //     $password = hash("sha256",$conn->escape_string($_POST['password']),false);
-    //     $sql = "SELECT * FROM user WHERE user_username='".$username
-    //             ."' AND user_password='".$password."' limit 1";
-    //     $result = $conn->query($sql);
-    //     if($conn->affected_rows>0){
-    //         $userData = $result->fetch_array();
-    //         $_SESSION['userData'] = $userData;
-    //         $_SESSION['loginStatus'] = true;
-    //         echo '1';
-    //     }else{
-    //         echo '0';
-    //     }
-    // }
     function loginFb($userData){
         try {
             $conn = DB::getConnect();
             $fbId = htmlentities($conn->escape_string($userData["fb_id"]));
             $fbName = htmlentities($conn->escape_string($userData["fb_name"]));
+            $imgProfile = htmlentities($conn->escape_string($userData["img"]));
             $sql = "SELECT user.* FROM fb_user INNER JOIN user ON fb_user.user_id = user.USER_ID \n".
                     " WHERE FB_ID=".$fbId;
             $result = $conn->query($sql);
@@ -36,7 +21,7 @@
             }else{
                 $fullName = explode(" ",$fbName);
                 $sql = "INSERT INTO user SET USER_USERNAME='".$fbId."',USER_PASSWORD='".hash("sha256",Util::randomPassword(),false)."'".
-                        ",USER_NAME='".$fullName[0]."',USER_LASTNAME='".(string)$fullName[(sizeof($fullName)-1)]."'";
+                        ",USER_NAME='".$fullName[0]."',USER_LASTNAME='".(string)$fullName[(sizeof($fullName)-1)]."',img='".$imgProfile."'";
                 if($conn->query($sql)){
                     $lastId = $conn->insert_id;
                     $conn->query("INSERT INTO fb_user SET USER_ID=".$lastId.",FB_ID=".$fbId);
@@ -60,8 +45,8 @@
             if ($payload){
                 $userid = $payload['sub'];
                 $conn = DB::getConnect();
-                $sql = "SELECT user.* FROM gg_user INNER JOIN userON gg_user.user_id = user.USER_ID\n".
-                        "WHERE gg_user.user_id =".$userid;
+                $sql = "SELECT user.* FROM gg_user INNER JOIN user ON gg_user.user_id = user.USER_ID\n".
+                        "WHERE gg_user.gg_id='".$userid."'";
                 $result = $conn->query($sql);
                 if(($conn->affected_rows)>0){
                     $userData = $result->fetch_array();
@@ -71,7 +56,8 @@
                 }else{
                     $fullName = explode(" ",$payload["name"]);
                     $sql = "INSERT INTO user SET USER_USERNAME='".$userid."',USER_PASSWORD='".hash("sha256",Util::randomPassword(),false)."'".
-                            ",USER_NAME='".$fullName[0]."',USER_LASTNAME='".(string)$fullName[(sizeof($fullName)-1)]."',USER_EMAIL='".$payload["email"]."'";
+                            ",USER_NAME='".$fullName[0]."',USER_LASTNAME='".(string)$fullName[(sizeof($fullName)-1)]."',USER_EMAIL='".$payload["email"]."'".
+                            ",img='".$payload["picture"]."'";
                     if($conn->query($sql)){
                         $lastId = $conn->insert_id;
                         $conn->query("INSERT INTO gg_user SET user_id=".$lastId.",gg_id=".$userid);
@@ -101,9 +87,6 @@
 
     if(isset($_POST["func"])){
         switch($_POST["func"]){
-            // case "login" :
-            //     login();
-            //     break;
             case "loginFb":
                 loginFb($_POST);
                 break;

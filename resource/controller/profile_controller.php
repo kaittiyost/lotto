@@ -10,7 +10,7 @@ class GetData{
     public function profile(){
         try{
             $conn = DB::getConnect();
-            $sql = "SELECT user_id,user_username,user_uuid,user_lastname , user_tel , user_email,user_name FROM user WHERE user_id=".$_SESSION["userData"]["USER_ID"];
+            $sql = "SELECT user_id,user_username,user_uuid,user_lastname , user_tel ,img, user_email,user_name FROM user WHERE user_id=".$_SESSION["userData"]["USER_ID"];
             $result  = $conn->query($sql);
             return (($conn->affected_rows)<=0)?Null:$result->fetch_array();
         }catch(Exception $e){
