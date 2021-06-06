@@ -6,9 +6,6 @@
 </head>
 <body>
 	<meta name="google-signin-client_id" content="1036552871785-hp22bf6mmcfgdto7nrkajn39s558on4j.apps.googleusercontent.com">
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v10.0&appId=527242314963433&autoLogAppEvents=1" nonce="PywkciAJ"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<center>
 		<div class="container">
 			<br><br>
@@ -93,5 +90,8 @@
 					});
 				}
 			</script>
+				<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v10.0&appId=527242314963433&autoLogAppEvents=1" nonce="PywkciAJ"></script>
+				<script src="https://apis.google.com/js/platform.js" async defer></script>
 		</body>
 		</html>
