@@ -266,6 +266,7 @@ $data = new GetData();
 		</div>
 	</div>
 </div>
+<script src='../resource/script.js'></script>
 
 <style>
 td{
@@ -273,7 +274,6 @@ td{
 	border-left : 0.1px solid #A4A4A4;
 }
 </style>
-<script src='../resource/script.js'></script>
 <script>
 	window.onload =()=>{
 		loadDataTable(null);
