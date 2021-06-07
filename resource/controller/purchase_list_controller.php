@@ -196,6 +196,29 @@ class ExeData{
             return "error -->".$e->getMessage();
         }
     }
+
+    function payCash(){
+        try{
+            if(isset($_SESSION["adminLoginStatus"])){
+                $lot_id = $_POST['lot_id'];
+                $lot_quantity = $_POST['lot_quantity'];
+                $conn = DB::getConnect();
+                $sql="UPDATE `lottery` SET  lottery.stock = lottery.stock-".$lot_quantity.
+                " WHERE `lottery`.`id` = ".$lot_id;
+                $result = $conn->query($sql);
+                if($result){
+                    echo 1;
+                }else{
+
+                    echo 0;
+                }
+            }else{
+                return 'non login';
+            }
+        }catch(Exception $e){
+            return "error -->".$e->getMessage();
+        }
+    }
 }
 
 if(isset($_POST["func"])){
@@ -208,6 +231,9 @@ if(isset($_POST["func"])){
 }else  if($_POST["func"]== "find_max_sale_id"){
     $getData = new GetData();
     $getData->find_max_sale_id();
+}else  if($_POST["func"]== "payCash"){
+    $exeData = new ExeData();
+    $exeData->payCash();
 }
 }
 ?>

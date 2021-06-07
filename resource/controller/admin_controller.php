@@ -53,12 +53,14 @@
                         $price = htmlentities($conn->escape_string($lottoData["price"]));
                         $date = htmlentities($conn->escape_string($lottoData["date"]));
                         $status = htmlentities($conn->escape_string($lottoData["status"]));
+                        $descript = htmlentities($conn->escape_string($lottoData["descript"]));
                         $imgName = $number."-".date("d_m_Y").".".explode(".",$img["name"])[(sizeof(explode(".",$img["name"])))-1];
         
                         $imgOnServer = __DIR__."/../../images/item/".$imgName;
                         if(move_uploaded_file($img["tmp_name"],$imgOnServer)){
                             $sql = "INSERT INTO lottery SET number='".$number."',date='".$date."',stock=".$stock.",img='".$imgName."'"
-                                   .",price=".$price.",status=".$status;
+                                     .",price=".$price.",status=".$status.",descript='".$descript."'";
+                                    // echo $sql;
                             echo ($conn->query($sql))?"1":"error";
                             $conn->close();
                         }
@@ -84,8 +86,9 @@
                             $price = htmlentities($conn->escape_string($lottoData["price"]));
                             $date = htmlentities($conn->escape_string($lottoData["date"]));
                             $status = htmlentities($conn->escape_string($lottoData["status"]));
+                            $descript = htmlentities($conn->escape_string($lottoData["descript"]));
                             $sql = "UPDATE lottery SET number='".$number."',date='".$date."',stock=".$stock
-                                    .",price=".$price.",status=".$status;
+                                    .",price=".$price.",status=".$status.",descript='".$descript."'";
                             if(isset($_FILES["img"])){
                                 $img = $_FILES["img"];
                                 if(((string)$img["type"])!="image/jpeg"){
