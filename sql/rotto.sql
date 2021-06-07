@@ -182,6 +182,7 @@ CREATE TABLE `lottery` (
   `stock` int(6) DEFAULT NULL,
   `price` decimal(10,0) DEFAULT 80,
   `status` tinyint(1) DEFAULT 1,
+  `descript` VARCHAR(255) NULL,
   `reg_date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -3,6 +3,12 @@
 <head>
 	<title>เข้าสู่ระบบ</title>
 	<?php include(__DIR__."/resource/include/script.html"); ?>
+	<script>
+		window.onload = ()=>{
+			var auth2 = gapi.auth2.getAuthInstance();
+          	auth2.signOut();
+		}
+	</script>
 </head>
 <body>
 	<meta name="google-signin-client_id" content="1036552871785-hp22bf6mmcfgdto7nrkajn39s558on4j.apps.googleusercontent.com">
@@ -37,10 +43,6 @@
 				}
 			</style>
 			<script type="text/javascript">
-				window.onload = ()=>{
-					var auth2 = gapi.auth2.getAuthInstance();
-          			auth2.signOut();
-				}
 				function go_register(){
 					window.location = "register.php";
 				}
@@ -90,8 +92,8 @@
 					});
 				}
 			</script>
-				<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-				<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v10.0&appId=527242314963433&autoLogAppEvents=1" nonce="PywkciAJ"></script>
-				<script src="https://apis.google.com/js/platform.js" async defer></script>
+			<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+			<script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v10.0&appId=527242314963433&autoLogAppEvents=1" nonce="PywkciAJ"></script>
+			<script src="https://apis.google.com/js/platform.js" async defer></script>
 		</body>
 		</html>
